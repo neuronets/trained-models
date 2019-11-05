@@ -25,3 +25,11 @@ This model was trained for five epochs on a dataset of 10,000 T1-weighted brain 
 ![Predicted brain mask on T1-weighted brain scan](/images/brain-extraction/unet-best-prediction.png)
 
 ![Predicted brain mask on T1-weighted brain scan with motion](/images/brain-extraction/unet-worst-prediction.png)
+
+## Meningioma extraction
+
+### 3D U-Net
+
+Please refer to the repository [neuronets/ams](https://github.com/neuronets/ams) for more information.
+
+![Predicted meningioma mask on T1-weighted contrast-enhanced brain scan](https://user-images.githubusercontent.com/17690870/55470578-e6cb7800-55d5-11e9-991f-fe13c03ab0bd.png)
