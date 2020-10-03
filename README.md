@@ -4,6 +4,16 @@ This repository contains pre-trained models for 3D image processing. The models 
 
 These models can be used for their original purpose or for transfer learning on a new task. For example, a pre-trained brain extraction network can be trained on a tumor-labeling task.
 
+## Getting models
+
+The models are accessible via [`git-annex`](https://git-annex.branchable.com/install/). Clone this repository and run `git annex get`:
+
+```
+git clone https://github.com/neuronets/nobrainer-models
+cd nobrainer-models
+git annex get
+```
+
 ## Brain extraction
 
 ### [3D U-Net](https://github.com/kaczmarj/nobrainer/blob/master/nobrainer/models/unet.py)
@@ -15,3 +25,11 @@ This model was trained for five epochs on a dataset of 10,000 T1-weighted brain 
 ![Predicted brain mask on T1-weighted brain scan](/images/brain-extraction/unet-best-prediction.png)
 
 ![Predicted brain mask on T1-weighted brain scan with motion](/images/brain-extraction/unet-worst-prediction.png)
+
+## Meningioma extraction
+
+### 3D U-Net
+
+Please refer to the repository [neuronets/ams](https://github.com/neuronets/ams) for more information.
+
+![Predicted meningioma mask on T1-weighted contrast-enhanced brain scan](https://user-images.githubusercontent.com/17690870/55470578-e6cb7800-55d5-11e9-991f-fe13c03ab0bd.png)
