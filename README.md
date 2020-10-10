@@ -1,6 +1,6 @@
 # Nobrainer models
 
-This repository contains pre-trained models for 3D image processing. The models were trained using the [_Nobrainer_](https://github.com/kaczmarj/nobrainer) framework, which wraps TensorFlow/Keras. Please see the [releases](https://github.com/kaczmarj/nobrainer-models/releases) for model weights.
+This repository contains pre-trained models for 3D image processing. The models were trained using the [_Nobrainer_](https://github.com/neuronets/nobrainer) framework, which wraps TensorFlow/Keras. Please see the [releases](https://github.com/neuronets/trained-models/releases) for model weights.
 
 These models can be used for their original purpose or for transfer learning on a new task. For example, a pre-trained brain extraction network can be trained on a tumor-labeling task.
 
@@ -9,14 +9,14 @@ These models can be used for their original purpose or for transfer learning on 
 The models are accessible via [`git-annex`](https://git-annex.branchable.com/install/). Clone this repository and run `git annex get`:
 
 ```
-git clone https://github.com/neuronets/nobrainer-models
+git clone https://github.com/neuronets/trained-models
 cd nobrainer-models
 git annex get
 ```
 
 ## Brain extraction
 
-### [3D U-Net](https://github.com/kaczmarj/nobrainer/blob/master/nobrainer/models/unet.py)
+### [3D U-Net](https://github.com/neuronets/nobrainer/blob/master/nobrainer/models/unet.py)
 
 This model achieved a median Dice score of 0.97, mean of 0.96, minimum of 0.91, and maximum of 0.98 on a validation dataset of 99 T1-weighted brain scans and their corresponding binarized FreeSurfer segmentations (public and private sources). This model should be agnostic to orientation and can predict the brainmask for a volume of size 256x256x256 in approximately three seconds.
 
