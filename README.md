@@ -6,12 +6,18 @@ These models can be used for their original purpose or for transfer learning on 
 
 ## Getting models
 
-The models are accessible via [`git-annex`](https://git-annex.branchable.com/install/). Clone this repository and run `git annex get`:
+This repo is a datalad dataset. To get the models you need [`datalad`](https://www.datalad.org/get_datalad.html) and [`datalad-osf`](https://pypi.org/project/datalad-osf/). First `datalad clone` the repo and then run `datalad get -s osf-storage .` to get the whole content. 
 
 ```
-git clone https://github.com/neuronets/trained-models
-cd nobrainer-models
-git annex get
+datalad clone https://github.com/neuronets/trained-models
+cd trained-models
+datalad get -s osf-storage .
+```
+
+to get a specific model you can pass the path of the model to the `datalad get`.
+
+```
+datalad get -s osf-storage neuronets/ams/0.1.0/meningioma_T1wc_128iso_v1.h5
 ```
 
 ## Brain extraction
