@@ -45,7 +45,7 @@ model = tf.keras.models.load_model("neuronets/kwyk/0.4.1/all_50_bvwn_multi_prior
 model.predict(...)
 ```
 
-The `h5` files (bariny and ams) contain weights that can be loaded onto an instantiated architecture.
+The `h5` files (brainy and ams) contain weights that can be loaded onto an instantiated architecture.
 
 ```
 import nobrainer
