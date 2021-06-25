@@ -30,7 +30,7 @@ datalad get -s osf-storage neuronets/ams/0.1.0/meningioma_T1wc_128iso_v1.h5
 ```
 
 ```
-datalad get -s neuronets/braingen
+datalad get -s osf-storage neuronets/braingen
 ```
 
 ## Loading models for training
