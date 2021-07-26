@@ -35,7 +35,7 @@ datalad get -s osf-storage neuronets/braingen
 
 ## Loading models for training
 
-All models are available for re-training or transfer learning purposes except the **kwyk** model, which its weights are not available in tf2 keras format (We are working to make it available in near future). These models can be loaded with `tf.keras.models.load_model`.
+All models are available for re-training or transfer learning purposes except the **kwyk** model.  The kwyk model weights are not available in a tf2 keras format (We are working to make it available in near future). The kwyk models can be loaded with `tf.keras.models.load_model`.
 
 ```
 import tensorflow as tf
@@ -70,4 +70,3 @@ out = nobrainer.prediction.predict_from_filepath(image_path,
 ```
 
 For an example of inferece using kwyk model, please see this [notebook](https://github.com/neuronets/nobrainer/blob/master/guide/inference_with_kwyk_model.ipynb).
-
