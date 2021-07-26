@@ -53,7 +53,7 @@ You can use [_Nobrainer_](https://github.com/neuronets/nobrainer) toolbox for in
 
 ```
 import nobrainer
-from nobrainer.volume import standardize_numpy
+from nobrainer.volume import standardize
 
 block_shape=(128,128,128)
 batch_size = 1
@@ -70,5 +70,4 @@ out = nobrainer.prediction.predict_from_filepath(image_path,
 ```
 
 For an example of inferece using kwyk model, please see this [notebook](https://github.com/neuronets/nobrainer/blob/master/guide/inference_with_kwyk_model.ipynb).
-
 
