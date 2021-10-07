@@ -54,4 +54,4 @@ model.fit(...)
 
 You can see a transfer learning example [here](https://github.com/neuronets/nobrainer/blob/master/guide/transfer_learning.ipynb), and an example of brain MRI generation using **braingen** models can be find [here](https://github.com/neuronets/nobrainer/blob/master/guide/train_generation_progressive.ipynb).
 
-For an example of inferece using kwyk model, please see this [notebook](https://github.com/neuronets/nobrainer/blob/master/guide/inference_with_kwyk_model.ipynb).
+For an example of inference using kwyk model, please see this [notebook](https://github.com/neuronets/nobrainer/blob/master/guide/inference_with_kwyk_model.ipynb).
