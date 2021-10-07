@@ -37,7 +37,11 @@ datalad get -s osf-storage neuronets/ams/0.1.0/meningioma_T1wc_128iso_v1.h5
 datalad get -s osf-storage neuronets/braingen
 ```
 
-## Loading models for training
+## Using models for inference or training
+
+You can use the [Nobrainer-zoo](https://github.com/neuronets/zoo) toolbox for easy inference and re-training of the models without installing any additional model dependencies.
+
+## Loading models for training with python and tensorflow/keras
 
 All models are available for re-training or transfer learning purposes except the **kwyk** model.  The kwyk model weights are not available in a tf2 keras format (We are working to make it available in near future). The kwyk models can be loaded with `tf.keras.models.load_model`.
 
@@ -49,28 +53,5 @@ model.fit(...)
 ```
 
 You can see a transfer learning example [here](https://github.com/neuronets/nobrainer/blob/master/guide/transfer_learning.ipynb), and an example of brain MRI generation using **braingen** models can be find [here](https://github.com/neuronets/nobrainer/blob/master/guide/train_generation_progressive.ipynb).
-
-
-## Using models for inference
-
-You can use [_Nobrainer_](https://github.com/neuronets/nobrainer) toolbox for neuronet models.
-
-```
-import nobrainer
-from nobrainer.volume import standardize
-
-block_shape=(128,128,128)
-batch_size = 1
-image_path = "path_to_input_image_file"
-
-model = tf.keras.models.load_model("neuronets/brainy/0.1.0/brain-extraction-unet-128iso-model.h5")
-out = nobrainer.prediction.predict_from_filepath(image_path, 
-                                           model,
-                                           block_shape = (128,128,128),
-                                           batch_size = batch_size,
-                                           normalizer = standardize_numpy,
-                                             )
-
-```
 
 For an example of inferece using kwyk model, please see this [notebook](https://github.com/neuronets/nobrainer/blob/master/guide/inference_with_kwyk_model.ipynb).
