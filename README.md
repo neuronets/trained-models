@@ -1,10 +1,10 @@
 # Nobrainer models
 
-This repository contains pre-trained models for 3D image processing. The models were trained using the [_Nobrainer_](https://github.com/neuronets/nobrainer) framework, which wraps TensorFlow/Keras.
+This repository contains pre-trained models for 3D neuroimaging data processing. These models can be used for their original purpose or for transfer learning on a new task. For example, a pre-trained brain extraction network can be trained on a tumor-labeling task. models are included based on `<org-name>/<model-name>/<version>`.
 
-These models can be used for their original purpose or for transfer learning on a new task. For example, a pre-trained brain extraction network can be trained on a tumor-labeling task.
+## Neuronet organization
 
-## Models in neuronet organization
+These models were trained using the [_Nobrainer_](https://github.com/neuronets/nobrainer) framework, which wraps TensorFlow/Keras.
 
 - [brainy](https://github.com/neuronets/brainy): 3D U-Net brain extraction model
 - [ams](https://github.com/neuronets/ams): automated meningioma segmentation model
@@ -12,7 +12,11 @@ These models can be used for their original purpose or for transfer learning on 
 - braingen: progressive generation of T1-weighted brain MR scans
 
 The folder inside the model names shows the released versions of the model.
+  
+## UCL organization
 
+- [SynthSeg](https://github.com/BBillot/SynthSeg): 3D brain MRI segmentation model
+  
 ## Downloading models
 
 This repo is a datalad dataset. To get the models you need [`datalad`](https://www.datalad.org/get_datalad.html) and [`datalad-osf`](https://pypi.org/project/datalad-osf/). First `datalad clone` the repo and then run `datalad get -s osf-storage .` to get the whole content. 
@@ -49,7 +53,7 @@ You can see a transfer learning example [here](https://github.com/neuronets/nobr
 
 ## Using models for inference
 
-You can use [_Nobrainer_](https://github.com/neuronets/nobrainer) toolbox for inference.
+You can use [_Nobrainer_](https://github.com/neuronets/nobrainer) toolbox for neuronet models.
 
 ```
 import nobrainer
