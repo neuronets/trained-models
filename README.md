@@ -2,7 +2,7 @@
 
 This repository contains pre-trained models for 3D neuroimaging data processing. These models can be used for their original purpose or for transfer learning on a new task. For example, a pre-trained brain extraction network can be trained on a tumor-labeling task. models are included based on `<org-name>/<model-name>/<version>`.
 
-## Neuronet organization
+## Neuronets organization
 
 These models were trained using the [_Nobrainer_](https://github.com/neuronets/nobrainer) framework, which wraps TensorFlow/Keras.
 
@@ -16,6 +16,11 @@ The folder inside the model names shows the released versions of the model.
 ## UCL organization
 
 - [SynthSeg](https://github.com/BBillot/SynthSeg): 3D brain MRI segmentation model
+
+## DDIG Organization
+
+- [SynthMorph](https://github.com/voxelmorph/voxelmorph): contrast agnostic registration model
+- [VoxelMorph](https://github.com/voxelmorph/voxelmorph): learning based registration model
   
 ## Downloading models
 
