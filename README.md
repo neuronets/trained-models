@@ -16,6 +16,7 @@ The folder inside the model names shows the released versions of the model.
 ## UCL organization
 
 - [SynthSeg](https://github.com/BBillot/SynthSeg): 3D brain MRI segmentation model
+- [SynthSR](https://github.com/BBillot/SynthSR): 3D brain MRI (& CT) super resolution model
 
 ## DDIG Organization
 
