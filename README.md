@@ -1,6 +1,6 @@
 # Nobrainer models
 
-This repository contains pre-trained models for 3D neuroimaging data processing. These models can be used for their original purpose or for transfer learning on a new task. For example, a pre-trained brain extraction network can be trained on a tumor-labeling task. models are included based on `<org-name>/<model-name>/<version>`.
+This repository contains pre-trained models for 3D neuroimaging data processing. These models can be used for their original purpose or for transfer learning on a new task. For example, a pre-trained brain extraction network can be trained on a tumor-labeling task. models are included based on `<org-name>/<model-name>/<version>`. Instructions to add a model can be find [here](https://github.com/Hoda1394/trained-models/blob/master/add_model_instructions.md).
 
 ## Neuronets organization
 
