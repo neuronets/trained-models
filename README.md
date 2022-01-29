@@ -23,7 +23,7 @@ The folder inside the model names shows the released versions of the model.
 - [SynthMorph](https://github.com/voxelmorph/voxelmorph): contrast agnostic registration model
 - [VoxelMorph](https://github.com/voxelmorph/voxelmorph): learning based registration model
 
-## lcn Organization
+## Laboratory for Computational Neuroscience (lcn) Organization
 
 - ParcNet: cortical parcellation model 
   
