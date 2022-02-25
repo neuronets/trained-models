@@ -9,3 +9,4 @@ images/brain-generation annex.largefiles=nothing
 ** annex.largefiles=(not (include=*.txt))
 ** annex.largefiles=(not (include=*.yaml))
 ** annex.largefiles=(not (include=*.md))
+** annex.largefiles=(not (include=Dockerfiles))
