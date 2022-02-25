@@ -1,0 +1,33 @@
+#### container info
+image:
+  singularity: nobrainer-zoo_ucl.sif
+  docker: neuronets/nobrainer-zoo:ucl
+
+#### repository info
+repo:  
+    repo_url: "https://github.com/BBillot/SynthSeg.git"
+    commitish: "1c9995e0"
+    repo_download: True
+    repo_download_location: "path_to_be_defined"
+    
+#### required fields for prediction
+inference:
+    prediction_script: "trained-models/UCL/SynthSeg/0.1/predict.py"
+    command: f"python nobrainerzoo/UCL/SynthSeg/0.1/predict.py --i {infile[0]} --o {outfile}"
+    # TODO: we should add help for options.
+    options: 
+      post: {mandatory: False, argstr: "--post", type: "str"}
+      resample: {mandatory: False, argstr: "--resample", type: "str"}
+      vol: {mandatury: False, argstr: "--vol", type: "str"}
+      crop: {mandatory: False, argstr: "--crop", type: "int", default: 192}
+      threads: {mandatory: False, argstr: "--threads", type: "int", default: 1}
+      cpu: {mandatory: False, argstr: "--cpu", is_flag: true}
+    #### input data characteristics
+    data_spec:
+      input: {n_files: 1}
+      output: {n_files: 1}
+      
+#### required fields for model training
+train:
+    #TODO: train spec to be added here
+  
