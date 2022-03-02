@@ -4,9 +4,9 @@
 images/brain-extraction annex.largefiles=nothing
 images/brain-generation annex.largefiles=nothing
 * annex.largefiles=((mimeencoding=binary)and(largerthan=0))
-** annex.largefiles=(not (include=*.py))
-** annex.largefiles=(not (include=*.json))
-** annex.largefiles=(not (include=*.txt))
-** annex.largefiles=(not (include=*.yaml))
-** annex.largefiles=(not (include=*.md))
-** annex.largefiles=(not (include=Dockerfiles))
+** annex.largefiles=(not(include=*.py))
+** annex.largefiles=(not(include=*.json))
+** annex.largefiles=(not(include=*.txt))
+** annex.largefiles=(not(include=*.yaml))
+** annex.largefiles=(not(include=*.md))
+** annex.largefiles=(not(include=Dockerfiles))
