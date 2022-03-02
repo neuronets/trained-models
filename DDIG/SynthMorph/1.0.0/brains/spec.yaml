@@ -4,7 +4,7 @@ image:
   docker: neuronets/nobrainer-zoo:ddig
 
 #### repository info
-repo:  
+repository:  
     repo_url: "https://github.com/voxelmorph/voxelmorph.git"
     commitish: "67bc9d20"
     repo_download: False
