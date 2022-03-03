@@ -1,0 +1,33 @@
+#### container info
+image:
+  singularity: nobrainer-zoo_nobrainer.sif
+  docker: neuronets/nobrainer-zoo:nobrainer
+  
+#### repository info
+repository:   
+    repo_url: "git@github.com:neuronets/nobrainer.git"
+    commitish: "72aa211b"
+    repo_download: False
+    repo_download_location: "None"
+    
+#### required fields for prediction
+inference:
+    prediction_script: "nobrainerzoo/neuronets/kwyk/0.4.1/predict.py"
+    command: f"python3 nobrainerzoo/neuronets/kwyk/0.4.1/predict.py -m {model_type} {infile[0]} {outfile}"
+    # TODO: we should add help for model options
+    options:
+      n-samples: {mandatory: False, default: 1, argstr: "-n", type: "int"}
+      batch-size: {mandatory: False, default: 8, argstr: "-b", type: "int"}
+      save-variance: {argstr: "--save-variance", is_flag: true}
+      save-entropy: {argstr: "--save-entropy", is_flag: true}
+      overwrite: {mandatory: False, argstr: "--overwrite", type: "str"}
+      #atlocation: {argstr: "--atlocation", is_flag: true} # not supported with zoo cli
+    #### input data characteristics
+    data_spec:
+      input: {n_files: "any"}
+      output: {n_files: 1}
+      
+#### required fields for model training 
+train:
+    #### Not implemented ####      
+  

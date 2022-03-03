@@ -1,3 +1,16 @@
 
 * annex.backend=MD5E
 **/.git* annex.largefiles=nothing
+images/brain-extraction annex.largefiles=nothing
+images/brain-generation annex.largefiles=nothing
+* annex.largefiles=((mimeencoding=binary)and(largerthan=0))
+**/**/**/*.py annex.largefiles=nothing
+**/**/**/*.yaml annex.largefiles=nothing
+**/**/**/Dockerfile annex.largefiles=nothing
+**/**/**/*.txt annex.largefiles=nothing
+**/**/**/*.md annex.largefiles=nothing
+**/**/**/**/*.py annex.largefiles=nothing
+**/**/**/**/*.txt annex.largefiles=nothing
+**/**/**/**/*.yaml annex.largefiles=nothing
+**/**/**/**/*.md annex.largefiles=nothing
+**/**/**/**/Dockerfiles annex.largefiles=nothing

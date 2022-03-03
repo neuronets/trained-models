@@ -1,0 +1,31 @@
+#### container info
+image:
+  singularity: nobrainer-zoo_ddig.sif
+  docker: neuronets/nobrainer-zoo:ddig
+
+#### repository info
+repository:  
+    repo_url: "https://github.com/voxelmorph/voxelmorph.git"
+    commitish: "67bc9d20"
+    repo_download: False
+    repo_download_location: "None"
+
+#### required fields for prediction
+inference:
+    prediction_script: "trained-models/DDIG/SynthMorph/1.0.0/brains/register.py"
+    command: f"nobrainerzoo/DDIG/SynthMorph/1.0.0/register.py --moving {moving} --fixed {fixed} --model {model_path} --moved {moved}"
+    # TODO: we should add help for model options
+    options:
+      warp: {mandatory: False, argstr: "--warp", type: "str"}  
+      gpu: {mandatory: False, default: "None", argstr: "--gpu", type: "int"}
+      multichannel: {mandatory: False, is_flag: true} 
+    #### input data characteristics
+    data_spec:
+      moving: {n_files: 1}
+      fixed: {n_files: 1}
+      moved: {n_files: 1}
+      
+#### required fields for model training 
+train:
+    # TODO: train spec to be added
+ 
