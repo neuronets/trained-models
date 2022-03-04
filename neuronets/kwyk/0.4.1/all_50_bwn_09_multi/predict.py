@@ -11,9 +11,9 @@ import numpy as np
 _models_dir = Path(__file__).resolve().parents[3] / "trained-models" / "neuronets" / "kwyk" / "0.4.1" 
 
 _models = {
-    'bwn': _models_dir / 'all_50_wn',
-    'bwn_multi': _models_dir / 'all_50_bwn_09_multi',
-    'bvwn_multi_prior': _models_dir / 'all_50_bvwn_multi_prior',
+    'bwn': _models_dir / 'all_50_wn' / 'weights',
+    'bwn_multi': _models_dir / 'all_50_bwn_09_multi' / 'weights',
+    'bvwn_multi_prior': _models_dir / 'all_50_bvwn_multi_prior' / 'weights',
 }
 
 
