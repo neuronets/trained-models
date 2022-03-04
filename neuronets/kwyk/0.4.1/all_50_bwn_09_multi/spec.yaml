@@ -24,8 +24,8 @@ inference:
       #atlocation: {argstr: "--atlocation", is_flag: true} # not supported with zoo cli
     #### input data characteristics
     data_spec:
-      input: {n_files: "any"}
-      output: {n_files: 1}
+      infile: {n_files: "any"}
+      outfile: {n_files: 1}
       
 #### required fields for model training 
 train:

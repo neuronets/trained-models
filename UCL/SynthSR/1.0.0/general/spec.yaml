@@ -21,8 +21,8 @@ inference:
       ct: {mandatury: False, argstr: "--ct", is_flag: true}
     #### input data characteristics
     data_spec:
-      input: {n_files: 1}
-      output: {n_files: 1}
+      infile: {n_files: 1}
+      outfile: {n_files: 1}
       
 #### required fields for model training
 train:

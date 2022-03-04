@@ -20,8 +20,8 @@ inference:
       cpu: {mandatory: False, argstr: "--cpu", is_flag: true}
     #### input data characteristics
     data_spec:
-      input: {n_files: 2}
-      output: {n_files: 1}
+      infile: {n_files: 2}
+      outfile: {n_files: 1}
       
 #### required fields for model training
 train:
