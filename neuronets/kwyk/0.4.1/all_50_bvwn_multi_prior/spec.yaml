@@ -12,8 +12,8 @@ repository:
     
 #### required fields for prediction
 inference:
-    prediction_script: "nobrainerzoo/neuronets/kwyk/0.4.1/predict.py"
-    command: f"python3 nobrainerzoo/neuronets/kwyk/0.4.1/predict.py -m {model_type} {infile[0]} {outfile}"
+    prediction_script: "trained-models/neuronets/kwyk/0.4.1/predict.py"
+    command: f"python3 {MODELS_PATH}/{model}/{model_type}/predict.py -m {model_type} {infile[0]} {outfile}"
     # TODO: we should add help for model options
     options:
       n-samples: {mandatory: False, default: 1, argstr: "-n", type: "int"}
