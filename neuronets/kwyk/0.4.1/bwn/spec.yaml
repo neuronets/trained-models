@@ -12,7 +12,7 @@ repository:
     
 #### required fields for prediction
 inference:
-    prediction_script: "trained-models/neuronets/kwyk/0.4.1/predict.py"
+    prediction_script: "trained-models/neuronets/kwyk/0.4.1/bwn/predict.py"
     command: f"python3 {MODELS_PATH}/{model}/{model_type}/predict.py -m {model_type} {infile[0]} {outfile}"
     # TODO: we should add help for model options
     options:
