@@ -6,9 +6,9 @@ image:
 #### repository info
 repository:  
     repo_url: "https://github.com/BBillot/SynthSeg.git"
-    commitish: "1c9995e0"
+    commitish: "cd597b08"
     repo_download: True
-    repo_download_location: f"{REPO_PATH}"
+    repo_download_location: f"{REPO_PATH}/{model_nm}-{ver}"
     
 #### required fields for prediction
 inference:

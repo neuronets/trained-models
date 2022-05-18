@@ -9,15 +9,7 @@ print('\n')
 # python imports
 import os
 import sys
-from pathlib import Path
 from argparse import ArgumentParser
-
-# # add the repository main folder to python path and import ./SynthSeg/predict.py
-# org_home = Path(__file__).resolve().parents[1]
-# model_repo = org_home / "org_repo"
-# sys.path.append(str(model_repo))
-# model_path = Path(__file__).resolve().parents[3] / "trained-models/UCL/SynthSeg/0.1/SynthSeg.h5"
-# from SynthSeg.predict import predict
 
 # parse arguments
 parser = ArgumentParser()
@@ -52,7 +44,7 @@ args = vars(parser.parse_args())
 repo_path = args["repo_path"]
 sys.path.append(repo_path)
 args.pop("repo_path")
-
+from SynthSeg.predict import predict
 
 # enforce CPU processing if necessary
 if args['cpu']:
@@ -64,14 +56,14 @@ del args['cpu']
 import tensorflow as tf
 tf.config.threading.set_intra_op_parallelism_threads(args['threads'])
 del args['threads']
-from SynthSeg.predict import predict
+
 
 # default parameters
 args['segmentation_labels'] = os.path.join(repo_path, 'data/labels_classes_priors/segmentation_labels.npy')
 args['n_neutral_labels'] = 18
 args['segmentation_label_names'] = os.path.join(repo_path, 'data/labels_classes_priors/segmentation_names.npy')
 args['topology_classes'] = os.path.join(repo_path, 'data/labels_classes_priors/topological_classes.npy')
-#args['path_model'] = os.path.join(repo_path, 'models/SynthSeg.h5')
+#args['path_model'] = os.path.join(repo_path, 'models/SynthSeg.h5') # using model added to the zoo repository
 args['padding'] = args['cropping']
 
 # call predict
