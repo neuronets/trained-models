@@ -8,12 +8,12 @@ repository:
     repo_url: "https://github.com/BBillot/SynthSeg.git"
     commitish: "1c9995e0"
     repo_download: True
-    repo_download_location: "path_to_be_defined"
+    repo_download_location: f"{REPO_PATH}"
     
 #### required fields for prediction
 inference:
     prediction_script: "trained-models/UCL/SynthSeg/0.1/predict.py"
-    command: f"python nobrainerzoo/UCL/SynthSeg/0.1/predict.py --i {infile[0]} --o {outfile}"
+    command: f"python3 {MODELS_PATH}/{model}/predict.py --repo_path {repo_dest} --model_path {model_path} --i {infile[0]} --o {outfile}"
     # TODO: we should add help for options.
     options: 
       post: {mandatory: False, argstr: "--post", type: "str"}
