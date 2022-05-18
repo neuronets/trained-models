@@ -24,19 +24,8 @@ print('\n')
 # python imports
 import os
 import sys
-#from pathlib import Path
 import numpy as np
 from argparse import ArgumentParser
-
-# add main folder to python path and import SynthSR packages
-# org_home = Path(__file__).resolve().parents[2]
-# model_repo = org_home / "org_repo"
-# print(str(model_repo))
-# sys.path.append(str(model_repo))
-# model_path = Path(__file__).resolve().parents[4] / "trained-models/UCL/SynthSR/1.0.0/general/SynthSR_v10_210712.h5"
-# from ext.neuron import models as nrn_models
-# from ext.lab2im import utils
-# from ext.lab2im import edit_volumes
 
 
 # parse arguments
@@ -58,9 +47,7 @@ parser.add_argument("--ct", action="store_true", help="use this flag for ct scan
 args = vars(parser.parse_args())
 
 # add the repository main folder to python path and import ./SynthSeg/predict.py
-repo_path = args["repo_path"]
-sys.path.append(repo_path)
-args.pop("repo_path")
+sys.path.append(args["repo_path"])
 from ext.neuron import models as nrn_models
 from ext.lab2im import utils
 from ext.lab2im import edit_volumes

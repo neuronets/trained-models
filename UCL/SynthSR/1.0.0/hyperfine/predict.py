@@ -24,22 +24,16 @@ print('\n')
 # python imports
 import os
 import sys
-from pathlib import Path
 import numpy as np
 from argparse import ArgumentParser
 
-# add main folder to python path and import SynthSR packages
-org_home = Path(__file__).resolve().parents[2]
-model_repo = org_home / "org_repo"
-print(str(model_repo))
-sys.path.append(str(model_repo))
-model_path = Path(__file__).resolve().parents[4] / "trained-models/UCL/SynthSR/1.0.0/hyperfine/SynthSR_v10_210712_hyperfine.h5"
-from ext.neuron import models as nrn_models
-from ext.lab2im import utils
-from ext.lab2im import edit_volumes
-
 # parse arguments
 parser = ArgumentParser()
+
+# repository location and model path
+parser.add_argument("--repo_path", type=str, dest="repo_path", help="repository download location.")
+parser.add_argument("--model_path", type=str, dest="model_path", help="saved model path")
+
 parser.add_argument("path_t1_images", type=str, help="T1 images to super-resolve / synthesize, at native 1.5x1.5x5 axial resolution. Can be the path to a single image or to a folder")
 parser.add_argument("path_t2_images", type=str, help="T2 images (single image or path to directory); these must be registered to the T1s, in physical coordinates (i.e., with the headers, no NOT resample when registering; see instructions on website)")
 parser.add_argument("path_predictions", type=str,
@@ -49,6 +43,11 @@ parser.add_argument("--cpu", action="store_true", help="enforce running with CPU
 parser.add_argument("--threads", type=int, default=1, dest="threads",
                     help="number of threads to be used by tensorflow when running on CPU.")
 args = vars(parser.parse_args())
+
+sys.path.append(args["repo_path"])
+from ext.neuron import models as nrn_models
+from ext.lab2im import utils
+from ext.lab2im import edit_volumes
 
 # enforce CPU processing if necessary
 if args['cpu']:
@@ -73,7 +72,7 @@ unet_model = nrn_models.unet(nb_features=24,
                              batch_norm=-1,
                              input_model=None)
 
-unet_model.load_weights(str(model_path), by_name=True)
+unet_model.load_weights(args["model_path"], by_name=True)
 
 # Prepare list of images to process
 path_t1_images = os.path.abspath(args['path_t1_images'])
