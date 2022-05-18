@@ -12,7 +12,7 @@ repository:
     
 #### required fields for prediction
 inference:
-    prediction_script: "trained-models/UCL/SynthSeg/0.1/predict.py"
+    prediction_script: "trained-models/UCL/SynthSeg/1.0.0/predict.py"
     command: f"python3 {MODELS_PATH}/{model}/predict.py --repo_path {repo_dest} --model_path {model_path} --i {infile[0]} --o {outfile}"
     # TODO: we should add help for options.
     options: 

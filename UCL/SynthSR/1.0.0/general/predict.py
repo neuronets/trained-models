@@ -24,22 +24,28 @@ print('\n')
 # python imports
 import os
 import sys
-from pathlib import Path
+#from pathlib import Path
 import numpy as np
 from argparse import ArgumentParser
 
 # add main folder to python path and import SynthSR packages
-org_home = Path(__file__).resolve().parents[2]
-model_repo = org_home / "org_repo"
-print(str(model_repo))
-sys.path.append(str(model_repo))
-model_path = Path(__file__).resolve().parents[4] / "trained-models/UCL/SynthSR/1.0.0/general/SynthSR_v10_210712.h5"
-from ext.neuron import models as nrn_models
-from ext.lab2im import utils
-from ext.lab2im import edit_volumes
+# org_home = Path(__file__).resolve().parents[2]
+# model_repo = org_home / "org_repo"
+# print(str(model_repo))
+# sys.path.append(str(model_repo))
+# model_path = Path(__file__).resolve().parents[4] / "trained-models/UCL/SynthSR/1.0.0/general/SynthSR_v10_210712.h5"
+# from ext.neuron import models as nrn_models
+# from ext.lab2im import utils
+# from ext.lab2im import edit_volumes
+
 
 # parse arguments
 parser = ArgumentParser()
+
+# repository location and model path
+parser.add_argument("--repo_path", type=str, dest="repo_path", help="repository download location.")
+parser.add_argument("--model_path", type=str, dest="model_path", help="saved model path")
+
 parser.add_argument("path_images", type=str, help="images to super-resolve / synthesize. Can be the path to a single image or to a folder")
 parser.add_argument("path_predictions", type=str,
                     help="path where to save the synthetic 1mm MP-RAGEs. Must be the same type "
@@ -50,6 +56,14 @@ parser.add_argument("--threads", type=int, default=1, dest="threads",
 parser.add_argument("--ct", action="store_true", help="use this flag for ct scans.")
 
 args = vars(parser.parse_args())
+
+# add the repository main folder to python path and import ./SynthSeg/predict.py
+repo_path = args["repo_path"]
+sys.path.append(repo_path)
+args.pop("repo_path")
+from ext.neuron import models as nrn_models
+from ext.lab2im import utils
+from ext.lab2im import edit_volumes
 
 # enforce CPU processing if necessary
 if args['cpu']:
@@ -74,7 +88,7 @@ unet_model = nrn_models.unet(nb_features=24,
                              activation='elu',
                              input_model=None)
 
-unet_model.load_weights(str(model_path), by_name=True)
+unet_model.load_weights(args["model_path"], by_name=True)
 
 # Prepare list of images to process
 path_images = os.path.abspath(args['path_images'])
