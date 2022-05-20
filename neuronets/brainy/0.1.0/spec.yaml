@@ -82,3 +82,50 @@ train:
     path:
       save_model: model/
       pretrained_model: none
+      
+#### training data characteristics
+training_data_info:
+    data_number:
+        total: 10000
+        train: None
+        evaluate: None
+        test: 99 
+    biological_sex:
+        male: None
+        female: None
+    age_histogram: None
+    race: None
+    imaging_contrast_info: "T1-weighted"
+    dataset_sources: None
+    data_sites:
+        number_of_sites: None
+        sites: None
+    scanner_models: None
+    hardware: None
+    training_parameters:
+        input_shape: "256x256x256"
+        block_shape: "128x128x128" 
+        n_classes: 1
+        lr: None
+        n_epochs: 5
+        batch_size: 2
+        number_of_gpus: None
+        loss_function: "Jaccard"
+        metrics: "Dice"
+        data_preprocessing: "standard score"
+        data_augmentation: "random rigid transformations applied to 50% of data"
+        
+#### model information and help
+model:
+    model_name: "brainy"
+    description: "3D brain extraction model"
+    structure: "U-Net"
+    training_mode: "supervised"
+    model_url: "https://github.com/neuronets/brainy"
+    Zoo_function: "predict"
+    example: "nobrainer-zoo predict -m neuronets/brainy/0.1.0 <path_to_input> <path_to_output>/out.nii.gz"
+    note: "Please provide an output file name with an extension."
+    input_file_type: "nii.gz"
+
+        
+        
