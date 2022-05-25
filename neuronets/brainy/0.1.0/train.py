@@ -1,9 +1,8 @@
 import nobrainer
 import tensorflow as tf
-# TODO: use pathlib instead of os
 from pathlib import Path
 import os
-# TODO: argparse can be replaced by click or sys
+# TODO: argparse can be replaced by click
 import argparse
 import yaml
 
@@ -22,7 +21,7 @@ def main(config):
     n_epochs = config['train']['epoch']
     n_train = config['dataset_train']['n_train'] #ToDo: it is required when using user data
     n_eval = config['dataset_test']['n_test'] #ToDo: it is required when using user data
-
+    
     if config.get("data_train_pattern") and config.get("data_valid_pattern"):
         data_train_pattern = config["data_train_pattern"]
         data_evaluate_pattern = config["data_valid_pattern"]
@@ -48,17 +47,12 @@ def main(config):
         invalid = nobrainer.io.verify_features_labels(evaluate_paths)
         assert not invalid
         
-        # data directory is exists because we bind it to container
-        data_dir = Path(__file__).resolve().parents[2] / "data"
-        #current_directory = os.getcwd()
-        #final_directory = os.path.join(current_directory, r'data')
-        # if not os.path.exists(final_directory):
-        #    os.makedirs(final_directory)
+        data_dir = Path(config["dataset_train"]["data_location"])
+        os.makedirs(data_dir, exist_ok=True)
         
         nobrainer.tfrecord.write(
             features_labels=train_paths,
             filename_template= str(data_dir / "data-train_shard-{shard:03d}.tfrec"),
-            #filename_template='data/data-train_shard-{shard:03d}.tfrec',
             examples_per_shard=3)
         
         data_train_pattern = str(data_dir / "data-train_shard-*.tfrec")
@@ -145,11 +139,11 @@ def main(config):
     #         json.dump(history, file)
             
     #save model
-    save_path = os.path.join(config['path']['save_model'])
-    if not os.path.exists(save_path):
-        os.makedirs(save_path)
-    model.save_weights(os.path.join(save_path,'weights_brainy_unet.hdf5' ))
-    print("Model is saved at {}".format(os.path.join(save_path,'weights_brainy_unet.hdf5' )))
+    save_path = Path(config['path']['save_model'])
+    os.makedirs(save_path, exist_ok=True)
+    
+    model.save_weights(str(save_path / 'weights_brainy_unet.h5'))
+    print("The trained model is saved at {}".format(str(save_path / 'weights_brainy_unet.h5')))
     
     # TODO: Add loading a pretrained model for transfer learning 
         

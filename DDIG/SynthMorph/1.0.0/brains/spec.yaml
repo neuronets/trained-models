@@ -13,7 +13,7 @@ repository:
 #### required fields for prediction
 inference:
     prediction_script: "trained-models/DDIG/SynthMorph/1.0.0/brains/register.py"
-    command: f"nobrainerzoo/DDIG/SynthMorph/1.0.0/register.py --moving {moving} --fixed {fixed} --model {model_path} --moved {moved}"
+    command: f"python3 {MODELS_PATH}/{model}/{model_type}/register.py --moving {moving} --fixed {fixed} --model {model_path} --moved {moved}"
     # TODO: we should add help for model options
     options:
       warp: {mandatory: False, argstr: "--warp", type: "str"}  
