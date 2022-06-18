@@ -6,7 +6,7 @@ image:
 #### repository info
 repository:  
     repo_url: "None"
-    commitish: "None"
+    committish: "None"
     repo_download: False
     repo_download_location: "None"
     

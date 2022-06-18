@@ -6,7 +6,7 @@ image:
 #### repository info
 repository:  
     repo_url: "https://github.com/voxelmorph/voxelmorph.git"
-    commitish: "67bc9d20"
+    committish: "67bc9d20"
     repo_download: False
     repo_download_location: "None"
 

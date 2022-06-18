@@ -6,7 +6,7 @@ image:
 #### repository info
 repository:  
     repo_url: "https://github.com/BBillot/SynthSeg.git"
-    commitish: "cd597b08"
+    committish: "cd597b08"
     repo_download: True
     repo_download_location: f"{REPO_PATH}/{model_nm}-{ver}"
     

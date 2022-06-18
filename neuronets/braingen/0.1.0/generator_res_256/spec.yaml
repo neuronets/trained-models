@@ -6,7 +6,7 @@ image:
 #### repository info
 repository:   
     repo_url: "git@github.com:neuronets/nobrainer.git"
-    commitish: "72aa211b"
+    committish: "72aa211b"
     repo_download: False
     repo_download_location: "None"
     
