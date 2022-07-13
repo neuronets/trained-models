@@ -17,10 +17,16 @@
 
 	```datalad siblings configure -s origin --publish-depends osf-storage```
 	
-4. The structure of the repository is ```<org>/<model_name>/<version>/<model_file>```. Copy or move the trained model in the proper location based on this structure.
-	
-	**NOTE: do not create a new branch. Work on master branch.**
-	
+4. **NOTE: do not create a new branch. Work on master branch.** The structure of the repository is ```<org>/<model_name>/<version>```. Create these nested directories with proper names and version of your model. Organization name can refer to your affiliation. You need below files for adding your model,
+	- **saved model file or weights:** add the model file in a subdirectory called ```weights```
+	- **sep.yaml:** this file contains an information about your model, command to run, training dataset and etc. check the template [here](). 
+	- **prediction.py:** script for getting inference from the model
+	- **train.py:** script for training of the model 
+	- **requirement.txt:** list of model dependencies for inference and train
+	- **Dockerfile:** docker file to build a container
+
+You may submit your model only for inference, in that case you may not have the ```train.py``` file.
+
 5. Save the dataset with a commit message from the root of the repository.
 	
 	```datalad save -m “Added model X”```
