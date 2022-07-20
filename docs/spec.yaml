@@ -1,0 +1,131 @@
+#### container info
+image:
+  singularity: # singularity container name for running the model
+  docker: # container name for running the model
+  
+#### repository info
+repository:   
+    repo_url: "git@github.com:neuronets/nobrainer.git" # related GitHub repository of the model
+    committish: "72aa211b" # Commit id related to current version of the model
+    repo_download: False # Is repository needs to be downloaded for running the model?
+    repo_download_location: "None" # probably we do not need this with new changes
+    
+#### required fields for prediction
+inference:
+    prediction_script: "nobrainer/nobrainer/cli/main.py" # The prediction script name
+    command: f"nobrainer predict -m {model_path} {infile[0]} {outfile}" # The command to run the script with placeholders for model and input or output
+    # TODO: we should add help for model options
+    options: # optional settings that will be passed to the model by "--options" argument. they are model-specific
+      block_shape: {mandatory: False, default: [128, 128, 128], argstr: "-b", type: "list"}
+      resize_features_to: {mandatory: False, default: [256, 256, 256], argstr: "-r", type: "list"}
+      threshold: {mandatory: False, default: 0.3, argstr: "-t", type: "float"}
+      rotate_and_predict: {argstr: "--rotate-and-predict", is_flag: true}
+      largest_label: {arstr: "-l", is_flag: true}
+      verbose: {argstr: "-v", is_flag: true}
+    #### input data characteristics
+    data_spec:
+      infile: {n_files: 1} # input number of files
+      outfile: {n_files: 1} # output number of files
+      
+#### required fields for model training 
+train:
+    #### Train script
+    train_script: Brainy_Train_Unet.py
+
+    # the sample data used if data_patterns is not provided by the user
+    sample_data: sample_MGH
+
+    #### general settings
+    name: unet_brainy
+    is_train: true
+    #use_visdom: false # for visualization
+    #visdom_port: 8067  
+    model: cnn
+    device: cuda:0
+
+    #### datasets
+    n_classes: 1
+    dataset_train:
+      data_location: data/
+      shuffle_buffer_size: 10
+      block_shape: 32
+      volume_shape: 256
+      batch_size: 2  # per GPU
+      augment: False
+      n_train: 9
+      num_parallel_calls: 2 # keeping same as batch size\
+    dataset_test:     #  test params may differ from train params
+      data_location: data/
+      shuffle_buffer_size: 0
+      block_shape: 32
+      volume_shape: 256
+      batch_size: 1
+      n_test: 1
+      num_parallel_calls: 1
+      augment: False
+
+    #### network structures
+    network:
+      model: unet
+      batchnorm: True
+    #### training settings: learning rate scheme, loss
+    training:
+      epoch: 5
+      lr: .00001  # adam
+      loss: nobrainer.losses.dice
+      metrics: [nobrainer.metrics.dice, nobrainer.metrics.jaccard]
+
+    #### logger
+    logger:
+      ckpt_path: ckpts/
+  
+    path:
+      save_model: model/
+      pretrained_model: none
+      
+#### trained data characteristics
+training_data_info:
+    data_number:
+        total: 10000
+        train: None
+        evaluate: None
+        test: 99 
+    biological_sex:
+        male: None
+        female: None
+    age_histogram: None
+    race: None
+    imaging_contrast_info: "T1-weighted"
+    dataset_sources: None # A list containing datasets names used to train the model
+    data_sites:
+        number_of_sites: None
+        sites: None
+    scanner_models: None
+    hardware: None
+    training_parameters:
+        input_shape: "256x256x256"
+        block_shape: "128x128x128" 
+        n_classes: 1
+        lr: None
+        n_epochs: 5
+        batch_size: 2
+        number_of_gpus: None
+        loss_function: "Jaccard"
+        metrics: "Dice"
+        data_preprocessing: "standard score"
+        data_augmentation: "random rigid transformations applied to 50% of data"
+        
+#### model information and help
+model:
+    model_name: "brainy"
+    description: "3D brain extraction model"
+    structure: "U-Net"
+    training_mode: "supervised"
+    model_url: "https://github.com/neuronets/brainy" # related website or GitHub page
+    Nobrainer-zoo_function: "predict"
+    example: "nobrainer-zoo predict -m neuronets/brainy/0.1.0 <path_to_input> <path_to_output>/out.nii.gz"
+    note: "Please provide an output file name with an extension."
+    input_file_type: "nii.gz"
+
+        
+        

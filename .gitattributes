@@ -3,6 +3,7 @@
 **/.git* annex.largefiles=nothing
 images/brain-extraction annex.largefiles=nothing
 images/brain-generation annex.largefiles=nothing
+docs/*.yaml annex.largefiles=nothing
 * annex.largefiles=((mimeencoding=binary)and(largerthan=0))
 **/**/**/*.py annex.largefiles=nothing
 **/**/**/*.yaml annex.largefiles=nothing
