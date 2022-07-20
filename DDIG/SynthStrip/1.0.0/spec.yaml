@@ -1,0 +1,31 @@
+#### container info
+image:
+  singularity: nobrainer-zoo_ddig.sif
+  docker: neuronets/nobrainer-zoo:ddig
+
+#### repository info
+repository: 
+    repo_url: "https://github.com/freesurfer/freesurfer/tree/dev/mri_synthstrip"
+    committish: "e935059"
+    repo_download: True
+    repo_download_location: f"{REPO_PATH}/{model_nm}-{ver}"
+    
+#### required fields for prediction
+inference:
+    prediction_script: "trained-models/DDIG/SynthStrip/1.0.0/predict.py"
+    command: f"python3 {MODELS_PATH}/{model}/{model_type}/predict.py --model_path {model_path} -i {infile} -o {outfile}"
+    # TODO: we should add help for options.
+    options:
+      threads: {mandatory: False, argstr: "--threads", type: "int", default: 1}
+      cpu: {mandatory: False, argstr: "--cpu", is_flag: true}   
+      ct: {mandatury: False, argstr: "--ct", is_flag: true}
+    #### input data characteristics
+    data_spec:
+      infile: {n_files: 1}
+      outfile: {n_files: 1}
+      
+#### required fields for model training
+train:
+#### TODO: Add the train spec here
+  
+  
