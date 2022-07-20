@@ -1,0 +1,84 @@
+#### container info
+image:
+  singularity: nobrainer-zoo_nobrainer.sif
+  docker: neuronets/nobrainer-zoo:nobrainer
+  
+#### repository info
+repository:   
+    repo_url: "git@github.com:neuronets/nobrainer.git"
+    committish: "72aa211b"
+    repo_download: False
+    repo_download_location: "None"
+
+#### required fields for prediction
+inference:
+    prediction_script: "nobrainer/nobrainer/cli/main.py"
+    command: f"nobrainer predict -m {model_path} {infile[0]} {outfile}"
+    # TODO: we should add help for model options
+    options:
+      block_shape: {mandatory: False, default: [128, 128, 128], argstr: "-b", type: "list"}
+      resize_features_to: {mandatory: False, default: [256, 256, 256], argstr: "-r", type: "list"}
+      threshold: {mandatory: False, default: 0.3, argstr: "-t", type: "float"}
+      rotate_and_predict: {argstr: "--rotate-and-predict", is_flag: true}
+      largest_label: {argstr: "-l", is_flag: true}
+      verbose: {argstr: "-v", is_flag: true}
+    #### input data characteristics
+    data_spec:
+      infile: {n_files: 1}
+      outfile: {n_files: 1}
+      
+#### required fields for model training  
+train:  
+    #### Train script
+    train_script: train.py
+
+    # the sample data used if data_patterns is not provided by the user
+    sample_data: sample_MGH
+
+    #### general settings
+    name: unet_AMS
+    is_train: true
+    #use_visdom: false # for visualization
+    #visdom_port: 8067  
+    model: cnn
+    device: cuda:0
+
+    #### datasets
+    n_classes: 1
+    dataset_train:
+      data_location: data/
+      shuffle_buffer_size: 10
+      block_shape: 32
+      volume_shape: 256
+      batch_size: 2  # per GPU
+      augment: False
+      n_train: 9
+      num_parallel_calls: 2 # keeping same as batch sizse\
+    dataset_test:     #  test params may differ from train params
+      data_location: data/
+      shuffle_buffer_size: 0
+      block_shape: 32
+      volume_shape: 256
+      batch_size: 1
+      n_test: 1
+      num_parallel_calls: 1
+      augment: False
+
+    #### network structures
+    network:
+      model: unet
+      batchnorm: True
+    #### training settings: learning rate scheme, loss
+    training:
+      epoch: 5
+      lr: .00001  # adam
+      loss: nobrainer.losses.dice
+      metrics: [nobrainer.metrics.dice, nobrainer.metrics.jaccard]
+
+    #### logger
+    logger:
+      ckpt_path: ckpts/
+  
+    path:
+      save_model: model/
+      pretrained_model: none

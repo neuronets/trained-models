@@ -1,0 +1,28 @@
+#### container info
+image:
+  singularity: nobrainer-zoo_torch_1.10.0.sif
+  docker: neuronets/nobrainer-zoo:torch_1.10.0
+
+#### repository info
+repository:  
+    repo_url: "None"
+    committish: "None"
+    repo_download: False
+    repo_download_location: "None"
+    
+#### required fields for prediction
+inference:
+    prediction_script: "trained-models/lcn/parcnet/1.0.0/predict.py"
+    command: f"python3 {MODELS_PATH}/{model}/predict.py --model {model_path} {infile[0]} {outfile}"
+    # TODO: we should add help for options.
+    options:
+      cpu: {mandatory: False, argstr: "--cpu", is_flag: true}
+    #### input data characteristics
+    data_spec:
+      infile: {n_files: 1}
+      outfile: {n_files: 1}
+      
+#### required fields for model training
+train:
+    #TODO: train spec to be added here
+  

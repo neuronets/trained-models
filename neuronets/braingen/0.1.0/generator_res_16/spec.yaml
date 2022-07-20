@@ -1,0 +1,31 @@
+#### container info
+image:
+  singularity: nobrainer-zoo_nobrainer.sif
+  docker: neuronets/nobrainer-zoo:nobrainer
+  
+#### repository info
+repository:   
+    repo_url: "git@github.com:neuronets/nobrainer.git"
+    committish: "72aa211b"
+    repo_download: False
+    repo_download_location: "None"
+    
+#### required fields for prediction
+inference:
+    prediction_script: "trained-models/neuronets/braingen/0.1.0/generator_res_16/generate.py"
+    command: f"python3 {MODELS_PATH}/{model}/{model_type}/generate.py -m {model_path} {outfile}"
+    # TODO: we should add help for model options
+    options:
+      latent-size: {mandatory: False, default: 1024, argstr: "-l", type: "int"}
+      drange-in: {mandatory: False, default: (-1, 1), argstr: "--drange-in", type: "int"}
+      drange-out: {mandatory: False, default: (0, 255), argstr: "--drange-out", type: "int"}
+      output-shape: {mandatory: False, default: (128, 128, 128), argstr: "-o", type: "int"}
+      verbose: {argstr: "-v", is_flag: true}
+    #### input data characteristics
+    data_spec:
+      outfile: {n_files: 1}
+      
+#### required fields for model training
+train:
+#### TODO: Add the train spec here
+

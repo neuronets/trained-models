@@ -1,0 +1,3 @@
+git+https://github.com/adalca/pystrum.git@8cd5c483195971c0c51e9809f33aa04777aa35c8
+git+https://github.com/adalca/neurite.git@c735164ca973afc5c46b2814194f708762f73fec
+git+https://github.com/voxelmorph/voxelmorph.git@67bc9d209c2eb42dee09276b5d1cb77eb8587c54

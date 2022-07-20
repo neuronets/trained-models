@@ -1,0 +1,31 @@
+#### container info
+image:
+  singularity: nobrainer-zoo_ucl.sif
+  docker: neuronets/nobrainer-zoo:ucl
+
+#### repository info
+repository: 
+    repo_url: "https://github.com/BBillot/SynthSR.git"
+    committish: "59b92b54"
+    repo_download: True
+    repo_download_location: f"{REPO_PATH}/{model_nm}-{ver}"
+    
+#### required fields for prediction
+inference:
+    prediction_script: "trained-models/UCL/SynthSR/1.0.0/general/predict.py"
+    command: f"python3 {MODELS_PATH}/{model}/{model_type}/predict.py --repo_path {repo_dest} --model_path {model_path} {infile[0]} {outfile}"
+    # TODO: we should add help for options.
+    options:
+      threads: {mandatory: False, argstr: "--threads", type: "int", default: 1}
+      cpu: {mandatory: False, argstr: "--cpu", is_flag: true}   
+      ct: {mandatury: False, argstr: "--ct", is_flag: true}
+    #### input data characteristics
+    data_spec:
+      infile: {n_files: 1}
+      outfile: {n_files: 1}
+      
+#### required fields for model training
+train:
+#### TODO: Add the train spec here
+  
+  
