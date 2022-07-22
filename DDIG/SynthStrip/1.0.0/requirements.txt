@@ -60,6 +60,7 @@ sphinx
 sphinx_rtd_theme
 tensorboard==2.0.2
 termcolor==1.1.0
+torch==1.10.2
 tqdm==4.45.0
 traitlets==4.3.3
 urllib3==1.25.9
