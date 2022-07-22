@@ -13,7 +13,7 @@ repository:
 #### required fields for prediction
 inference:
     prediction_script: "trained-models/DDIG/SynthStrip/1.0.0/predict.py"
-    command: f"python3 {MODELS_PATH}/{model}/{model_type}/predict.py --model_path {model_path} -i {infile} -o {outfile}"
+    command: f"python3 {MODELS_PATH}/{model}/predict.py --model {model_path} -i {infile} -o {outfile}"
     # TODO: we should add help for options.
     options:
       threads: {mandatory: False, argstr: "--threads", type: "int", default: 1}
