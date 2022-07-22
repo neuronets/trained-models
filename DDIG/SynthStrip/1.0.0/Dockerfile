@@ -2,8 +2,6 @@
 
 FROM centos:7
 
-# copy local data
-COPY . /external
 
 # shell settings
 WORKDIR /freesurfer
@@ -14,7 +12,7 @@ RUN yum -y install libgomp python3
 RUN yum clean all
 
 # python packages
-RUN pip3 install scipy torch==1.10.2
+RUN pip3 install scipy surfa torch==1.10.2
 RUN pip3 install /external/fsmodule
 
 # install synthstrip
@@ -22,12 +20,14 @@ RUN cp /external/mri_synthstrip /freesurfer/
 
 # configure model
 ENV FREESURFER_HOME /freesurfer
-RUN mkdir -p /freesurfer/models
-RUN cp /external/synthstrip.1.pt /freesurfer/models/
 
 # setup rest of the env
 ENV OS Linux
 ENV FSF_OUTPUT_FORMAT nii.gz
+
+COPY requirements.txt requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir PyYAML
 
 # clean up
 RUN rm -rf /external /root/.cache/pip
