@@ -1,38 +1,24 @@
 # syntax=docker/dockerfile:1
 
-FROM centos:7
+FROM pytorch/pytorch:1.11.0-cuda11.3-cudnn8-runtime
 
+RUN apt-get update \
+    && apt-get install --yes --quiet --no-install-recommends \
+        ca-certificates \
+        git \
+        libgomp1 \
+        gcc \
+    && rm -rf /var/lib/apt/lists/*
 
-# shell settings
-WORKDIR /freesurfer
-
-# install utils
-RUN yum -y update
-RUN yum -y install libgomp python3
-RUN yum clean all
+ENV LC_ALL=C.UTF-8 \
+    LANG=C.UTF-8
 
 # python packages
-RUN pip3 install scipy surfa torch==1.10.2
-RUN pip3 install /external/fsmodule
-
-# install synthstrip
-RUN cp /external/mri_synthstrip /freesurfer/
-
-# configure model
-ENV FREESURFER_HOME /freesurfer
-
-# setup rest of the env
-ENV OS Linux
-ENV FSF_OUTPUT_FORMAT nii.gz
-
 COPY requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install --no-cache-dir PyYAML
 
 # clean up
-RUN rm -rf /external /root/.cache/pip
-
-ENTRYPOINT ["python3", "/freesurfer/mri_synthstrip"]
+RUN rm -rf /root/.cache/pip
 
 WORKDIR /work
 LABEL maintainer="Hoda Rajaei <rajaei.hoda@gmail.com>"
