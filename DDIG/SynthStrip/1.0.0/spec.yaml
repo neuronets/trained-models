@@ -1,7 +1,7 @@
 #### container info
 image:
-  singularity: nobrainer-zoo_ddig.sif
-  docker: neuronets/nobrainer-zoo:ddig
+  singularity: nobrainer-zoo_ddig_torch1.11.0.sif
+  docker: neuronets/nobrainer-zoo:ddig_torch1.11.0
 
 #### repository info
 repository: 
