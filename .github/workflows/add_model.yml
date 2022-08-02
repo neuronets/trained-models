@@ -1,8 +1,8 @@
 name: Add Model
 
 on:
-  push:
-    branches: [ "master" ]
+  # push:
+    # branches: [ "master" ]
   # added for debugging purposes
   workflow_dispatch:
 
