@@ -38,6 +38,7 @@ jobs:
           datalad --version
           git annex version
           echo $GITHUB_WORKSPACE
+          echo $OSF_TOKEN     
           git config --global user.name "trained_models"
           git config --global user.email "trained_models"
           # datalad push --to origin -d $GITHUB_WORKSPACE
