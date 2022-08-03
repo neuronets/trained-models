@@ -1,0 +1,38 @@
+name: Add Model
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    # created matrix for future os runs
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-20.04 ]
+        python-version: ["3.9"]
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4.2.0
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install datalad
+          python -m pip install datalad-osf
+      - name: Add model
+        env:
+          OSF_TOKEN: ${{secrets.OSF_TOKEN}}
+        run: |
+          echo datalad --version
+          git annex version
+          echo $GITHUB_WORKSPACE
+          echo $OSF_TOKEN     
+          git config --global user.name "trained_models"
+          git config --global user.email "trained_models"
+    
