@@ -1,7 +1,7 @@
 name: Add Model
 
 on:
-  workflow_dispatch:
+  [push]
 
 jobs:
   build:
