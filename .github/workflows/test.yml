@@ -23,11 +23,12 @@ jobs:
 
       - name: Install dependencies
         run: |
-          apt-get install datalad
+          sudo apt-get install datalad
           python -m pip install --upgrade pip
           python -m pip install datalad-osf
           git config --global user.name "trained_models"
           git config --global user.email "trained_models"
+
       - name: Add model
         env:
           OSF_TOKEN: ${{secrets.OSF_TOKEN}}
