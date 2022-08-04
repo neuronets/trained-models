@@ -1,8 +1,7 @@
 name: Add Model
 
-on:
-  [push]
-
+on: [push]
+    
 jobs:
   build:
     # created matrix for future os runs
@@ -33,7 +32,5 @@ jobs:
         env:
           OSF_TOKEN: ${{secrets.OSF_TOKEN}}
         run: |
-          datalad --version
-          git annex version
-          echo $GITHUB_WORKSPACE
-          echo $OSF_TOKEN 
+          datalad siblings
+          # datalad push --to origin -d $GITHUB_WORKSPACE
