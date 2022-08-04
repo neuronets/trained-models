@@ -10,7 +10,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-20.04 ]
+        os: [ ubuntu-22.04 ]
         python-version: ["3.9"]
 
     steps:
@@ -27,9 +27,7 @@ jobs:
       - name: Install dependencies
         run: |
           python3 -m pip install --upgrade pip
-          python3 -m pip install datalad-installer
-          datalad-installer git-annex -m datalad/packages
-          pip install datalad
+          sudo apt-get install datalad
           python3 -m pip install datalad-osf
           git config --global user.name "trained_models"
           git config --global user.email "trained_models"
