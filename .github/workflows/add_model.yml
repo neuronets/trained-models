@@ -36,7 +36,7 @@ jobs:
         env:
           OSF_TOKEN: ${{secrets.OSF_TOKEN}}
         run: |
-          # datalad siblings
+          datalad siblings
           datalad siblings configure -s origin --publish-depends osf-storage
           # Sanity check
           # cat .git/config
