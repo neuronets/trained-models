@@ -38,5 +38,7 @@ jobs:
         run: |
           datalad siblings -d $GITHUB_WORKSPACE
           git branch
+          datalad siblings configure -s origin --publish-depends osf-storage
           cat $GITHUB_WORKSPACE/.git/config
+          git annex whereis neuronets/brainy/0.1.0/weights/brain-extraction-unet-128iso-model.h5
           # datalad push --to origin -d $GITHUB_WORKSPACE
