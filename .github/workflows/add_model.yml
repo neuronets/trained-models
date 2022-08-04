@@ -36,8 +36,8 @@ jobs:
         env:
           OSF_TOKEN: ${{secrets.OSF_TOKEN}}
         run: |
-          datalad siblings
-          cat .git/config
+          # datalad siblings
           datalad siblings configure -s origin --publish-depends osf-storage
-          cat .git/config
-          # datalad push --to origin -d $GITHUB_WORKSPACE
+          # Sanity check
+          # cat .git/config
+          datalad push --to origin -d $GITHUB_WORKSPACE
