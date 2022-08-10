@@ -1,0 +1,43 @@
+name: Add Model
+
+on:
+  push:
+    branches: ["master"]
+    
+jobs:
+  build:
+    # created matrix for future os runs
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-22.04 ]
+        python-version: ["3.9"]
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: master
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4.2.0
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          sudo apt-get install datalad
+          python3 -m pip install datalad-osf
+          git config --global user.name "trained_models"
+          git config --global user.email "trained_models"
+      - name: Add model
+        env:
+          OSF_TOKEN: ${{secrets.OSF_TOKEN}}
+        run: |
+          datalad siblings
+          datalad siblings configure -s origin --publish-depends osf-storage
+          # Sanity check
+          # cat .git/config
+          datalad push --to origin -d $GITHUB_WORKSPACE
