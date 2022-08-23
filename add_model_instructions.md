@@ -15,7 +15,7 @@
 	
 3. **NOTE: do not create a new branch. Work on master branch.** The structure of the repository is ```<org>/<model_name>/<version>```. Create these nested directories with proper names and version of your model. Organization name can refer to your affiliation. You need below files for adding your model,
 	- **saved model file or weights:** add the model file in a subdirectory called ```weights```
-	- **sep.yaml:** this file contains an information about your model, command to run, training dataset and etc. check the template [here](). 
+	- **sep.yaml:** this file contains an information about your model, command to run, training dataset and etc. check the template [here](https://github.com/neuronets/trained-models/blob/master/docs/spec.yaml). 
 	- **prediction.py:** script for getting inference from the model
 	- **train.py:** script for training of the model 
 	- **requirement.txt:** list of model dependencies for inference and train
