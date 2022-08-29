@@ -1,0 +1,4 @@
+# pytorch==1.10.2
+scipy==1.8.1
+surfa==0.2.0
+PyYAML

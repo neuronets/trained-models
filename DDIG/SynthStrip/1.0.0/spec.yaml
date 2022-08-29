@@ -1,0 +1,31 @@
+#### container info
+image:
+  singularity: nobrainer-zoo_ddig_torch1.11.0.sif
+  docker: neuronets/nobrainer-zoo:ddig_torch1.11.0
+
+#### repository info
+repository: 
+    repo_url: "https://github.com/freesurfer/freesurfer/tree/dev/mri_synthstrip"
+    committish: "e935059a"
+    repo_download: False
+    repo_download_location: "None"
+    
+#### required fields for prediction
+inference:
+    prediction_script: "trained-models/DDIG/SynthStrip/1.0.0/predict.py"
+    command: f"python3 {MODELS_PATH}/{model}/predict.py --model {model_path} -i {infile} -o {outfile}"
+
+    options:
+      mask: {mandatory: False, argstr: "-m", type: "str", help: "Save binary brain mask to path."}
+      gpu: {mandatory: False, argstr: "-g", is_flag: true, help: "Use the GPU."}
+      border: {mandatory: False, argstr: "-b", type: "int", default: 1, help: "Mask border threshold in mm. Default is 1."}
+    #### input data characteristics
+    data_spec:
+      infile: {n_files: 1}
+      outfile: {n_files: 1}
+      
+#### required fields for model training
+train:
+#### TODO: Add the train spec here
+  
+  
