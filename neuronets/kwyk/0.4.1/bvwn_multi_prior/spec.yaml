@@ -29,5 +29,51 @@ inference:
       
 #### required fields for model training 
 train:
-    #### Not implemented ####      
+    #### Not implemented ####
+
+#### training data characteristics
+training_data_info:
+    data_number:
+        total: 11480
+        train: 9184
+        evaluate: 1148
+        test: 1148
+        held_out_data: 418
+    biological_sex:
+        male: None
+        female: None
+    age_histogram: None
+    race: None
+    imaging_contrast_info: "T1-weighted"
+    dataset_sources: ["CoRR", "OpenfMRI", "NKI", "SLIM", "ABIDE", "HCP", "ADHD200", "CMI", "SALD", "Buckner", "HBNSSI", "GSP", "Haxby", "Gobbini", "ICBM", "Barrios"]
+    data_sites:
+        number_of_sites: None
+        sites: None
+    scanner_models: None
+    hardware: None
+    training_parameters:
+        input_shape: "256x256x256"
+        block_shape: "32x32x32"
+        n_classes: 50
+        lr: 0.0001
+        n_epochs: None
+        total_batch_size: 32
+        number_of_gpus: 4
+        loss_function: "ELBO"
+        metrics: "Dice"
+        data_preprocessing: "intensity normalization using freesurfer"
+        data_augmentation: "No augmentation"
+
+#### model information and help
+model:
+    model_name: "kwyk"
+    description: "3D brain segmentation model"
+    structure: "Meshnet"
+    training_mode: "supervised"
+    model_url: "https://github.com/neuronets/kwyk"
+    Zoo_function: "predict"
+    example: "nobrainer-zoo predict -m neuronets/kwyk/0.4.0 --model_type bvwn_multi_prior <path_to_input> <path_to_output>/out"
+    note: "output will be saved as .nii.gz file type (e.g out_means.nii.gz)"
+    input_file_type: "nii.gz"
+
   

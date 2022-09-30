@@ -28,4 +28,48 @@ inference:
 #### required fields for model training
 train:
 #### TODO: Add the train spec here
+#### training data characteristics
+training_data_info:
+    data_number:
+        total: None
+        train: None
+        evaluate: None
+        test: None
+    biological_sex:
+        male: None
+        female: None
+    age_histogram: None
+    race: None
+    imaging_contrast_info: "T1-weighted"
+    dataset_sources: None
+    data_sites:
+        number_of_sites: None
+        sites: None
+    scanner_models: None
+    hardware: None
+    training_parameters:
+        input_shape: None
+        block_shape: "16x16x16"
+        n_classes: None
+        lr: None
+        n_epochs: None
+        total_batch_size: None
+        number_of_gpus: None
+        loss_function: None
+        metrics: None
+        data_preprocessing: None
+        data_augmentation: None
+
+#### model information and help
+model:
+    model_name: "braingen"
+    description: "3D brain generator model at 16 cube."
+    structure: "GAN"
+    training_mode: "unsupervised"
+    model_url: "https://github.com/neuronets/progressivegan3d"
+    Zoo_function: "generate"
+    example: "nobrainer-zoo generate -m neuronets/braingen/0.1.0 --model_type generator_res_16 <path_to_output>/out.nii.gz"
+    note: "Please provide an output file name with an extension."
+    input_file_type: None
+
 

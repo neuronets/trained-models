@@ -27,7 +27,47 @@ inference:
       infile: {n_files: 1}
       outfile: {n_files: 1}
       
-#### required fields for model training
-train:
-    #TODO: train spec to be added here
+#### training data characteristics
+training_data_info:
+    data_number:
+        total: None
+        train: None
+        evaluate: None
+        test: None
+    biological_sex:
+        male: None
+        female: None
+    age_histogram: None
+    race: None
+    imaging_contrast_info: "any contrast"
+    dataset_sources: None
+    data_sites:
+        number_of_sites: None
+        sites: None
+    scanner_models: None
+    hardware: None
+    training_parameters:
+        input_shape: None
+        block_shape: None
+        n_classes: None
+        lr: None
+        n_epochs: None
+        total_batch_size: None
+        number_of_gpus: None
+        loss_function: None
+        metrics: None
+        data_preprocessing: None
+        data_augmentation: "domain randomization using a generator"
+
+#### model information and help
+model:
+    model_name: "SynthSeg"
+    description: "3D brain segmentation model"
+    structure: "U-Net"
+    training_mode: "supervised"
+    model_url: "https://github.com/BBillot/SynthSeg"
+    Zoo_function: "predict"
+    example: "nobrainer-zoo predict -m UCL/SynthSeg/1.0.0 <path_to_input> <path_to_output>/out.nii.gz"
+    note: "Please provide an output file name with an extension."
+    input_file_type: "nii.gz"
   

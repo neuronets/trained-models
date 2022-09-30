@@ -28,4 +28,48 @@ inference:
 #### required fields for model training 
 train:
     # TODO: train spec to be added
+
+#### training data characteristics
+training_data_info:
+    data_number:
+        total: None
+        train: None
+        evaluate: None
+        test: None
+    biological_sex:
+        male: None
+        female: None
+    age_histogram: None
+    race: None
+    imaging_contrast_info: None
+    dataset_sources: None
+    data_sites:
+        number_of_sites: None
+        sites: None
+    scanner_models: None
+    hardware: None
+    training_parameters:
+        input_shape: None
+        block_shape: None
+        n_classes: None
+        lr: None
+        n_epochs: None
+        total_batch_size: None
+        number_of_gpus: None
+        loss_function: None
+        metrics: None
+        data_preprocessing: None
+        data_augmentation: None
+
+#### model information and help
+model:
+    model_name: "SynthMorph"
+    description: "3D brain registration model"
+    structure: "U-Net"
+    training_mode: "unsupervised"
+    model_url: "https://github.com/voxelmorph/voxelmorph"
+    Zoo_function: "register"
+    example: "nobrainer-zoo register -m DDIG/SynthMorph/1.0.0/brains --model_type brains <path_to_moving_image> <path_to_fixed_image> <path_to_registered_output>/out.npz"
+    note: "Please provide an output file name with an extension."
+    input_file_type: ".npz"
  
