@@ -82,3 +82,47 @@ train:
     path:
       save_model: model/
       pretrained_model: none
+
+#### training data characteristics
+training_data_info:
+    data_number:
+        total: None
+        train: None
+        evaluate: None
+        test: None
+    biological_sex:
+        male: None
+        female: None
+    age_histogram: None
+    race: None
+    imaging_contrast_info: None
+    dataset_sources: None
+    data_sites:
+        number_of_sites: None
+        sites: None
+    scanner_models: None
+    hardware: None
+    training_parameters:
+        input_shape: "256x256x256"
+        block_shape: "128x128x128"
+        n_classes: 1
+        lr: None
+        n_epochs: None
+        total_batch_size: None
+        number_of_gpus: None
+        loss_function: None
+        metrics: None
+        data_preprocessing: None
+        data_augmentation: None
+
+#### model information and help
+model:
+    model_name: "ams"
+    description: "Meningioma Segmentation Model"
+    structure: "U-Net"
+    training_mode: "supervised"
+    model_url: "https://github.com/neuronets/ams"
+    Zoo_function: "predict"
+    example: "nobrainer-zoo predict -m neuronets/ams/0.1.0 <path_to_input> <path_to_output>/out.nii.gz"
+    note: "Please provide an output file name with an extension."
+    input_file_type: "nii.gz"

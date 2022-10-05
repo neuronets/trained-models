@@ -108,7 +108,7 @@ training_data_info:
         n_classes: 1
         lr: None
         n_epochs: 5
-        batch_size: 2
+        total_batch_size: 2
         number_of_gpus: None
         loss_function: "Jaccard"
         metrics: "Dice"
