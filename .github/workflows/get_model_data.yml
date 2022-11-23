@@ -1,4 +1,4 @@
-name: Run Script
+name: Get Model Data
 
 on:
   push:
@@ -13,5 +13,5 @@ jobs:
         with:
           fetch-depth: 0
           ref: master
-      - name: Run the script
-        run: node ./.github/workflows/script.js
+      - name: Run get_model_data script
+        run: node ./.github/workflows/get_model_data.js

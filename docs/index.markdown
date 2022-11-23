@@ -4,4 +4,8 @@
 
 layout: home
 ---
-# Hello, Jekyll!
+<ul>
+    {% for model in site.data.models %}
+    <li class="model">{{ model.model_name }}</li>
+    {% endfor %}
+</ul>
