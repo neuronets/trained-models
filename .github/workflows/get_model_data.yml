@@ -15,3 +15,5 @@ jobs:
           ref: master
       - name: Run get_model_data script
         run: node ./.github/workflows/get_model_data.js
+      - name: check for changes
+        run: git status
