@@ -4,8 +4,11 @@
 
 layout: home
 ---
+{% for model in site.data.models %}
+<h1>{{ model.model_name }}</h1>
 <ul>
-    {% for model in site.data.models %}
-    <li class="model">{{ model.model_name }}</li>
-    {% endfor %}
+    <li>{{ model.description }}</li>
+    <li>Structure: {{ model.structure }}</li>
+    <li>Training Mode: {{ model.training_mode }}</li>
 </ul>
+{% endfor %}
