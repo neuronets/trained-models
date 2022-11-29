@@ -13,15 +13,30 @@ jobs:
         with:
           fetch-depth: 0
           ref: master
+
       - name: Run get_model_data script
         run: node ./.github/workflows/get_model_data.js
+
       - name: check for changes
-        run: git status
+        uses: dorny/paths-filter@v2.11.1
+        id: changes
+        with:
+        filters: |
+          data:
+            - 'docs/_data/**'
+
       - name: stage changed files
+        if: steps.changes.outputs.data == 'true'
         run: git add docs/_data/models.yml
+
       - name: commit changed files
+        if: steps.changes.outputs.data == 'true'
         run: git commit -m "Auto updating docs/_data/models.yml"
+      
       - name: fetch from master
+        if: steps.changes.outputs.data == 'true'
         run: git fetch origin master
+
       - name: push code to master
+        if: steps.changes.outputs.data == 'true'
         run: git push origin HEAD:master
