@@ -21,9 +21,9 @@ jobs:
         uses: dorny/paths-filter@v2.11.1
         id: changes
         with:
-        filters: |
-          data:
-            - 'docs/_data/**'
+          filters: |
+            data:
+              - 'docs/_data/**'
 
       - name: stage changed files
         if: steps.changes.outputs.data == 'true'
