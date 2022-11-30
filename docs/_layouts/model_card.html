@@ -1,0 +1,15 @@
+---
+layout: default
+---
+{{content}}
+{% assign model = site.data.models[page.combined_name] %}
+<div class="body">
+    <h1 class="elem">{{model.model_name}}</h1>
+    <h2 class="elem">{{model.description}}</h2>
+    <h2 class="elem">Training Mode: {{model.training_mode}}</h2>
+    <a href="{{model.model_url}}" class="elem">{{model.model_url}}</a>
+    <p class="elem">Zoo Function: {{model.Zoo_function}}</p>
+    <p class="elem">Example: {{model.example}}</p>
+    <p class="elem">Note: {{model.note}}</p>
+    <p class="elem">Input File Type: {{model.input_file_type}}</p>
+</div>
