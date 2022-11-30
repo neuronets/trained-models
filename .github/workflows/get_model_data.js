@@ -33,20 +33,16 @@ paths.forEach(function(path) {
     doc.model.model_type = splitExample[index];
   }
   const model_name = doc.model.model_name;
-  const combinedName = (doc.model.model_type) ? `${model_name}_${doc.model.model_type}` : model_name;
-  modelNames.push(combinedName);
-  models[combinedName] = doc.model;
-  const permalink = (doc.model.model_type) ? `/${model_name}/${doc.model.model_type}/` : `/${model_name}/`;
+  modelNames.push(model_name);
+  models[model_name] = doc.model;
+
   const page = `---
   layout: model_card
-  permalink: ${permalink}
-  combined_name: ${combinedName}
+  permalink: /${model_name}/
   model_name: ${model_name}
 ---
-  `;
-  const filename = (doc.model.model_type) ? `./docs/_pages/${model_name}_${doc.model.model_type}.markdown` :
-  `./docs/_pages/${model_name}.markdown` 
-  fs.writeFile(filename, page, "utf8", err => {
+  `
+  fs.writeFile(`./docs/_pages/${model_name}.markdown`, page, "utf8", err => {
     if (err) console.log(err);
 });
 
