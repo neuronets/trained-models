@@ -8,7 +8,8 @@ permalink: /
 <div class="models-body">
     <h2 class="models-title">Models</h2>
     <div class="models-list">
-        {% for model in site.data.models %}
+        {% for model_name in site.data.model_names %}
+        {% assign model = site.data.models[model_name] %}
         {% assign header = model.model_name %}
         {% assign subheader = model.model_type %}
         {% include model.html header=header subheader=subheader %}

@@ -1,17 +1,5 @@
-- model_name: SynthMorph
-  description: 3D brain registration model
-  structure: U-Net
-  training_mode: unsupervised
-  model_url: https://github.com/voxelmorph/voxelmorph
-  Zoo_function: register
-  example: >-
-    nobrainer-zoo register -m DDIG/SynthMorph/1.0.0/brains --model_type brains
-    <path_to_moving_image> <path_to_fixed_image>
-    <path_to_registered_output>/out.npz
-  note: Please provide an output file name with an extension.
-  input_file_type: .npz
-  model_type: brains
-- model_name: SynthMorph
+SynthMorph:
+  model_name: SynthMorph
   description: 3D brain registration model
   structure: U-Net
   training_mode: unsupervised
@@ -24,7 +12,8 @@
   note: Please provide an output file name with an extension.
   input_file_type: .npz
   model_type: shapes
-- model_name: SynthStrip
+SynthStrip:
+  model_name: SynthStrip
   description: 3D brain extraction model
   structure: U-Net
   training_mode: supervised
@@ -35,7 +24,8 @@
     <path_to_output>/out.nii.gz
   note: Please provide an output file name with an extension.
   input_file_type: nii.gz
-- model_name: VoxelMorph
+VoxelMorph:
+  model_name: VoxelMorph
   description: 3D brain registration model
   structure: U-Net
   training_mode: unsupervised
@@ -46,19 +36,8 @@
     <path_to_fixed_image> <path_to_registered_output>/out.npz
   note: Please provide an output file name with an extension.
   input_file_type: .npz
-- model_name: SynthSR
-  description: 3D brain hyper resolution model
-  structure: U-Net
-  training_mode: None
-  model_url: https://github.com/BBillot/SynthSR
-  Zoo_function: predict
-  example: >-
-    nobrainer-zoo predict -m UCL/SynthSR/1.0.0 --model_type general
-    <path_to_input> <path_to_output>/out.nii.gz
-  note: Please provide an output file name with an extension.
-  input_file_type: nii.gz
-  model_type: general
-- model_name: SynthSR
+SynthSR:
+  model_name: SynthSR
   description: 3D brain hyper resolution model
   structure: U-Net
   training_mode: None
@@ -70,7 +49,8 @@
   note: Please provide an output file name with an extension.
   input_file_type: nii.gz
   model_type: hyperfine
-- model_name: SynthSeg
+SynthSeg:
+  model_name: SynthSeg
   description: 3D brain segmentation model
   structure: U-Net
   training_mode: supervised
@@ -81,7 +61,8 @@
     <path_to_output>/out.nii.gz
   note: Please provide an output file name with an extension.
   input_file_type: nii.gz
-- model_name: parcnet
+parcnet:
+  model_name: parcnet
   description: None
   structure: None
   training_mode: None
@@ -92,7 +73,8 @@
     <path_to_output>/out.nii.gz
   note: Please provide an output file name with an extension.
   input_file_type: None
-- model_name: ams
+ams:
+  model_name: ams
   description: Meningioma Segmentation Model
   structure: U-Net
   training_mode: supervised
@@ -103,67 +85,8 @@
     <path_to_output>/out.nii.gz
   note: Please provide an output file name with an extension.
   input_file_type: nii.gz
-- model_name: braingen
-  description: 3D brain generator model at 128 cube.
-  structure: GAN
-  training_mode: unsupervised
-  model_url: https://github.com/neuronets/progressivegan3d
-  Zoo_function: generate
-  example: >-
-    nobrainer-zoo generate -m neuronets/braingen/0.1.0 --model_type
-    generator_res_128 <path_to_output>/out.nii.gz
-  note: Please provide an output file name with an extension.
-  input_file_type: None
-  model_type: generator_res_128
-- model_name: braingen
-  description: 3D brain generator model at 16 cube.
-  structure: GAN
-  training_mode: unsupervised
-  model_url: https://github.com/neuronets/progressivegan3d
-  Zoo_function: generate
-  example: >-
-    nobrainer-zoo generate -m neuronets/braingen/0.1.0 --model_type
-    generator_res_16 <path_to_output>/out.nii.gz
-  note: Please provide an output file name with an extension.
-  input_file_type: None
-  model_type: generator_res_16
-- model_name: braingen
-  description: 3D brain generator model at 256 cube.
-  structure: GAN
-  training_mode: unsupervised
-  model_url: https://github.com/neuronets/progressivegan3d
-  Zoo_function: generate
-  example: >-
-    nobrainer-zoo generate -m neuronets/braingen/0.1.0 --model_type
-    generator_res_256 <path_to_output>/out.nii.gz
-  note: Please provide an output file name with an extension.
-  input_file_type: None
-  model_type: generator_res_256
-- model_name: braingen
-  description: 3D brain generator model at 32 cube.
-  structure: GAN
-  training_mode: unsupervised
-  model_url: https://github.com/neuronets/progressivegan3d
-  Zoo_function: generate
-  example: >-
-    nobrainer-zoo generate -m neuronets/braingen/0.1.0 --model_type
-    generator_res_32 <path_to_output>/out.nii.gz
-  note: Please provide an output file name with an extension.
-  input_file_type: None
-  model_type: generator_res_32
-- model_name: braingen
-  description: 3D brain generator model at 64 cube.
-  structure: GAN
-  training_mode: unsupervised
-  model_url: https://github.com/neuronets/progressivegan3d
-  Zoo_function: generate
-  example: >-
-    nobrainer-zoo generate -m neuronets/braingen/0.1.0 --model_type
-    generator_res_64 <path_to_output>/out.nii.gz
-  note: Please provide an output file name with an extension.
-  input_file_type: None
-  model_type: generator_res_64
-- model_name: braingen
+braingen:
+  model_name: braingen
   description: 3D brain generator model at 8 cube.
   structure: GAN
   training_mode: unsupervised
@@ -175,7 +98,8 @@
   note: Please provide an output file name with an extension.
   input_file_type: None
   model_type: generator_res_8
-- model_name: brainy
+brainy:
+  model_name: brainy
   description: 3D brain extraction model
   structure: U-Net
   training_mode: supervised
@@ -186,31 +110,8 @@
     <path_to_output>/out.nii.gz
   note: Please provide an output file name with an extension.
   input_file_type: nii.gz
-- model_name: kwyk
-  description: 3D brain segmentation model
-  structure: Meshnet
-  training_mode: supervised
-  model_url: https://github.com/neuronets/kwyk
-  Zoo_function: predict
-  example: >-
-    nobrainer-zoo predict -m neuronets/kwyk/0.4.0 --model_type bvwn_multi_prior
-    <path_to_input> <path_to_output>/out
-  note: output will be saved as .nii.gz file type (e.g out_means.nii.gz)
-  input_file_type: nii.gz
-  model_type: bvwn_multi_prior
-- model_name: kwyk
-  description: 3D brain segmentation model
-  structure: Meshnet
-  training_mode: supervised
-  model_url: https://github.com/neuronets/kwyk
-  Zoo_function: predict
-  example: >-
-    nobrainer-zoo predict -m neuronets/kwyk/0.4.0 --model_type bwn
-    <path_to_input> <path_to_output>/out
-  note: output will be saved as .nii.gz file type (e.g out_means.nii.gz)
-  input_file_type: nii.gz
-  model_type: bwn
-- model_name: kwyk
+kwyk:
+  model_name: kwyk
   description: 3D brain segmentation model
   structure: Meshnet
   training_mode: supervised
