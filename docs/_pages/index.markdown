@@ -13,6 +13,6 @@ permalink: /
         {% assign header = model.model_name %}
         {% assign subheader = model.model_type %}
         {% include model.html header=header subheader=subheader %}
-        {% endfor %}
+        {% endfor %} 
     </div>
 </div>
