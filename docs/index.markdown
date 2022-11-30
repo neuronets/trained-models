@@ -4,11 +4,15 @@
 
 layout: home
 ---
-{% for model in site.data.models %}
-<h1>{{ model.model_name }}</h1>
-<ul>
-    <li>{{ model.description }}</li>
-    <li>Structure: {{ model.structure }}</li>
-    <li>Training Mode: {{ model.training_mode }}</li>
-</ul>
-{% endfor %}
+<link rel="stylesheet" type="text/css" href="/assets/styles/main.css">
+{% include nav.html %}
+<div class="models-body">
+    <h2 class="models-title">Models</h2>
+    <div class="models-list">
+        {% for model in site.data.models %}
+        {% assign header = model.model_name %}
+        {% assign subheader = model.model_type %}
+        {% include model.html header=header subheader=subheader %}
+        {% endfor %}
+    </div>
+</div>

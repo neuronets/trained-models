@@ -1,0 +1,38 @@
+.navbar {
+    border: 1px solid #e7e7e7;
+    background-color: #f3f3f3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.menu {
+    display: flex;
+    gap: 1em;
+}
+
+.nav-links {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.nav-link a {
+    display: block;
+    color: #666;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.nav-link a:hover:not(.active) {
+    background-color: #ddd;
+}
+
+.nav-link a.active {
+    color: white;
+    background-color: #04AA6D;
+}

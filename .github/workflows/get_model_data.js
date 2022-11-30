@@ -26,6 +26,11 @@ const paths = getAllPaths('.');
 const models = [];
 paths.forEach(function(path) {
     const doc = yaml.load(fs.readFileSync(path, 'utf8'));
+    if (doc.model.example.includes('--model_type')) {
+      const splitExample = doc.model.example.split(' ');
+      const index = splitExample.indexOf('--model_type') + 1;
+      doc.model.model_type = splitExample[index];
+    }
     models.push(doc.model);
 });
 yamlModels = yaml.dump(models);

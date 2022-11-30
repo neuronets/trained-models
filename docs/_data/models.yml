@@ -10,6 +10,7 @@
     <path_to_registered_output>/out.npz
   note: Please provide an output file name with an extension.
   input_file_type: .npz
+  model_type: brains
 - model_name: SynthMorph
   description: 3D brain registration model
   structure: U-Net
@@ -22,6 +23,7 @@
     <path_to_registered_output>/out.npz
   note: Please provide an output file name with an extension.
   input_file_type: .npz
+  model_type: shapes
 - model_name: SynthStrip
   description: 3D brain extraction model
   structure: U-Net
@@ -55,6 +57,7 @@
     <path_to_input> <path_to_output>/out.nii.gz
   note: Please provide an output file name with an extension.
   input_file_type: nii.gz
+  model_type: general
 - model_name: SynthSR
   description: 3D brain hyper resolution model
   structure: U-Net
@@ -66,6 +69,7 @@
     <path_to_input_T1> <path_to_input_T2> <path_to_output>/out.nii.gz
   note: Please provide an output file name with an extension.
   input_file_type: nii.gz
+  model_type: hyperfine
 - model_name: SynthSeg
   description: 3D brain segmentation model
   structure: U-Net
@@ -110,6 +114,7 @@
     generator_res_128 <path_to_output>/out.nii.gz
   note: Please provide an output file name with an extension.
   input_file_type: None
+  model_type: generator_res_128
 - model_name: braingen
   description: 3D brain generator model at 16 cube.
   structure: GAN
@@ -121,6 +126,7 @@
     generator_res_16 <path_to_output>/out.nii.gz
   note: Please provide an output file name with an extension.
   input_file_type: None
+  model_type: generator_res_16
 - model_name: braingen
   description: 3D brain generator model at 256 cube.
   structure: GAN
@@ -132,6 +138,7 @@
     generator_res_256 <path_to_output>/out.nii.gz
   note: Please provide an output file name with an extension.
   input_file_type: None
+  model_type: generator_res_256
 - model_name: braingen
   description: 3D brain generator model at 32 cube.
   structure: GAN
@@ -143,6 +150,7 @@
     generator_res_32 <path_to_output>/out.nii.gz
   note: Please provide an output file name with an extension.
   input_file_type: None
+  model_type: generator_res_32
 - model_name: braingen
   description: 3D brain generator model at 64 cube.
   structure: GAN
@@ -154,6 +162,7 @@
     generator_res_64 <path_to_output>/out.nii.gz
   note: Please provide an output file name with an extension.
   input_file_type: None
+  model_type: generator_res_64
 - model_name: braingen
   description: 3D brain generator model at 8 cube.
   structure: GAN
@@ -165,6 +174,7 @@
     generator_res_8 <path_to_output>/out.nii.gz
   note: Please provide an output file name with an extension.
   input_file_type: None
+  model_type: generator_res_8
 - model_name: brainy
   description: 3D brain extraction model
   structure: U-Net
@@ -187,6 +197,7 @@
     <path_to_input> <path_to_output>/out
   note: output will be saved as .nii.gz file type (e.g out_means.nii.gz)
   input_file_type: nii.gz
+  model_type: bvwn_multi_prior
 - model_name: kwyk
   description: 3D brain segmentation model
   structure: Meshnet
@@ -198,6 +209,7 @@
     <path_to_input> <path_to_output>/out
   note: output will be saved as .nii.gz file type (e.g out_means.nii.gz)
   input_file_type: nii.gz
+  model_type: bwn
 - model_name: kwyk
   description: 3D brain segmentation model
   structure: Meshnet
@@ -209,3 +221,4 @@
     <path_to_input> <path_to_output>/out
   note: output will be saved as .nii.gz file type (e.g out_means.nii.gz)
   input_file_type: nii.gz
+  model_type: bwn_multi
