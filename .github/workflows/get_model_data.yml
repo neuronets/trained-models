@@ -28,7 +28,7 @@ jobs:
 
       - name: stage changed files
         if: steps.changes.outputs.data == 'true'
-        run: git add docs/_data/models.yml
+        run: git add docs/*
 
       - name: commit changed files
         if: steps.changes.outputs.data == 'true'
