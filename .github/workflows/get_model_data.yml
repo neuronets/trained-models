@@ -24,6 +24,7 @@ jobs:
           filters: |
             data:
               - 'docs/_data/**'
+              - 'docs/_pages/**'
 
       - name: stage changed files
         if: steps.changes.outputs.data == 'true'
@@ -31,7 +32,7 @@ jobs:
 
       - name: commit changed files
         if: steps.changes.outputs.data == 'true'
-        run: git commit -m "Auto updating docs/_data/models.yml"
+        run: git commit -m "Auto updating docs/"
       
       - name: fetch from master
         if: steps.changes.outputs.data == 'true'

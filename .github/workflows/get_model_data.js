@@ -23,16 +23,6 @@ const getAllPaths = function(dirPath, arrayOfPaths) {
 }
 
 const paths = getAllPaths('.');
-/* const models = [];
-paths.forEach(function(path) {
-    const doc = yaml.load(fs.readFileSync(path, 'utf8'));
-    if (doc.model.example.includes('--model_type')) {
-      const splitExample = doc.model.example.split(' ');
-      const index = splitExample.indexOf('--model_type') + 1;
-      doc.model.model_type = splitExample[index];
-    }
-    models.push(doc.model);
-}); */
 const models = {};
 const modelNames = [];
 paths.forEach(function(path) {
@@ -45,6 +35,17 @@ paths.forEach(function(path) {
   const model_name = doc.model.model_name;
   modelNames.push(model_name);
   models[model_name] = doc.model;
+
+  const page = `---
+  layout: model_card
+  permalink: /${model_name}/
+  model_name: ${model_name}
+---
+  `
+  fs.writeFile(`./docs/_pages/${model_name}.markdown`, page, "utf8", err => {
+    if (err) console.log(err);
+});
+
 });
 
 yamlModelNames = yaml.dump(modelNames);
@@ -56,3 +57,4 @@ yamlModels = yaml.dump(models);
 fs.writeFile("./docs/_data/models.yml", yamlModels, "utf8", err => {
     if (err) console.log(err);
 });
+
