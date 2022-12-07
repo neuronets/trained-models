@@ -8,16 +8,22 @@ permalink: /
 <div class="models-body">
     <div class="models-list">
         {% for org in site.data.names %}
-            {% include org.html header=org %}
-            {% for modelName in site.data.names[org] %}
-                {% include modelName.html header=modelName %}
-                {% for version in site.data.names[org][modelName] %}
-                    {% include version.html header=version %}
-                    {% for modelType in site.data.names[org][modelName][version] %}
-                        {% assign model = site.data.models[org][modelName][version][modelType] %}
-                        {% assign header = model.model_name %}
-                        {% assign subheader = model.model_type %}
-                        {% include model.html header=header subheader=subheader %}
+            {% assign org_name = org.name%}
+            {% include org.html org=org_name %}
+            {% assign org_name = org.name%}
+            {% for modelName in org.modelNames %}
+                {% assign modelName_name = modelName.name%}
+                {% include modelName.html modelName=modelName_name %}
+                {% for version in modelName.versions %}
+                    {% assign version_name = version.name%}
+                    {% include version.html version=version_name %}
+                    {% for modelType in version.modelTypes %}
+                        {% assign modelType_name = modelType.name%}
+                        {% include modelType.html 
+                            org=org_name
+                            modelName=modelName_name
+                            version=version_name
+                            modelType=modelType_name %}
                     {% endfor %}
                 {% endfor %}
             {% endfor %}

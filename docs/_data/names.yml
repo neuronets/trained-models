@@ -1,0 +1,22 @@
+- name: DDIG
+  modelNames:
+  - name: SynthMorph
+    versions:
+    - name: 1.0.0
+      modelTypes:
+      - name: brains
+      - name: shapes
+- name: neuronets
+  modelNames:
+  - name: braingen
+    versions:
+      - name: 0.1.0
+        modelTypes:
+        - name: generator_res_8
+        - name: generator_res_16
+  - name: "kwyk"
+    versions:
+      - name: 0.4.1
+        modelTypes:
+        - name: bvmn_multi_prior
+        - name: bwn
