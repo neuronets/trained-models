@@ -13,10 +13,10 @@ permalink: /
             {% assign org_name = org.name%}
             {% for modelName in org.modelNames %}
                 {% assign modelName_name = modelName.name%}
-                {% include modelName.html modelName=modelName_name %}
+                {% include modelName.html org=org_name modelName=modelName_name %}
                 {% for version in modelName.versions %}
                     {% assign version_name = version.name%}
-                    {% include version.html version=version_name %}
+                    {% include version.html modelName=modelName_name version=version_name %}
                     {% for modelType in version.modelTypes %}
                         {% assign modelType_name = modelType.name%}
                         {% include modelType.html 
@@ -30,3 +30,4 @@ permalink: /
         {% endfor %} 
     </div>
 </div>
+{%- include collapsible.html -%}
