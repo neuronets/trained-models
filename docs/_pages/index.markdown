@@ -6,13 +6,21 @@ layout: default
 permalink: /
 ---
 <div class="models-body">
-    <h2 class="models-title">Models</h2>
     <div class="models-list">
-        {% for model_name in site.data.model_names %}
-        {% assign model = site.data.models[model_name] %}
-        {% assign header = model.model_name %}
-        {% assign subheader = model.model_type %}
-        {% include model.html header=header subheader=subheader %}
+        {% for org in site.data.names %}
+            {% include org.html header=org %}
+            {% for modelName in site.data.names[org] %}
+                {% include modelName.html header=modelName %}
+                {% for version in site.data.names[org][modelName] %}
+                    {% include version.html header=version %}
+                    {% for modelType in site.data.names[org][modelName][version] %}
+                        {% assign model = site.data.models[org][modelName][version][modelType] %}
+                        {% assign header = model.model_name %}
+                        {% assign subheader = model.model_type %}
+                        {% include model.html header=header subheader=subheader %}
+                    {% endfor %}
+                {% endfor %}
+            {% endfor %}
         {% endfor %} 
     </div>
 </div>
