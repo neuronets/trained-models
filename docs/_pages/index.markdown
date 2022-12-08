@@ -30,4 +30,4 @@ permalink: /
         {% endfor %} 
     </div>
 </div>
-{%- include collapsible.html -%}
+{%- include collapsibles.html -%}
