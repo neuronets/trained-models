@@ -1,51 +1,57 @@
 <script>
+
     var collapsibleOrgs = document.getElementsByClassName("collapsibleOrg");
     for (const collapsible of collapsibleOrgs) {
         collapsible.addEventListener("click", function() {
-        var children = document.getElementsByClassName(this.id);
-        const isCollapse = children[0].style.display === "block";
-        for (const child of children) {
-            if (isCollapse) {
-                child.style.display = "none";
-            } else if (child.classList.contains("modelName")) {
-                child.style.display = "block";
+            this.classList.toggle("active");
+            var children = document.getElementsByClassName(this.id);
+            const isCollapse = children[0].style.display === "block";
+            for (const child of children) {
+                if (isCollapse) {
+                    child.style.display = "none";
+                    //child.style.maxHeight = null;
+                } else if (child.classList.contains("modelName")) {
+                    child.style.display = "block";
+                    //child.style.maxHeight = child.scrollHeight + "px";
+                }
             }
-            
-        }
       });
     }
 
     var collapsibleModelNames = document.getElementsByClassName("collapsibleModelName");
     for (const collapsible of collapsibleModelNames) {
         collapsible.addEventListener("click", function() {
-        var children = document.getElementsByClassName(this.id);
-        const isCollapse = children[0].style.display === "block";
-        for (const child of children) {
-            if (isCollapse) {
-                child.style.display = "none";
-            } else if (child.classList.contains("version")) {
-                child.style.display = "block";
+            this.classList.toggle("active");
+            var children = document.getElementsByClassName(this.id);
+            const isCollapse = children[0].style.display === "block";
+            for (const child of children) {
+                if (isCollapse) {
+                    child.style.display = "none";
+                    //child.style.maxHeight = null;
+                } else if (child.classList.contains("version")) {
+                    child.style.display = "block";
+                    //child.style.maxHeight = child.scrollHeight + "px";
+                }
             }
-            
-        }
       });
     }
 
     var collapsibleVersions = document.getElementsByClassName("collapsibleVersion");
     for (const collapsible of collapsibleVersions) {
         collapsible.addEventListener("click", function() {
-        var children = document.getElementsByClassName(this.id);
-        const isCollapse = children[0].style.display === "block";
-        for (const child of children) {
-            if (isCollapse) {
-                child.style.display = "none";
-            } else if (child.classList.contains("modelType")) {
-                child.style.display = "block";
+            this.classList.toggle("active");
+            var children = document.getElementsByClassName(this.id);
+            const isCollapse = children[0].style.display === "block";
+            for (const child of children) {
+                if (isCollapse) {
+                    child.style.display = "none";
+                    //child.style.maxHeight = null;
+                } else if (child.classList.contains("modelType")) {
+                    child.style.display = "block";
+                    //child.style.maxHeight = child.scrollHeight + "px";
+                }
             }
-            
-        }
       });
     }
-
 
 </script>

@@ -1,7 +1,24 @@
-.version {
-    border: 1px solid #e7e7e7;
-    background-color: #f3f3f3;
-    margin: 10px;
-    position: relative;
+.collapsibleVersion {
+    background-color: #777;
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
     display: none;
-}
+  }
+  
+  .active, .collapsibleVersion:hover {
+    background-color: #555;
+  }
+  
+  .collapsibleVersion:after {
+    content: '\002B';
+    color: white;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+  }
