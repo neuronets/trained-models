@@ -11,6 +11,15 @@ DDIG_SynthMorph_1.0.0_brains:
     <path_to_registered_output>/out.npz
   note: Please provide an output file name with an extension.
   input_file_type: .npz
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
 DDIG_SynthMorph_1.0.0_shapes:
   model_details: Information not provided.
   intended_use: Information not provided.
