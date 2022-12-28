@@ -14,19 +14,3 @@
   flex-direction: row;
   justify-content: space-between;
 }
-
-.active,
-.collapsibleOrg:hover {
-  background-color: whitesmoke;
-}
-
-.collapsibleOrg:after {
-  content: '\002B';
-  font-weight: bold;
-  float: right;
-  margin-left: 5px;
-}
-
-.active:after {
-  content: "\2212";
-}

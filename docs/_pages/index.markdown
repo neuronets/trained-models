@@ -11,7 +11,7 @@ permalink: /
         {% for org in site.data.names %}
             {% assign org_name = org.name%}
             {% include org.html org=org_name %}
-            <!-- {% assign org_name = org.name%}
+            {% assign org_name = org.name%}
             {% for modelName in org.modelNames %}
                 {% assign modelName_name = modelName.name%}
                 {% include modelName.html org=org_name modelName=modelName_name %}
@@ -27,7 +27,7 @@ permalink: /
                             modelType=modelType_name %}
                     {% endfor %}
                 {% endfor %}
-            {% endfor %} -->
+            {% endfor %}
         {% endfor %} 
     </div>
 </div>
