@@ -11,3 +11,173 @@ DDIG_SynthMorph_1.0.0_brains:
     <path_to_registered_output>/out.npz
   note: Please provide an output file name with an extension.
   input_file_type: .npz
+DDIG_SynthMorph_1.0.0_shapes:
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
+DDIG_SythStrip_1.0.0_model:
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
+DDIG_VoxelMorph_1.0.0_model:
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
+lcn_parcnet_1.0.0_model:
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
+neuronets_ams_0.1.0_model:
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
+neuronets_braingen_0.1.0_generator_res_8:
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
+neuronets_braingen_0.1.0_generator_res_16:
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
+neuronets_braingen_0.1.0_generator_res_32:
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
+neuronets_braingen_0.1.0_generator_res_64:
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
+neuronets_braingen_0.1.0_generator_res_128:
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
+neuronets_braingen_0.1.0_generator_res_256:
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
+neuronets_brainy_0.1.0_model:
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
+neuronets_kwyk_0.4.1_bvmn_multi_prior:
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
+neuronets_kwyk_0.4.1_bwn:
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
+neuronets_kwyk_0.4.1_bwn_multi:
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
+UCL_SynthSeg_1.0.0_model:
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
+UCL_SynthSR_1.0.0_model:
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
