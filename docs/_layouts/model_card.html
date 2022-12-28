@@ -1,15 +1,27 @@
 ---
 layout: default
 ---
-{{content}}
+{{ content }}
 {% assign model = site.data.models[page.combined_name] %}
-<div class="body">
-    <h1 class="elem">{{model.model_name}}</h1>
-    <h2 class="elem">{{model.description}}</h2>
-    <h2 class="elem">Training Mode: {{model.training_mode}}</h2>
-    <a href="{{model.model_url}}" class="elem">{{model.model_url}}</a>
-    <p class="elem">Zoo Function: {{model.Zoo_function}}</p>
-    <p class="elem">Example: {{model.example}}</p>
-    <p class="elem">Note: {{model.note}}</p>
-    <p class="elem">Input File Type: {{model.input_file_type}}</p>
+<div>
+    <h2 class="title">{{ page.org }} {{ page.modelName }} {{ page.modelType }}</h1>
+    <h3 class="subtitle">Version: {{ page.version }}</h2>
+    <h3 class="heading">Model Details</h2>
+    <p class="descr">{{ model.model_details }}</p>
+    <h3 class="heading">Intended Use</h2>
+    <p class="descr">{{ model.intended_use }}</p>
+    <h3 class="heading">Factors</h2>
+    <p class="descr">{{ model.factors }}</p>
+    <h3 class="heading">Metrics</h2>
+    <p class="descr">{{ model.metrics }}</p>
+    <h3 class="heading">Evaluation Data</h2>
+    <p class="descr">{{ model.eval_data }}</p>
+    <h3 class="heading">Training Data</h2>
+    <p class="descr">{{ model.training_data }}</p>
+    <h3 class="heading">Quantitative Analyses</h2>
+    <p class="descr">{{ model.quant_analyses }}</p>
+    <h3 class="heading">Ethical Considerations</h2>
+    <p class="descr">{{ model.ethical_considerations }}</p>
+    <h3 class="heading">Caveats & Recommendations</h2>
+    <p class="descr">{{ model.caveats_recs }}</p>
 </div>
