@@ -34,12 +34,12 @@
     for (const collapsible of collapsibleVersions) {
         collapsible.addEventListener("click", function() {
             var children = document.getElementsByClassName(this.id);
-            const isCollapse = children[0].style.display === "flex";
+            const isCollapse = children[0].style.display === "block";
             for (const child of children) {
                 if (isCollapse) {
                     child.style.display = "none";
                 } else if (child.classList.contains("modelType")) {
-                    child.style.display = "flex";
+                    child.style.display = "block";
                 }
             }
       });
