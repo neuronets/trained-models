@@ -6,6 +6,7 @@ layout: default
 permalink: /
 ---
 <div class="models-body">
+    {% include search.html %}
     <div class="models-list">
         {% for org in site.data.names %}
             {% assign org_name = org.name%}
