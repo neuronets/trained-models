@@ -1,0 +1,67 @@
+- name: DDIG
+  modelNames:
+    - name: SynthMorph
+      versions:
+        - name: 1.0.0
+          modelTypes:
+            - name: brains
+            - name: shapes
+    - name: SynthStrip
+      versions:
+        - name: 1.0.0
+          modelTypes:
+            - name: model
+    - name: VoxelMorph
+      versions:
+        - name: 1.0.0
+          modelTypes:
+            - name: model
+- name: UCL
+  modelNames:
+    - name: SynthSR
+      versions:
+        - name: 1.0.0
+          modelTypes:
+            - name: general
+            - name: hyperfine
+    - name: SynthSeg
+      versions:
+        - name: 1.0.0
+          modelTypes:
+            - name: model
+- name: lcn
+  modelNames:
+    - name: parcnet
+      versions:
+        - name: 1.0.0
+          modelTypes:
+            - name: model
+- name: neuronets
+  modelNames:
+    - name: ams
+      versions:
+        - name: 0.1.0
+          modelTypes:
+            - name: model
+    - name: braingen
+      versions:
+        - name: 0.1.0
+          modelTypes:
+            - name: generator_res_128
+            - name: generator_res_16
+            - name: generator_res_256
+            - name: generator_res_32
+            - name: generator_res_64
+            - name: generator_res_8
+    - name: brainy
+      versions:
+        - name: 0.1.0
+          modelTypes:
+            - name: model
+    - name: kwyk
+      versions:
+        - name: 0.4.0
+          modelTypes:
+            - name: bvwn_multi_prior
+            - name: bwn
+            - name: bwn_multi
