@@ -63,4 +63,5 @@
     versions:
     - name: 1.0.0
       modelTypes:
-      - name: model
+      - name: general
+      - name: hyperfine
