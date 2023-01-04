@@ -21,15 +21,18 @@ DDIG_SynthMorph_1.0.0_brains:
   ethical_considerations: Information not provided.
   caveats_recs: Information not provided.
 DDIG_SynthMorph_1.0.0_shapes:
-  model_name: "SynthMorph"
-  description: "3D brain registration model"
-  structure: "U-Net"
-  training_mode: "unsupervised"
-  model_url: "https://github.com/voxelmorph/voxelmorph"
-  Zoo_function: "register"
-  example: "nobrainer-zoo register -m DDIG/SynthMorph/1.0.0 --model_type shapes <path_to_moving_image> <path_to_fixed_image> <path_to_registered_output>/out.npz"
-  note: "Please provide an output file name with an extension."
-  input_file_type: ".npz"
+  model_name: SynthMorph
+  description: 3D brain registration model
+  structure: U-Net
+  training_mode: unsupervised
+  model_url: https://github.com/voxelmorph/voxelmorph
+  Zoo_function: register
+  example: >-
+    nobrainer-zoo register -m DDIG/SynthMorph/1.0.0 --model_type shapes
+    <path_to_moving_image> <path_to_fixed_image>
+    <path_to_registered_output>/out.npz
+  note: Please provide an output file name with an extension.
+  input_file_type: .npz
   model_details: Information not provided.
   intended_use: Information not provided.
   factors: Information not provided.
@@ -40,15 +43,17 @@ DDIG_SynthMorph_1.0.0_shapes:
   ethical_considerations: Information not provided.
   caveats_recs: Information not provided.
 DDIG_SynthStrip_1.0.0_model:
-  model_name: "SynthStrip"
-  description: "3D brain extraction model"
-  structure: "U-Net"
-  training_mode: "supervised"
-  model_url: "https://surfer.nmr.mgh.harvard.edu/docs/synthstrip/"
-  Zoo_function: "predict"
-  example: "nobrainer-zoo predict -m DDIG/SynthStrip/1.0.0 <path_to_input> <path_to_output>/out.nii.gz"
-  note: "Please provide an output file name with an extension."
-  input_file_type: "nii.gz"
+  model_name: SynthStrip
+  description: 3D brain extraction model
+  structure: U-Net
+  training_mode: supervised
+  model_url: https://surfer.nmr.mgh.harvard.edu/docs/synthstrip/
+  Zoo_function: predict
+  example: >-
+    nobrainer-zoo predict -m DDIG/SynthStrip/1.0.0 <path_to_input>
+    <path_to_output>/out.nii.gz
+  note: Please provide an output file name with an extension.
+  input_file_type: nii.gz
   model_details: Information not provided.
   intended_use: Information not provided.
   factors: Information not provided.
@@ -59,15 +64,80 @@ DDIG_SynthStrip_1.0.0_model:
   ethical_considerations: Information not provided.
   caveats_recs: Information not provided.
 DDIG_VoxelMorph_1.0.0_model:
-  model_name: "VoxelMorph"
-  description: "3D brain registration model"
-  structure: "U-Net"
-  training_mode: "unsupervised"
-  model_url: "https://github.com/voxelmorph/voxelmorph"
-  Zoo_function: "register"
-  example: "nobrainer-zoo register -m DDIG/VoxelMorph/1.0.0 <path_to_moving_image> <path_to_fixed_image> <path_to_registered_output>/out.npz"
-  note: "Please provide an output file name with an extension."
-  input_file_type: ".npz"
+  model_name: VoxelMorph
+  description: 3D brain registration model
+  structure: U-Net
+  training_mode: unsupervised
+  model_url: https://github.com/voxelmorph/voxelmorph
+  Zoo_function: register
+  example: >-
+    nobrainer-zoo register -m DDIG/VoxelMorph/1.0.0 <path_to_moving_image>
+    <path_to_fixed_image> <path_to_registered_output>/out.npz
+  note: Please provide an output file name with an extension.
+  input_file_type: .npz
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
+UCL_SynthSR_1.0.0_general:
+  model_name: SynthSR
+  description: 3D brain hyper resolution model
+  structure: U-Net
+  training_mode: None
+  model_url: https://github.com/BBillot/SynthSR
+  Zoo_function: predict
+  example: >-
+    nobrainer-zoo predict -m UCL/SynthSR/1.0.0 --model_type general
+    <path_to_input> <path_to_output>/out.nii.gz
+  note: Please provide an output file name with an extension.
+  input_file_type: nii.gz
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
+UCL_SynthSR_1.0.0_hyperfine:
+  model_name: SynthSR
+  description: 3D brain hyper resolution model
+  structure: U-Net
+  training_mode: None
+  model_url: https://github.com/BBillot/SynthSR
+  Zoo_function: predict
+  example: >-
+    nobrainer-zoo predict -m UCL/SynthSR/1.0.0 --model_type hyperfine
+    <path_to_input_T1> <path_to_input_T2> <path_to_output>/out.nii.gz
+  note: Please provide an output file name with an extension.
+  input_file_type: nii.gz
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
+UCL_SynthSeg_1.0.0_model:
+  model_name: SynthSeg
+  description: 3D brain segmentation model
+  structure: U-Net
+  training_mode: supervised
+  model_url: https://github.com/BBillot/SynthSeg
+  Zoo_function: predict
+  example: >-
+    nobrainer-zoo predict -m UCL/SynthSeg/1.0.0 <path_to_input>
+    <path_to_output>/out.nii.gz
+  note: Please provide an output file name with an extension.
+  input_file_type: nii.gz
   model_details: Information not provided.
   intended_use: Information not provided.
   factors: Information not provided.
@@ -78,14 +148,16 @@ DDIG_VoxelMorph_1.0.0_model:
   ethical_considerations: Information not provided.
   caveats_recs: Information not provided.
 lcn_parcnet_1.0.0_model:
-  model_name: "parcnet"
+  model_name: parcnet
   description: None
   structure: None
   training_mode: None
   model_url: None
-  Zoo_function: "predict"
-  example: "nobrainer-zoo predict -m lcn/parcnet/1.0.0 <path_to_input> <path_to_output>/out.nii.gz"
-  note: "Please provide an output file name with an extension."
+  Zoo_function: predict
+  example: >-
+    nobrainer-zoo predict -m lcn/parcnet/1.0.0 <path_to_input>
+    <path_to_output>/out.nii.gz
+  note: Please provide an output file name with an extension.
   input_file_type: None
   model_details: Information not provided.
   intended_use: Information not provided.
@@ -97,15 +169,17 @@ lcn_parcnet_1.0.0_model:
   ethical_considerations: Information not provided.
   caveats_recs: Information not provided.
 neuronets_ams_0.1.0_model:
-  model_name: "ams"
-  description: "Meningioma Segmentation Model"
-  structure: "U-Net"
-  training_mode: "supervised"
-  model_url: "https://github.com/neuronets/ams"
-  Zoo_function: "predict"
-  example: "nobrainer-zoo predict -m neuronets/ams/0.1.0 <path_to_input> <path_to_output>/out.nii.gz"
-  note: "Please provide an output file name with an extension."
-  input_file_type: "nii.gz"
+  model_name: ams
+  description: Meningioma Segmentation Model
+  structure: U-Net
+  training_mode: supervised
+  model_url: https://github.com/neuronets/ams
+  Zoo_function: predict
+  example: >-
+    nobrainer-zoo predict -m neuronets/ams/0.1.0 <path_to_input>
+    <path_to_output>/out.nii.gz
+  note: Please provide an output file name with an extension.
+  input_file_type: nii.gz
   model_details: Information not provided.
   intended_use: Information not provided.
   factors: Information not provided.
@@ -115,15 +189,17 @@ neuronets_ams_0.1.0_model:
   quant_analyses: Information not provided.
   ethical_considerations: Information not provided.
   caveats_recs: Information not provided.
-neuronets_braingen_0.1.0_generator_res_8:
-  model_name: "braingen"
-  description: "3D brain generator model at 8 cube."
-  structure: "GAN"
-  training_mode: "unsupervised"
-  model_url: "https://github.com/neuronets/progressivegan3d"
-  Zoo_function: "generate"
-  example: "nobrainer-zoo generate -m neuronets/braingen/0.1.0 --model_type generator_res_8 <path_to_output>/out.nii.gz"
-  note: "Please provide an output file name with an extension."
+neuronets_braingen_0.1.0_generator_res_128:
+  model_name: braingen
+  description: 3D brain generator model at 128 cube.
+  structure: GAN
+  training_mode: unsupervised
+  model_url: https://github.com/neuronets/progressivegan3d
+  Zoo_function: generate
+  example: >-
+    nobrainer-zoo generate -m neuronets/braingen/0.1.0 --model_type
+    generator_res_128 <path_to_output>/out.nii.gz
+  note: Please provide an output file name with an extension.
   input_file_type: None
   model_details: Information not provided.
   intended_use: Information not provided.
@@ -135,71 +211,16 @@ neuronets_braingen_0.1.0_generator_res_8:
   ethical_considerations: Information not provided.
   caveats_recs: Information not provided.
 neuronets_braingen_0.1.0_generator_res_16:
-  model_name: "braingen"
-  description: "3D brain generator model at 16 cube."
-  structure: "GAN"
-  training_mode: "unsupervised"
-  model_url: "https://github.com/neuronets/progressivegan3d"
-  Zoo_function: "generate"
-  example: "nobrainer-zoo generate -m neuronets/braingen/0.1.0 --model_type generator_res_16 <path_to_output>/out.nii.gz"
-  note: "Please provide an output file name with an extension."
-  input_file_type: None
-  model_details: Information not provided.
-  intended_use: Information not provided.
-  factors: Information not provided.
-  metrics: Information not provided.
-  eval_data: Information not provided.
-  training_data: Information not provided.
-  quant_analyses: Information not provided.
-  ethical_considerations: Information not provided.
-  caveats_recs: Information not provided.
-neuronets_braingen_0.1.0_generator_res_32:
-  model_name: "braingen"
-  description: "3D brain generator model at 32 cube."
-  structure: "GAN"
-  training_mode: "unsupervised"
-  model_url: "https://github.com/neuronets/progressivegan3d"
-  Zoo_function: "generate"
-  example: "nobrainer-zoo generate -m neuronets/braingen/0.1.0 --model_type generator_res_32 <path_to_output>/out.nii.gz"
-  note: "Please provide an output file name with an extension."
-  input_file_type: None
-  model_details: Information not provided.
-  intended_use: Information not provided.
-  factors: Information not provided.
-  metrics: Information not provided.
-  eval_data: Information not provided.
-  training_data: Information not provided.
-  quant_analyses: Information not provided.
-  ethical_considerations: Information not provided.
-  caveats_recs: Information not provided.
-neuronets_braingen_0.1.0_generator_res_64:
-  model_name: "braingen"
-  description: "3D brain generator model at 64 cube."
-  structure: "GAN"
-  training_mode: "unsupervised"
-  model_url: "https://github.com/neuronets/progressivegan3d"
-  Zoo_function: "generate"
-  example: "nobrainer-zoo generate -m neuronets/braingen/0.1.0 --model_type generator_res_64 <path_to_output>/out.nii.gz"
-  note: "Please provide an output file name with an extension."
-  input_file_type: None
-  model_details: Information not provided.
-  intended_use: Information not provided.
-  factors: Information not provided.
-  metrics: Information not provided.
-  eval_data: Information not provided.
-  training_data: Information not provided.
-  quant_analyses: Information not provided.
-  ethical_considerations: Information not provided.
-  caveats_recs: Information not provided.
-neuronets_braingen_0.1.0_generator_res_128:
-  model_name: "braingen"
-  description: "3D brain generator model at 128 cube."
-  structure: "GAN"
-  training_mode: "unsupervised"
-  model_url: "https://github.com/neuronets/progressivegan3d"
-  Zoo_function: "generate"
-  example: "nobrainer-zoo generate -m neuronets/braingen/0.1.0 --model_type generator_res_128 <path_to_output>/out.nii.gz"
-  note: "Please provide an output file name with an extension."
+  model_name: braingen
+  description: 3D brain generator model at 16 cube.
+  structure: GAN
+  training_mode: unsupervised
+  model_url: https://github.com/neuronets/progressivegan3d
+  Zoo_function: generate
+  example: >-
+    nobrainer-zoo generate -m neuronets/braingen/0.1.0 --model_type
+    generator_res_16 <path_to_output>/out.nii.gz
+  note: Please provide an output file name with an extension.
   input_file_type: None
   model_details: Information not provided.
   intended_use: Information not provided.
@@ -211,14 +232,79 @@ neuronets_braingen_0.1.0_generator_res_128:
   ethical_considerations: Information not provided.
   caveats_recs: Information not provided.
 neuronets_braingen_0.1.0_generator_res_256:
-  model_name: "braingen"
-  description: "3D brain generator model at 256 cube."
-  structure: "GAN"
-  training_mode: "unsupervised"
-  model_url: "https://github.com/neuronets/progressivegan3d"
-  Zoo_function: "generate"
-  example: "nobrainer-zoo generate -m neuronets/braingen/0.1.0 --model_type generator_res_256 <path_to_output>/out.nii.gz"
-  note: "Please provide an output file name with an extension."
+  model_name: braingen
+  description: 3D brain generator model at 256 cube.
+  structure: GAN
+  training_mode: unsupervised
+  model_url: https://github.com/neuronets/progressivegan3d
+  Zoo_function: generate
+  example: >-
+    nobrainer-zoo generate -m neuronets/braingen/0.1.0 --model_type
+    generator_res_256 <path_to_output>/out.nii.gz
+  note: Please provide an output file name with an extension.
+  input_file_type: None
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
+neuronets_braingen_0.1.0_generator_res_32:
+  model_name: braingen
+  description: 3D brain generator model at 32 cube.
+  structure: GAN
+  training_mode: unsupervised
+  model_url: https://github.com/neuronets/progressivegan3d
+  Zoo_function: generate
+  example: >-
+    nobrainer-zoo generate -m neuronets/braingen/0.1.0 --model_type
+    generator_res_32 <path_to_output>/out.nii.gz
+  note: Please provide an output file name with an extension.
+  input_file_type: None
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
+neuronets_braingen_0.1.0_generator_res_64:
+  model_name: braingen
+  description: 3D brain generator model at 64 cube.
+  structure: GAN
+  training_mode: unsupervised
+  model_url: https://github.com/neuronets/progressivegan3d
+  Zoo_function: generate
+  example: >-
+    nobrainer-zoo generate -m neuronets/braingen/0.1.0 --model_type
+    generator_res_64 <path_to_output>/out.nii.gz
+  note: Please provide an output file name with an extension.
+  input_file_type: None
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
+neuronets_braingen_0.1.0_generator_res_8:
+  model_name: braingen
+  description: 3D brain generator model at 8 cube.
+  structure: GAN
+  training_mode: unsupervised
+  model_url: https://github.com/neuronets/progressivegan3d
+  Zoo_function: generate
+  example: >-
+    nobrainer-zoo generate -m neuronets/braingen/0.1.0 --model_type
+    generator_res_8 <path_to_output>/out.nii.gz
+  note: Please provide an output file name with an extension.
   input_file_type: None
   model_details: Information not provided.
   intended_use: Information not provided.
@@ -230,15 +316,17 @@ neuronets_braingen_0.1.0_generator_res_256:
   ethical_considerations: Information not provided.
   caveats_recs: Information not provided.
 neuronets_brainy_0.1.0_model:
-  model_name: "brainy"
-  description: "3D brain extraction model"
-  structure: "U-Net"
-  training_mode: "supervised"
-  model_url: "https://github.com/neuronets/brainy"
-  Zoo_function: "predict"
-  example: "nobrainer-zoo predict -m neuronets/brainy/0.1.0 <path_to_input> <path_to_output>/out.nii.gz"
-  note: "Please provide an output file name with an extension."
-  input_file_type: "nii.gz"
+  model_name: brainy
+  description: 3D brain extraction model
+  structure: U-Net
+  training_mode: supervised
+  model_url: https://github.com/neuronets/brainy
+  Zoo_function: predict
+  example: >-
+    nobrainer-zoo predict -m neuronets/brainy/0.1.0 <path_to_input>
+    <path_to_output>/out.nii.gz
+  note: Please provide an output file name with an extension.
+  input_file_type: nii.gz
   model_details: Information not provided.
   intended_use: Information not provided.
   factors: Information not provided.
@@ -248,16 +336,18 @@ neuronets_brainy_0.1.0_model:
   quant_analyses: Information not provided.
   ethical_considerations: Information not provided.
   caveats_recs: Information not provided.
-neuronets_kwyk_0.4.1_bvmn_multi_prior:
-  model_name: "kwyk"
-  description: "3D brain segmentation model"
-  structure: "Meshnet"
-  training_mode: "supervised"
-  model_url: "https://github.com/neuronets/kwyk"
-  Zoo_function: "predict"
-  example: "nobrainer-zoo predict -m neuronets/kwyk/0.4.0 --model_type bvwn_multi_prior <path_to_input> <path_to_output>/out"
-  note: "output will be saved as .nii.gz file type (e.g out_means.nii.gz)"
-  input_file_type: "nii.gz"
+neuronets_kwyk_0.4.0_bvwn_multi_prior:
+  model_name: kwyk
+  description: 3D brain segmentation model
+  structure: Meshnet
+  training_mode: supervised
+  model_url: https://github.com/neuronets/kwyk
+  Zoo_function: predict
+  example: >-
+    nobrainer-zoo predict -m neuronets/kwyk/0.4.0 --model_type bvwn_multi_prior
+    <path_to_input> <path_to_output>/out
+  note: output will be saved as .nii.gz file type (e.g out_means.nii.gz)
+  input_file_type: nii.gz
   model_details: Information not provided.
   intended_use: Information not provided.
   factors: Information not provided.
@@ -267,16 +357,18 @@ neuronets_kwyk_0.4.1_bvmn_multi_prior:
   quant_analyses: Information not provided.
   ethical_considerations: Information not provided.
   caveats_recs: Information not provided.
-neuronets_kwyk_0.4.1_bwn:
-  model_name: "kwyk"
-  description: "3D brain segmentation model"
-  structure: "Meshnet"
-  training_mode: "supervised"
-  model_url: "https://github.com/neuronets/kwyk"
-  Zoo_function: "predict"
-  example: "nobrainer-zoo predict -m neuronets/kwyk/0.4.0 --model_type bwn <path_to_input> <path_to_output>/out"
-  note: "output will be saved as .nii.gz file type (e.g out_means.nii.gz)"
-  input_file_type: "nii.gz"
+neuronets_kwyk_0.4.0_bwn:
+  model_name: kwyk
+  description: 3D brain segmentation model
+  structure: Meshnet
+  training_mode: supervised
+  model_url: https://github.com/neuronets/kwyk
+  Zoo_function: predict
+  example: >-
+    nobrainer-zoo predict -m neuronets/kwyk/0.4.0 --model_type bwn
+    <path_to_input> <path_to_output>/out
+  note: output will be saved as .nii.gz file type (e.g out_means.nii.gz)
+  input_file_type: nii.gz
   model_details: Information not provided.
   intended_use: Information not provided.
   factors: Information not provided.
@@ -286,73 +378,18 @@ neuronets_kwyk_0.4.1_bwn:
   quant_analyses: Information not provided.
   ethical_considerations: Information not provided.
   caveats_recs: Information not provided.
-neuronets_kwyk_0.4.1_bwn_multi:
-  model_name: "kwyk"
-  description: "3D brain segmentation model"
-  structure: "Meshnet"
-  training_mode: "supervised"
-  model_url: "https://github.com/neuronets/kwyk"
-  Zoo_function: "predict"
-  example: "nobrainer-zoo predict -m neuronets/kwyk/0.4.0 --model_type bwn_multi <path_to_input> <path_to_output>/out"
-  note: "output will be saved as .nii.gz file type (e.g out_means.nii.gz)"
-  input_file_type: "nii.gz"
-  model_details: Information not provided.
-  intended_use: Information not provided.
-  factors: Information not provided.
-  metrics: Information not provided.
-  eval_data: Information not provided.
-  training_data: Information not provided.
-  quant_analyses: Information not provided.
-  ethical_considerations: Information not provided.
-  caveats_recs: Information not provided.
-UCL_SynthSeg_1.0.0_model:
-  model_name: "SynthSeg"
-  description: "3D brain segmentation model"
-  structure: "U-Net"
-  training_mode: "supervised"
-  model_url: "https://github.com/BBillot/SynthSeg"
-  Zoo_function: "predict"
-  example: "nobrainer-zoo predict -m UCL/SynthSeg/1.0.0 <path_to_input> <path_to_output>/out.nii.gz"
-  note: "Please provide an output file name with an extension."
-  input_file_type: "nii.gz"
-  model_details: Information not provided.
-  intended_use: Information not provided.
-  factors: Information not provided.
-  metrics: Information not provided.
-  eval_data: Information not provided.
-  training_data: Information not provided.
-  quant_analyses: Information not provided.
-  ethical_considerations: Information not provided.
-  caveats_recs: Information not provided.
-UCL_SynthSR_1.0.0_general:
-  model_name: "SynthSR"
-  description: "3D brain hyper resolution model"
-  structure: "U-Net"
-  training_mode: None
-  model_url: "https://github.com/BBillot/SynthSR"
-  Zoo_function: "predict"
-  example: "nobrainer-zoo predict -m UCL/SynthSR/1.0.0 --model_type general <path_to_input> <path_to_output>/out.nii.gz"
-  note: "Please provide an output file name with an extension."
-  input_file_type: "nii.gz"
-  model_details: Information not provided.
-  intended_use: Information not provided.
-  factors: Information not provided.
-  metrics: Information not provided.
-  eval_data: Information not provided.
-  training_data: Information not provided.
-  quant_analyses: Information not provided.
-  ethical_considerations: Information not provided.
-  caveats_recs: Information not provided.
-UCL_SynthSR_1.0.0_hyperfine:
-  model_name: "SynthSR"
-  description: "3D brain hyper resolution model"
-  structure: "U-Net"
-  training_mode: None
-  model_url: "https://github.com/BBillot/SynthSR"
-  Zoo_function: "predict"
-  example: "nobrainer-zoo predict -m UCL/SynthSR/1.0.0 --model_type hyperfine <path_to_input_T1> <path_to_input_T2> <path_to_output>/out.nii.gz"
-  note: "Please provide an output file name with an extension."
-  input_file_type: "nii.gz"
+neuronets_kwyk_0.4.0_bwn_multi:
+  model_name: kwyk
+  description: 3D brain segmentation model
+  structure: Meshnet
+  training_mode: supervised
+  model_url: https://github.com/neuronets/kwyk
+  Zoo_function: predict
+  example: >-
+    nobrainer-zoo predict -m neuronets/kwyk/0.4.0 --model_type bwn_multi
+    <path_to_input> <path_to_output>/out
+  note: output will be saved as .nii.gz file type (e.g out_means.nii.gz)
+  input_file_type: nii.gz
   model_details: Information not provided.
   intended_use: Information not provided.
   factors: Information not provided.
