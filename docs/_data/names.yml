@@ -6,16 +6,17 @@
           modelTypes:
             - name: brains
             - name: shapes
+          isLink: false
     - name: SynthStrip
       versions:
         - name: 1.0.0
-          modelTypes:
-            - name: model
+          modelTypes: []
+          isLink: true
     - name: VoxelMorph
       versions:
         - name: 1.0.0
-          modelTypes:
-            - name: model
+          modelTypes: []
+          isLink: true
 - name: UCL
   modelNames:
     - name: SynthSR
@@ -24,25 +25,26 @@
           modelTypes:
             - name: general
             - name: hyperfine
+          isLink: false
     - name: SynthSeg
       versions:
         - name: 1.0.0
-          modelTypes:
-            - name: model
+          modelTypes: []
+          isLink: true
 - name: lcn
   modelNames:
     - name: parcnet
       versions:
         - name: 1.0.0
-          modelTypes:
-            - name: model
+          modelTypes: []
+          isLink: true
 - name: neuronets
   modelNames:
     - name: ams
       versions:
         - name: 0.1.0
-          modelTypes:
-            - name: model
+          modelTypes: []
+          isLink: true
     - name: braingen
       versions:
         - name: 0.1.0
@@ -53,11 +55,12 @@
             - name: generator_res_32
             - name: generator_res_64
             - name: generator_res_8
+          isLink: false
     - name: brainy
       versions:
         - name: 0.1.0
-          modelTypes:
-            - name: model
+          modelTypes: []
+          isLink: true
     - name: kwyk
       versions:
         - name: 0.4.0
@@ -65,3 +68,4 @@
             - name: bvwn_multi_prior
             - name: bwn
             - name: bwn_multi
+          isLink: false

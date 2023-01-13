@@ -14,7 +14,8 @@ permalink: /
                 {% include modelName.html org=org_name modelName=modelName_name %}
                 {% for version in modelName.versions %}
                     {% assign version_name = version.name%}
-                    {% include version.html org=org_name modelName=modelName_name version=version_name %}
+                    {% assign isLink = version.isLink %}
+                    {% include version.html isLink=isLink org=org_name modelName=modelName_name version=version_name %}
                     {% for modelType in version.modelTypes %}
                         {% assign modelType_name = modelType.name%}
                         {% include modelType.html 

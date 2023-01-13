@@ -41,6 +41,7 @@ paths.forEach(function(path) {
   let org;
   let modelName;
   let version;
+  let isLink;
   let modelType;
   for (let i=0; i < example.length; i++) {
     const str = example[i];
@@ -49,7 +50,8 @@ paths.forEach(function(path) {
       org = initCombinedName[0];
       modelName = initCombinedName[1];
       version = initCombinedName[2];
-      modelType = (example[i+1] === '--model_type') ? example[i+2] : 'model';
+      isLink = !(example[i+1] === '--model_type');
+      modelType = !isLink ? example[i+2] : 'model';
       break;
     }
   }
@@ -75,11 +77,14 @@ paths.forEach(function(path) {
       name: version,
       modelTypes: []
     };
+    versionStruct.isLink = isLink;
     modelNameStruct.versions.push(versionStruct);
   }
-  versionStruct.modelTypes.push({
-    name: modelType
-  });
+  if (!isLink) {
+    versionStruct.modelTypes.push({
+      name: modelType
+    });
+  }
 
   // create models.yml
   const combined_name = org + '_' + modelName + '_' + version + '_' + modelType;

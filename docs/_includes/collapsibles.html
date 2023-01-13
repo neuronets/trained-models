@@ -28,7 +28,7 @@
     for (const collapsible of collapsibleModelNames) {
         collapsible.addEventListener("click", function() {
             var children = document.getElementsByClassName(this.id);
-            const isCollapse = children[0].style.display === "flex";
+            const isCollapse = children[0].style.display === "flex" || children[0].style.display === "block";
             const icon = this.children[1];
             if (isCollapse) {
                 icon.innerHTML = '+';
@@ -41,8 +41,10 @@
                     if (child.children[1].classList.contains('icon')) {
                         child.children[1].innerHTML = '+';
                     }
-                } else if (child.classList.contains("version")) {
+                } else if (child.classList.contains("collapsibleVersion")) {
                     child.style.display = "flex";
+                } else if (child.classList.contains('nonCollapsibleVersion')) {
+                    child.style.display = 'block';
                 }
             }
       });
