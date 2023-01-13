@@ -4,17 +4,17 @@ layout: default
 {{ content }}
 {% assign model = site.data.models[page.combined_name] %}
 <div>
-    <h2 class="title">{{ page.org }} {{ page.modelName }} {{ page.modelType }}</h1>
+    {% if page.modelType == 'model' %}
+        <h2 class="title">{{ page.org }} {{ page.modelName }}</h1>
+    {% else %}
+        <h2 class="title">{{ page.org }} {{ page.modelName }} {{ page.modelType }}</h1>
+    {% endif %}
     <h3 class="subtitle">Version: {{ page.version }}</h2>
     <h3 class="heading">Model Details</h2>
     <p class="descr"><b>Description:</b> {{ model.description }}</p>
     <p class="descr"><b>Structure:</b> {{ model.structure }}</p>
     <p class="descr"><b>Training Mode:</b> {{ model.training_mode }}</p>
     <p class="descr"><b>Model URL:</b> {{ model.model_url }}</p>
-    <p class="descr"><b>Zoo Function:</b> {{ model.Zoo_function }}</p>
-    <p class="descr"><b>Example:</b> {{ model.example }}</p>
-    <p class="descr"><b>Note:</b> {{ model.note }}</p>
-    <p class="descr"><b>Input File Type:</b> {{ model.input_file_type }}</p>
     <h3 class="heading">Intended Use</h2>
     <p class="descr">{{ model.intended_use }}</p>
     <h3 class="heading">Factors</h2>

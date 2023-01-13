@@ -1,0 +1,32 @@
+<div class="modelCard">
+    {% assign model = site.data.spec.model %}
+    <h2 class="title">Example Model Card - {{ model.org }} {{ model.model_name }}</h2>
+    <h3 class="subtitle">Version: {{ model.version }}</h3>
+    <h3 class="heading">Model Details</h3>
+    <p class="descr"><b>Description:</b> {{ model.description }}</p>
+    <p class="descr"><b>Structure:</b> {{ model.structure }}</p>
+    <p class="descr"><b>Training Mode:</b> {{ model.training_mode }}</p>
+    <p class="descr"><b>Model URL:</b> {{ model.model_url }}</p>
+    <h3 class="heading">Intended Use</h3>
+    <p class="descr">{{ model.intended_use }}</p>
+    <h3 class="heading">Factors</h3>
+    <p class="descr">{{ model.factors }}</p>
+    <h3 class="heading">Metrics</h3>
+    <p class="descr">{{ model.metrics }}</p>
+    <div style="display:flex; flex-direction: row;">
+        <div>
+            <h3 class="heading">Training Data</h3>
+            <p class="descr">{{ model.training_data }}</p>
+        </div>
+        <div>
+            <h3 class="heading">Evaluation Data</h3>
+            <p class="descr">{{ model.eval_data }}</p>
+        </div>
+    </div>
+    <h3 class="heading">Quantitative Analyses</h3>
+    <p class="descr">{{ model.quant_analyses }}</p>
+    <h3 class="heading">Ethical Considerations</h3>
+    <p class="descr">{{ model.ethical_considerations }}</p>
+    <h3 class="heading">Caveats & Recommendations</h3>
+    <p class="descr">{{ model.caveats_recs }}</p>
+</div>

@@ -3,8 +3,8 @@ layout: default
 permalink: /
 ---
 <div class="models-body">
-    {% include search.html %}
     <div class="models-list">
+        {% include search.html %}
         {% for org in site.data.names %}
             {% assign org_name = org.name%}
             {% include org.html org=org_name %}
@@ -28,5 +28,6 @@ permalink: /
             {% endfor %}
         {% endfor %} 
     </div>
+    {% include defaultCard.html %}
 </div>
 {%- include collapsibles.html -%}
