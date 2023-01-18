@@ -14,6 +14,12 @@ jobs:
           fetch-depth: 0
           ref: master
 
+      - name: Set email
+        runs: git config --global user.email "nickgust@mit.edu"
+
+      - name: Set name
+        runs: git config --global user.name "Nicholas Gustafson"
+
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
