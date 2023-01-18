@@ -69,5 +69,13 @@ model:
     example: "nobrainer-zoo predict -m lcn/parcnet/1.0.0 <path_to_input> <path_to_output>/out.nii.gz"
     note: "Please provide an output file name with an extension."
     input_file_type: None
-
+    model_details: ""
+    intended_use: ""
+    factors: ""
+    metrics: ""
+    eval_data: ""
+    training_data: ""
+    quant_analyses: ""
+    ethical_considerations: ""
+    caveats_recs: ""
   
