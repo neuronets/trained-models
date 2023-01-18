@@ -20,3 +20,23 @@
     margin-bottom: 25px;
     margin-right: 50px;
 }
+
+.card-container {
+    border: 1px solid black;
+}
+
+.tab-list {
+    display: flex;
+    flex-direction: row;
+}
+
+.tab {
+    background-color: whitesmoke;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.selected {
+    border: 2px solid black;
+}

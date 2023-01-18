@@ -93,7 +93,7 @@ paths.forEach(function(path) {
     'model_details', 'intended_use', 'factors', 'metrics', 'eval_data', 'training_data', 'quant_analyses', 'ethical_considerations', 'caveats_recs'
   ];
   for (const field of modelCardFields) {
-    if (! models[combined_name].hasOwnProperty(field)) {
+    if (models[combined_name][field] === '') {
       models[combined_name][field] = 'Information not provided.';
     }
   }
