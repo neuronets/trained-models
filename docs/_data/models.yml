@@ -33,6 +33,15 @@ DDIG_SynthMorph_1.0.0_shapes:
     <path_to_registered_output>/out.npz
   note: Please provide an output file name with an extension.
   input_file_type: .npz
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
 DDIG_SynthStrip_1.0.0_model:
   model_name: SynthStrip
   description: 3D brain extraction model
@@ -45,6 +54,15 @@ DDIG_SynthStrip_1.0.0_model:
     <path_to_output>/out.nii.gz
   note: Please provide an output file name with an extension.
   input_file_type: nii.gz
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
 DDIG_VoxelMorph_1.0.0_model:
   model_name: VoxelMorph
   description: 3D brain registration model
@@ -57,6 +75,15 @@ DDIG_VoxelMorph_1.0.0_model:
     <path_to_fixed_image> <path_to_registered_output>/out.npz
   note: Please provide an output file name with an extension.
   input_file_type: .npz
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
 UCL_SynthSR_1.0.0_general:
   model_name: SynthSR
   description: 3D brain hyper resolution model
@@ -69,6 +96,15 @@ UCL_SynthSR_1.0.0_general:
     <path_to_input> <path_to_output>/out.nii.gz
   note: Please provide an output file name with an extension.
   input_file_type: nii.gz
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
 UCL_SynthSR_1.0.0_hyperfine:
   model_name: SynthSR
   description: 3D brain hyper resolution model
@@ -81,6 +117,15 @@ UCL_SynthSR_1.0.0_hyperfine:
     <path_to_input_T1> <path_to_input_T2> <path_to_output>/out.nii.gz
   note: Please provide an output file name with an extension.
   input_file_type: nii.gz
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
 UCL_SynthSeg_1.0.0_model:
   model_name: SynthSeg
   description: 3D brain segmentation model
@@ -93,6 +138,15 @@ UCL_SynthSeg_1.0.0_model:
     <path_to_output>/out.nii.gz
   note: Please provide an output file name with an extension.
   input_file_type: nii.gz
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
 lcn_parcnet_1.0.0_model:
   model_name: parcnet
   description: None
@@ -105,6 +159,15 @@ lcn_parcnet_1.0.0_model:
     <path_to_output>/out.nii.gz
   note: Please provide an output file name with an extension.
   input_file_type: None
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
 neuronets_ams_0.1.0_model:
   model_name: ams
   description: Meningioma Segmentation Model
@@ -117,6 +180,15 @@ neuronets_ams_0.1.0_model:
     <path_to_output>/out.nii.gz
   note: Please provide an output file name with an extension.
   input_file_type: nii.gz
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
 neuronets_braingen_0.1.0_generator_res_128:
   model_name: braingen
   description: 3D brain generator model at 128 cube.
@@ -129,6 +201,15 @@ neuronets_braingen_0.1.0_generator_res_128:
     generator_res_128 <path_to_output>/out.nii.gz
   note: Please provide an output file name with an extension.
   input_file_type: None
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
 neuronets_braingen_0.1.0_generator_res_16:
   model_name: braingen
   description: 3D brain generator model at 16 cube.
@@ -141,6 +222,15 @@ neuronets_braingen_0.1.0_generator_res_16:
     generator_res_16 <path_to_output>/out.nii.gz
   note: Please provide an output file name with an extension.
   input_file_type: None
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
 neuronets_braingen_0.1.0_generator_res_256:
   model_name: braingen
   description: 3D brain generator model at 256 cube.
@@ -153,6 +243,15 @@ neuronets_braingen_0.1.0_generator_res_256:
     generator_res_256 <path_to_output>/out.nii.gz
   note: Please provide an output file name with an extension.
   input_file_type: None
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
 neuronets_braingen_0.1.0_generator_res_32:
   model_name: braingen
   description: 3D brain generator model at 32 cube.
@@ -165,6 +264,15 @@ neuronets_braingen_0.1.0_generator_res_32:
     generator_res_32 <path_to_output>/out.nii.gz
   note: Please provide an output file name with an extension.
   input_file_type: None
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
 neuronets_braingen_0.1.0_generator_res_64:
   model_name: braingen
   description: 3D brain generator model at 64 cube.
@@ -177,6 +285,15 @@ neuronets_braingen_0.1.0_generator_res_64:
     generator_res_64 <path_to_output>/out.nii.gz
   note: Please provide an output file name with an extension.
   input_file_type: None
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
 neuronets_braingen_0.1.0_generator_res_8:
   model_name: braingen
   description: 3D brain generator model at 8 cube.
@@ -189,6 +306,15 @@ neuronets_braingen_0.1.0_generator_res_8:
     generator_res_8 <path_to_output>/out.nii.gz
   note: Please provide an output file name with an extension.
   input_file_type: None
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
 neuronets_brainy_0.1.0_model:
   model_name: brainy
   description: 3D brain extraction model
@@ -201,6 +327,15 @@ neuronets_brainy_0.1.0_model:
     <path_to_output>/out.nii.gz
   note: Please provide an output file name with an extension.
   input_file_type: nii.gz
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
 neuronets_kwyk_0.4.0_bvwn_multi_prior:
   model_name: kwyk
   description: 3D brain segmentation model
@@ -213,6 +348,15 @@ neuronets_kwyk_0.4.0_bvwn_multi_prior:
     <path_to_input> <path_to_output>/out
   note: output will be saved as .nii.gz file type (e.g out_means.nii.gz)
   input_file_type: nii.gz
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
 neuronets_kwyk_0.4.0_bwn:
   model_name: kwyk
   description: 3D brain segmentation model
@@ -225,6 +369,15 @@ neuronets_kwyk_0.4.0_bwn:
     <path_to_input> <path_to_output>/out
   note: output will be saved as .nii.gz file type (e.g out_means.nii.gz)
   input_file_type: nii.gz
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
 neuronets_kwyk_0.4.0_bwn_multi:
   model_name: kwyk
   description: 3D brain segmentation model
@@ -237,3 +390,12 @@ neuronets_kwyk_0.4.0_bwn_multi:
     <path_to_input> <path_to_output>/out
   note: output will be saved as .nii.gz file type (e.g out_means.nii.gz)
   input_file_type: nii.gz
+  model_details: Information not provided.
+  intended_use: Information not provided.
+  factors: Information not provided.
+  metrics: Information not provided.
+  eval_data: Information not provided.
+  training_data: Information not provided.
+  quant_analyses: Information not provided.
+  ethical_considerations: Information not provided.
+  caveats_recs: Information not provided.
