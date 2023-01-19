@@ -7,25 +7,23 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
+    
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           ref: master
 
-      - name: Set email
-        run: git config --global user.email "nickgust@mit.edu"
-
-      - name: Set name
-        run: git config --global user.name "Nicholas Gustafson"
-
-      - name: Use Node.js
+      - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
-      - name: Install dependencies
-        run: npm install
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: npm ci
 
       - name: Run get_model_data script
         run: node ./.github/workflows/get_model_data.js
