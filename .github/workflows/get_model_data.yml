@@ -14,23 +14,7 @@ jobs:
           fetch-depth: 0
           ref: master
 
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16.x'
-      - run: npm ci
-
       - name: Run get_model_data script
         run: node ./.github/workflows/get_model_data.js
 
-      - name: stage changed files
-        run: git add docs/*
-
-      - name: commit changed files
-        run: git commit -m "Auto updating docs/"
-      
-      - name: fetch from master
-        run: git fetch origin master
-
-      - name: push code to master
-        run: git push origin HEAD:master
+      - uses: stefanzweifel/git-auto-commit-action@v4
