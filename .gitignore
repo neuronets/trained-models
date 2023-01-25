@@ -2,4 +2,4 @@
 ._*
 .h5
 .idea/*
-/node_modules
+node_modules
