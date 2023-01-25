@@ -18,7 +18,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16.x'
-      - run: npm ci -w './.github/workflows'
+      - run: npm ci
 
       - name: Run get_model_data script
         run: node ./.github/workflows/get_model_data.js
