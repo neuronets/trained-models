@@ -6,11 +6,7 @@ on:
     
 jobs:
   build:
-    runs-on: ubuntu-latest
-    
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x, 16.x]
+    runs-on: macos-latest
     
     steps:
       - uses: actions/checkout@v3
@@ -18,20 +14,8 @@ jobs:
           fetch-depth: 0
           ref: master
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-      - run: npm ci
-
       - name: Run get_model_data script
         run: node ./.github/workflows/get_model_data.js
-
-      - name: Sleep for 30 seconds
-        uses: whatnick/wait-action@master
-        with:
-          time: '30s'
 
       - name: check for changes
         uses: dorny/paths-filter@v2.11.1
