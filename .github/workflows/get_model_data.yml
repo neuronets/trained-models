@@ -21,8 +21,10 @@ jobs:
           owner: 'neuronets'
           repository: 'trained-models-template'
 
-      - name: Move package-lock.json to root
-        run: mv ./.github/workflows/package-lock.json ./package-lock.json
+      - name: Move package.json and package-lock.json to root
+        run: |
+          mv ./.github/workflows/package-lock.json ./package-lock.json
+          mv ./.github/workflows/package.json ./package.json
 
       - name: Use node.js
         uses: actions/setup-node@v3
