@@ -3,7 +3,7 @@ const path = require("path");
 const yaml = require('js-yaml');
 
 const ignoreDirs = [
-    '.datalad', '.github', 'docs', 'images', 'weights'
+    '.datalad', '.github', 'docs', 'images', 'weights', 'trained-models-template'
 ];
 
 // find all spec.yml files
@@ -110,7 +110,7 @@ paths.forEach(function(path) {
   modelType: ${modelType}
 ---
   `;
-  const filename = `./docs/_pages/${combined_name}.markdown`;
+  const filename = `./trained-models-template/docs/_pages/${combined_name}.markdown`;
   fs.writeFile(filename, page, "utf8", err => {
     if (err) console.log(err);
   });
@@ -118,11 +118,11 @@ paths.forEach(function(path) {
 
 // write to files
 yamlNames = yaml.dump(names);
-fs.writeFile("./docs/_data/names.yml", yamlNames, "utf8", err => {
+fs.writeFile("./trained-models-template/docs/_data/names.yml", yamlNames, "utf8", err => {
   if (err) console.log(err);
 });
 
 yamlModels = yaml.dump(models);
-fs.writeFile("./docs/_data/models.yml", yamlModels, "utf8", err => {
+fs.writeFile("./trained-models-template/docs/_data/models.yml", yamlModels, "utf8", err => {
     if (err) console.log(err);
 });
