@@ -32,8 +32,7 @@ jobs:
 
       - name: Extract files from clone and remove clone
         run: |
-          mkdir docs
-          cp -r ./trained-models-template/docs/* ./docs/
+          mv ./trained-models-template/docs .
           rm -r ./trained-models-template
 
       - name: Push to gh-pages
