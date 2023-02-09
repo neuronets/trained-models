@@ -40,9 +40,8 @@ jobs:
           mv ./trained-models-template/docs .
           rm -r ./trained-models-template
 
-      - name: Push to gh-pages
-        uses: stefanzweifel/git-auto-commit-action@v4
+      - uses: helaili/jekyll-action@v2
         with:
-          branch: gh-pages
-          push_options: '--force'
-          skip_checkout: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          jekyll_src: 'sample_site'
+          target_branch: 'gh-pages'
