@@ -72,4 +72,13 @@ model:
     example: "nobrainer-zoo register -m DDIG/SynthMorph/1.0.0/brains --model_type brains <path_to_moving_image> <path_to_fixed_image> <path_to_registered_output>/out.npz"
     note: "Please provide an output file name with an extension."
     input_file_type: ".npz"
+    model_details: ""
+    intended_use: ""
+    factors: ""
+    metrics: ""
+    eval_data: ""
+    training_data: ""
+    quant_analyses: ""
+    ethical_considerations: ""
+    caveats_recs: ""
  
