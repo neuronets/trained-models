@@ -39,9 +39,18 @@ jobs:
         run: |
           mv ./trained-models-template/docs .
           rm -r ./trained-models-template
+      
+      - name: Use GitHub Actions' cache to shorten build times and decrease load on servers
+        uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
 
-      - uses: helaili/jekyll-action@v2
+      - name: Build and publish Jekyll site to gh-pages
+        uses: helaili/jekyll-action@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          jekyll_src: 'sample_site'
+          jekyll_src: 'docs'
           target_branch: 'gh-pages'
