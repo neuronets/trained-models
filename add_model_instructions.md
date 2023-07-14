@@ -1,9 +1,3 @@
-# How to add a model to the NoBrainer-zoo Documentation
-
-Status: In progress
-Assign: Edward Gaibor
-Research Backtracking: Week 3 (https://www.notion.so/Week-3-5ff64911dc9d4ee2b922d099d12e0a75?pvs=21)
-
 # **README - Trained Model Deployment**
 
 This README provides instructions for deploying a trained model using the **`nobrainer-zoo`** framework. Follow the steps below to set up your model repository and test it locally before creating a pull request.
