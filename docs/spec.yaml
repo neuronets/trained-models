@@ -1,3 +1,15 @@
+#### container info
+image:
+  singularity: [Singularity image]
+  docker: [docker image path]
+
+#### repository info
+repository:  
+    repo_url:
+    committish:
+    repo_download:
+    repo_download_location:
+
 train:
   #### Train Script
   train_script: [Path to the training script goes here]

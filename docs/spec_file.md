@@ -1,4 +1,4 @@
-# The spec.yaml Guide
+# The spec.yaml ReadMe Guide
 
 For a template please refer to docs/spec.yaml
 
@@ -39,7 +39,6 @@ The following things should be included in your spec.yaml file
             3. Push the image: Once the image is tagged, you can push it to the repository using the **`docker push`** command:
                 
                 ```
-                
                 docker push <repository>/<image_name>:<tag>
                 ```
                 
@@ -64,9 +63,7 @@ The following things should be included in your spec.yaml file
             3. Use the following command to create a Singularity image from a Docker image:
                 
                 ```
-                shellCopy code
                 singularity build <output_image_file> docker://<docker_image>
-                
                 ```
                 
                 Replace **`<output_image_file>`** with the desired name and path of the Singularity image file you want to create. Replace **`<docker_image>`** with the name of the Docker image you want to convert.
@@ -74,9 +71,7 @@ The following things should be included in your spec.yaml file
                 For example:
                 
                 ```
-                shellCopy code
                 singularity build myimage.sif docker://myrepo/myimage:latest
-                
                 ```
                 
                 This command will create a Singularity image file named **`myimage.sif`** from the Docker image **`myrepo/myimage:latest`**. Ensure that you have appropriate permissions and access to the Docker image.
