@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" type="text/css" href="/trained-models/assets/styles/main.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <nav class="navbar">
+    <h1 class="nav-title">Neuronets</h1>
+    <div class="nav-menu">
+        <ul class="nav-links">
+            <li class="nav-link"><a href="/trained-models/" class="">Models</a></li>
+        </ul>
+    </div>
+</nav>
+    <main class="page-content">
+        
+
+
+<div class="models-body"><div class="models-list">
+    <div class="container">
+    <input class="search" id="search" type="text" placeholder="Filter by name">
+</div>
+
+<script>
+    var input = document.getElementById('search');
+    input.addEventListener('input', function() {
+        reset();
+        findMatches(input.value.toLowerCase());
+    });
+
+    function findMatches(searchStr) {
+        const deepestMatch = {};
+        var orgs = document.getElementsByClassName("collapsibleOrg");
+        for (const org of orgs) {
+            deepestMatch[org.id] = [];
+            if (org.id.toLowerCase().includes(searchStr)) deepestMatch[org.id].push(org.id);
+            if (searchStr === '') continue;
+            const modelNames = document.getElementsByClassName('modelName ' + org.id);
+            for (const modelName of modelNames) {
+                if (modelName.id.toLowerCase().includes(searchStr)) deepestMatch[org.id].push(modelName.id);
+                const versions = document.getElementsByClassName('version ' + org.id + ' ' + modelName.id);
+                for (const version of versions) {
+                    if (version.id.toLowerCase().includes(searchStr)) deepestMatch[org.id].push(version.id);
+                    const modelTypes = document.getElementsByClassName('modelType ' + org.id + ' ' + modelName.id + ' ' + version.id);
+                    for (const modelType of modelTypes) {
+                        if (modelType.id.toLowerCase().includes(searchStr)) deepestMatch[org.id].push(modelType.id);
+                    }
+                }
+            }
+            
+        }
+        collapse(deepestMatch);
+    }
+
+    function collapse(deepestMatch) {
+        var orgs = document.getElementsByClassName("collapsibleOrg");
+        for (const org of orgs) {
+            if (deepestMatch[org.id].length === 0) {
+                org.style.display = "none";
+                continue;
+            }
+
+            const modelNames = document.getElementsByClassName('modelName ' + org.id);
+            for (const modelName of modelNames) {
+                if (deepestMatch[org.id].includes(modelName.id)) {
+                    org.children[1].innerHTML = '-';
+                    modelName.style.display = 'flex';
+                }
+                const versions = document.getElementsByClassName('version ' + org.id + ' ' + modelName.id);
+                for (const version of versions) {
+                    if (deepestMatch[org.id].includes(version.id)) {
+                        org.children[1].innerHTML = '-';
+                        modelName.style.display = 'flex';
+                        modelName.children[1].innerHTML = '-';
+                        version.style.display='flex';
+                    }
+                    const modelTypes = document.getElementsByClassName('modelType ' + org.id + ' ' + modelName.id + ' ' + version.id);
+                    for (const modelType of modelTypes) {
+                        if (deepestMatch[org.id].includes(modelType.id)) {
+                            org.children[1].innerHTML = '-';
+                            modelName.style.display = 'flex';
+                            modelName.children[1].innerHTML = '-';
+                            version.style.display='flex';
+                            version.children[1].innerHTML = '-';
+                            modelType.style.display = 'block';
+                        }
+                    }
+                }
+
+            }
+        } 
+    }
+
+    function reset() {
+        var orgs = document.getElementsByClassName("collapsibleOrg");
+        for (const org of orgs) {
+            org.style.display = "flex";
+            org.children[1].innerHTML = '+';
+            const children = document.getElementsByClassName(org.id);
+            for (const child of children) {
+                child.style.display = 'none';
+                if (child.children[1].classList.contains('icon')) child.children[1].innerHTML = '+';
+            }
+        }
+    }
+</script>
+    
+        
+        <div class="collapsibleOrg" id="DDIG">
+    <h3 class="header">DDIG</h3>
+    <h3 class="icon">+</h3>
+</div>
+        
+        
+            
+            <div class="modelName collapsibleModelName DDIG" id="SynthMorph">
+    <h3 class="header">SynthMorph</h3>
+    <h3 class="icon">+</h3>
+</div>
+            
+                
+                
+                
+<div class="version collapsibleVersion DDIG SynthMorph" id="1.0.0">
+    <h3 class="header">1.0.0</h3>
+    <h3 class="icon">+</h3>
+</div>
+
+
+                
+                    
+                    <div class="modelType DDIG SynthMorph 1.0.0" id="brains">
+    <h3 class="header">brains</h3>
+    <a class="link" href="/trained-models/DDIG/SynthMorph/1.0.0/brains"></a>
+</div>
+
+                
+                    
+                    <div class="modelType DDIG SynthMorph 1.0.0" id="shapes">
+    <h3 class="header">shapes</h3>
+    <a class="link" href="/trained-models/DDIG/SynthMorph/1.0.0/shapes"></a>
+</div>
+
+                
+            
+        
+            
+            <div class="modelName collapsibleModelName DDIG" id="SynthStrip">
+    <h3 class="header">SynthStrip</h3>
+    <h3 class="icon">+</h3>
+</div>
+            
+                
+                
+                
+<div class="version nonCollapsibleVersion DDIG SynthStrip" id="1.0.0">
+    <h3 class="header">1.0.0</h3>
+    <a class="link" href="/trained-models/DDIG/SynthStrip/1.0.0/model"></a>
+</div>
+
+
+                
+            
+        
+            
+            <div class="modelName collapsibleModelName DDIG" id="VoxelMorph">
+    <h3 class="header">VoxelMorph</h3>
+    <h3 class="icon">+</h3>
+</div>
+            
+                
+                
+                
+<div class="version nonCollapsibleVersion DDIG VoxelMorph" id="1.0.0">
+    <h3 class="header">1.0.0</h3>
+    <a class="link" href="/trained-models/DDIG/VoxelMorph/1.0.0/model"></a>
+</div>
+
+
+                
+            
+        
+    
+        
+        <div class="collapsibleOrg" id="UCL">
+    <h3 class="header">UCL</h3>
+    <h3 class="icon">+</h3>
+</div>
+        
+        
+            
+            <div class="modelName collapsibleModelName UCL" id="SynthSR">
+    <h3 class="header">SynthSR</h3>
+    <h3 class="icon">+</h3>
+</div>
+            
+                
+                
+                
+<div class="version collapsibleVersion UCL SynthSR" id="1.0.0">
+    <h3 class="header">1.0.0</h3>
+    <h3 class="icon">+</h3>
+</div>
+
+
+                
+                    
+                    <div class="modelType UCL SynthSR 1.0.0" id="general">
+    <h3 class="header">general</h3>
+    <a class="link" href="/trained-models/UCL/SynthSR/1.0.0/general"></a>
+</div>
+
+                
+                    
+                    <div class="modelType UCL SynthSR 1.0.0" id="hyperfine">
+    <h3 class="header">hyperfine</h3>
+    <a class="link" href="/trained-models/UCL/SynthSR/1.0.0/hyperfine"></a>
+</div>
+
+                
+            
+        
+            
+            <div class="modelName collapsibleModelName UCL" id="SynthSeg">
+    <h3 class="header">SynthSeg</h3>
+    <h3 class="icon">+</h3>
+</div>
+            
+                
+                
+                
+<div class="version nonCollapsibleVersion UCL SynthSeg" id="1.0.0">
+    <h3 class="header">1.0.0</h3>
+    <a class="link" href="/trained-models/UCL/SynthSeg/1.0.0/model"></a>
+</div>
+
+
+                
+            
+        
+    
+        
+        <div class="collapsibleOrg" id="lcn">
+    <h3 class="header">lcn</h3>
+    <h3 class="icon">+</h3>
+</div>
+        
+        
+            
+            <div class="modelName collapsibleModelName lcn" id="parcnet">
+    <h3 class="header">parcnet</h3>
+    <h3 class="icon">+</h3>
+</div>
+            
+                
+                
+                
+<div class="version nonCollapsibleVersion lcn parcnet" id="1.0.0">
+    <h3 class="header">1.0.0</h3>
+    <a class="link" href="/trained-models/lcn/parcnet/1.0.0/model"></a>
+</div>
+
+
+                
+            
+        
+    
+        
+        <div class="collapsibleOrg" id="neuronets">
+    <h3 class="header">neuronets</h3>
+    <h3 class="icon">+</h3>
+</div>
+        
+        
+            
+            <div class="modelName collapsibleModelName neuronets" id="ams">
+    <h3 class="header">ams</h3>
+    <h3 class="icon">+</h3>
+</div>
+            
+                
+                
+                
+<div class="version nonCollapsibleVersion neuronets ams" id="0.1.0">
+    <h3 class="header">0.1.0</h3>
+    <a class="link" href="/trained-models/neuronets/ams/0.1.0/model"></a>
+</div>
+
+
+                
+            
+        
+            
+            <div class="modelName collapsibleModelName neuronets" id="braingen">
+    <h3 class="header">braingen</h3>
+    <h3 class="icon">+</h3>
+</div>
+            
+                
+                
+                
+<div class="version collapsibleVersion neuronets braingen" id="0.1.0">
+    <h3 class="header">0.1.0</h3>
+    <h3 class="icon">+</h3>
+</div>
+
+
+                
+                    
+                    <div class="modelType neuronets braingen 0.1.0" id="generator_res_128">
+    <h3 class="header">generator_res_128</h3>
+    <a class="link" href="/trained-models/neuronets/braingen/0.1.0/generator_res_128"></a>
+</div>
+
+                
+                    
+                    <div class="modelType neuronets braingen 0.1.0" id="generator_res_16">
+    <h3 class="header">generator_res_16</h3>
+    <a class="link" href="/trained-models/neuronets/braingen/0.1.0/generator_res_16"></a>
+</div>
+
+                
+                    
+                    <div class="modelType neuronets braingen 0.1.0" id="generator_res_256">
+    <h3 class="header">generator_res_256</h3>
+    <a class="link" href="/trained-models/neuronets/braingen/0.1.0/generator_res_256"></a>
+</div>
+
+                
+                    
+                    <div class="modelType neuronets braingen 0.1.0" id="generator_res_32">
+    <h3 class="header">generator_res_32</h3>
+    <a class="link" href="/trained-models/neuronets/braingen/0.1.0/generator_res_32"></a>
+</div>
+
+                
+                    
+                    <div class="modelType neuronets braingen 0.1.0" id="generator_res_64">
+    <h3 class="header">generator_res_64</h3>
+    <a class="link" href="/trained-models/neuronets/braingen/0.1.0/generator_res_64"></a>
+</div>
+
+                
+                    
+                    <div class="modelType neuronets braingen 0.1.0" id="generator_res_8">
+    <h3 class="header">generator_res_8</h3>
+    <a class="link" href="/trained-models/neuronets/braingen/0.1.0/generator_res_8"></a>
+</div>
+
+                
+            
+        
+            
+            <div class="modelName collapsibleModelName neuronets" id="brainy">
+    <h3 class="header">brainy</h3>
+    <h3 class="icon">+</h3>
+</div>
+            
+                
+                
+                
+<div class="version nonCollapsibleVersion neuronets brainy" id="0.1.0">
+    <h3 class="header">0.1.0</h3>
+    <a class="link" href="/trained-models/neuronets/brainy/0.1.0/model"></a>
+</div>
+
+
+                
+            
+        
+            
+            <div class="modelName collapsibleModelName neuronets" id="kwyk">
+    <h3 class="header">kwyk</h3>
+    <h3 class="icon">+</h3>
+</div>
+            
+                
+                
+                
+<div class="version collapsibleVersion neuronets kwyk" id="0.4.0">
+    <h3 class="header">0.4.0</h3>
+    <h3 class="icon">+</h3>
+</div>
+
+
+                
+                    
+                    <div class="modelType neuronets kwyk 0.4.0" id="bvwn_multi_prior">
+    <h3 class="header">bvwn_multi_prior</h3>
+    <a class="link" href="/trained-models/neuronets/kwyk/0.4.0/bvwn_multi_prior"></a>
+</div>
+
+                
+                    
+                    <div class="modelType neuronets kwyk 0.4.0" id="bwn">
+    <h3 class="header">bwn</h3>
+    <a class="link" href="/trained-models/neuronets/kwyk/0.4.0/bwn"></a>
+</div>
+
+                
+                    
+                    <div class="modelType neuronets kwyk 0.4.0" id="bwn_multi">
+    <h3 class="header">bwn_multi</h3>
+    <a class="link" href="/trained-models/neuronets/kwyk/0.4.0/bwn_multi"></a>
+</div>
+
+                
+            
+        
+     
+</div>
+
+<script>
+
+    var collapsibleOrgs = document.getElementsByClassName("collapsibleOrg");
+    for (const collapsible of collapsibleOrgs) {
+        collapsible.addEventListener("click", function() {
+            var children = document.getElementsByClassName(this.id);
+            const isCollapse = children[0].style.display === "flex";
+            const icon = this.children[1];
+            if (isCollapse) {
+                icon.innerHTML = '+';
+            } else {
+                icon.innerHTML = '-';
+            }
+            for (const child of children) {
+                if (isCollapse) {
+                    child.style.display = "none";
+                    if (child.children[1].classList.contains('icon')) {
+                        child.children[1].innerHTML = '+';
+                    }
+                } else if (child.classList.contains("modelName")) {
+                    child.style.display = "flex";
+                }
+            }
+      });
+    }
+
+    var collapsibleModelNames = document.getElementsByClassName("collapsibleModelName");
+    for (const collapsible of collapsibleModelNames) {
+        collapsible.addEventListener("click", function() {
+            var children = document.getElementsByClassName(this.id);
+            const isCollapse = children[0].style.display === "flex" || children[0].style.display === "block";
+            const icon = this.children[1];
+            if (isCollapse) {
+                icon.innerHTML = '+';
+            } else {
+                icon.innerHTML = '-';
+            }
+            for (const child of children) {
+                if (isCollapse) {
+                    child.style.display = "none";
+                    if (child.children[1].classList.contains('icon')) {
+                        child.children[1].innerHTML = '+';
+                    }
+                } else if (child.classList.contains("collapsibleVersion")) {
+                    child.style.display = "flex";
+                } else if (child.classList.contains('nonCollapsibleVersion')) {
+                    child.style.display = 'block';
+                }
+            }
+      });
+    }
+
+    var collapsibleVersions = document.getElementsByClassName("collapsibleVersion");
+    for (const collapsible of collapsibleVersions) {
+        collapsible.addEventListener("click", function() {
+            var classes = collapsible.className.slice(26) + ' ' + this.id;
+            var children = document.getElementsByClassName(classes);
+            const isCollapse = children[0].style.display === "block";
+            const icon = this.children[1];
+            if (isCollapse) {
+                icon.innerHTML = '+';
+            } else {
+                icon.innerHTML = '-';
+            }
+            for (const child of children) {
+                if (isCollapse) {
+                    child.style.display = "none";
+                } else if (child.classList.contains("modelType")) {
+                    child.style.display = "block";
+                }
+            }
+      });
+    }
+
+</script>
+    <div class="modelCard" onload="find(page.org, page.modelName, page.version, page.modelType)">
+        
+        <h2 class="title">Model Card - neuronets braingen generator_res_256</h2>
+        
+        <h3 class="subtitle">Version: 0.1.0</h3>
+        <h3 class="heading">Model Details</h3>
+        <p class="descr"><b>Description:</b> 3D brain generator model at 256 cube.</p>
+        <p class="descr"><b>Structure:</b> GAN</p>
+        <p class="descr"><b>Training Mode:</b> unsupervised</p>
+        <p class="descr"><b>Model URL:</b> https://github.com/neuronets/progressivegan3d</p>
+        <h3 class="heading">Intended Use</h3>
+        <p class="descr">Information not provided.</p>
+        <h3 class="heading">Factors</h3>
+        <p class="descr">Information not provided.</p>
+        <h3 class="heading">Metrics</h3>
+        <p class="descr">Information not provided.</p>
+        <div style="display:flex; flex-direction: row;">
+            <div>
+                <h3 class="heading">Training Data</h3>
+                <p class="descr">Information not provided.</p>
+            </div>
+            <div>
+                <h3 class="heading">Evaluation Data</h3>
+                <p class="descr">Information not provided.</p>
+            </div>
+        </div>
+        <h3 class="heading">Quantitative Analyses</h3>
+        <p class="descr">Information not provided.</p>
+        <h3 class="heading">Ethical Considerations</h3>
+        <p class="descr">Information not provided.</p>
+        <h3 class="heading">Caveats & Recommendations</h3>
+        <p class="descr">Information not provided.</p>
+    </div>
+</div>
+
+    </main>
+</body>
+</html>
