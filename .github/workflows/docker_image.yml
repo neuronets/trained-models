@@ -2,9 +2,7 @@ name: Docker build and Push
 on:
   pull_request:
     types: [opened, synchronize, closed]
-  push:
-    branches:
-      - master
+
 jobs:
 
   build:
@@ -56,22 +54,16 @@ jobs:
       id: generate_model_card
       run: |
         python ./.github/workflows/create_model_card.py
-
-    - name: Build and push Docker image
-      env:
-          DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_ACCESS_TOKEN }}
-      run: |
-          docker build -t ${{ env.image_name }} ${{ env.dockerfile_path }}
-          docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
-          docker push ${{ env.image_name }}
+    
+    - name: Build Docker image
+      run: docker build -t ${{ env.image_name }} ${{ env.dockerfile_path }}
 
       # The actual commit will only happen when the PR is merged
     - name: Commit changes
       if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
       run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "actions@github.com"
+        git config --global user.name "gaiborjosue"
+        git config --global user.email "gaibor.edward@cebi.edu.ec"
 
         # Add, commit, and push the changes to the user's branch
         git add ${{ env.dockerfile_path }}/spec.yaml ${{ env.dockerfile_path }}/model_card.md
