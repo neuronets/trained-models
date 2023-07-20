@@ -1,41 +1,36 @@
-#### container info
 image:
+  docker: neuronets/deepcsr
   singularity: nobrainer-zoo_deepcsr.sif
-  docker: neuronets/nobrainer-zoo:deepcsr
-
-#### repository info
-repository:  
-    repo_url: "None"
-    committish: "None"
-    repo_download: False
-    repo_download_location: "None"
-    
-#### required fields for prediction
 inference:
-    prediction_script: "trained-models/DeepCSR/deepcsr/1.0/predict.py"
-    command: f"python {MODELS_PATH}/{model}/predict.py --conf_path {conf}"
-
-    #### input data characteristics
-    data_spec:
-      conf: {n_files: 1}
-
-#### model information and help
+  command: f"python {MODELS_PATH}/{model}/predict.py --conf_path {conf}"
+  data_spec:
+    conf:
+      n_files: 1
+  prediction_script: trained-models/DeepCSR/deepcsr/1.0/predict.py
 model:
-    model_name: "deepcsr"
-    description: "3D deep learning framework for cortical surface reconstruction from MRI"
-    structure: "Meshnet"
-    training_mode: "supervised"
-    model_url: "https://github.com/neuroneural/DeepCSR-fork/"
-    Zoo_function: "predict"
-    example: "nobrainer-zoo predict -m DeepCSR/deepcsr/1.0 <path_to_input>"
-    note: "The output will be the stl files and will be saved in the config file's specified directory. For the input config file examples please see the /configs/predict.yaml file inside the model's repo."
-    input_file_type: "yaml"
-    model_details: ""
-    intended_use: ""
-    factors: ""
-    metrics: ""
-    eval_data: ""
-    training_data: ""
-    quant_analyses: ""
-    ethical_considerations: ""
-    caveats_recs: ""
+  Zoo_function: predict
+  caveats_recs: ''
+  description: 3D deep learning framework for cortical surface reconstruction from
+    MRI
+  ethical_considerations: ''
+  eval_data: ''
+  example: nobrainer-zoo predict -m DeepCSR/deepcsr/1.0 <path_to_input>
+  factors: ''
+  input_file_type: yaml
+  intended_use: ''
+  metrics: ''
+  model_details: ''
+  model_name: deepcsr
+  model_url: https://github.com/neuroneural/DeepCSR-fork/
+  note: The output will be the stl files and will be saved in the config file's specified
+    directory. For the input config file examples please see the /configs/predict.yaml
+    file inside the model's repo.
+  quant_analyses: ''
+  structure: Meshnet
+  training_data: ''
+  training_mode: supervised
+repository:
+  committish: None
+  repo_download: false
+  repo_download_location: None
+  repo_url: None
