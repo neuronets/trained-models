@@ -1,0 +1,80 @@
+name: Docker build and Push
+on:
+  pull_request:
+    types: [opened, synchronize, closed]
+  push:
+    branches:
+      - master
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+
+    # Install yaml
+    - name: Install yaml
+      run: |
+          pip install pyyaml
+
+    - name: Get latest model folder
+      id: get_latest_folder
+      run: |
+          python ./.github/workflows/get_latest_model_name.py > latest_folder.txt
+
+    - name: Read latest folder name
+      id: read_latest_folder
+      run: echo "model_folder=$(cat latest_folder.txt)" >> $GITHUB_ENV
+      
+    - name: Get Dockerfile path
+      id: get_dockerfile_path
+      run: |
+          python ./.github/workflows/get_dockerfile_path.py > dockerfile_path.txt
+      
+    - name: Read Dockerfile path
+      id: read_dockerfile_path
+      run: echo "dockerfile_path=$(cat dockerfile_path.txt)" >> $GITHUB_ENV
+      
+    - name: Set Docker image name
+      id: set_image_name
+      run: |
+          echo "image_name=neuronets/${{ env.model_folder }}" >> $GITHUB_ENV
+
+    - name: Update yaml file
+      id: update_yaml
+      run: python ./.github/workflows/update_yaml_info.py
+
+    - name: Generate Model Card
+      id: generate_model_card
+      run: |
+        python ./.github/workflows/create_model_card.py
+
+    - name: Build and push Docker image
+      env:
+          DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+      run: |
+          docker build -t ${{ env.image_name }} ${{ env.dockerfile_path }}
+          docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
+          docker push ${{ env.image_name }}
+
+      # The actual commit will only happen when the PR is merged
+    - name: Commit changes
+      if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+
+        # Add, commit, and push the changes to the user's branch
+        git add ${{ env.dockerfile_path }}/spec.yaml ${{ env.dockerfile_path }}/model_card.md
+        git commit -m "Update"
+
+        git push origin HEAD:${{ github.head_ref }}
