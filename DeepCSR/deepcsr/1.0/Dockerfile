@@ -41,7 +41,7 @@ RUN tar -xf CBSI.tar.gz
 RUN mkdir niftyreg-build
 ENV CMAKE_BUILD_TYPE=Release
 WORKDIR /app/niftyreg-build
-RUN cmake ../niftyreg-CBSI
+RUN cmake /app/niftyreg-CBSI
 RUN make
 RUN make install
 WORKDIR /app
@@ -49,10 +49,11 @@ RUN conda env create -f requirements.yml
 SHELL ["conda", "run", "-n", "deepcsr", "/bin/bash", "-c"]
 RUN git clone https://github.com/neuroneural/DeepCSR-fork.git
 WORKDIR /app/DeepCSR-fork/docker/nighres
+RUN pip install jcc
 RUN git checkout tags/docker1
 RUN ./build.sh
 RUN python3 -m pip install .
 RUN apt-get clean
 RUN pip cache purge
 RUN conda clean -a
-ENTRYPOINT ["/bin/bash",  "-l", "-c"]
+ENTRYPOINT ["/bin/bash", "-l", "-c"]
