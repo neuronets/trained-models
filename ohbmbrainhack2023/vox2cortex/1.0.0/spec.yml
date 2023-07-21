@@ -1,0 +1,41 @@
+#### container info
+image:
+  singularity: nobrainer-zoo_vox2cortex.sif
+  docker: neuronets/nobrainer-zoo:vox2cortex
+
+#### repository info
+repository:  
+    repo_url: "None"
+    committish: "None"
+    repo_download: False
+    repo_download_location: "None"
+    
+#### required fields for prediction
+inference:
+    prediction_script: "trained-models/ohbmbrainhack2023/vox2cortex/1.0.0/predict.py"
+    command: f"python {MODELS_PATH}/{model}/predict.py --conf_path {conf}"
+
+    #### input data characteristics
+    data_spec:
+      conf: {n_files: 1}
+
+#### model information and help
+model:
+    model_name: "vox2cortex"
+    description: "Vox2Cortex: Fast Explicit Reconstruction of Cortical Surfaces from 3D MRI Scans with Geometric Deep Neural Networks"
+    structure: "CN and GNN"
+    training_mode: "supervised"
+    model_url: "https://github.com/neuroneural/Vox2cortex_fork/"
+    Zoo_function: "predict"
+    example: "nobrainer-zoo predict -m ohbmbrainhack2023/vox2cortex/1.0.0 <path_to_input>"
+    note: ""
+    input_file_type: "yaml"
+    model_details: ""
+    intended_use: ""
+    factors: ""
+    metrics: ""
+    eval_data: ""
+    training_data: ""
+    quant_analyses: ""
+    ethical_considerations: ""
+    caveats_recs: ""
