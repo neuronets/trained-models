@@ -5,15 +5,15 @@ image:
 
 #### repository info
 repository:  
-    repo_url: "None"
+    repo_url: "https://github.com/ai-med/Vox2Cortex"
     committish: "None"
     repo_download: true
-    repo_download_location: "None"
+    repo_download_location: f"{REPO_PATH}/{model_nm}-{ver}"
     
 #### required fields for prediction
 inference:
     prediction_script: "trained-models/ohbmbrainhack2023/vox2cortex/1.0.0/evaluate.py"
-    command: f"python {MODELS_PATH}/{model}/predict.py --conf_path {conf}"
+    command: f"python {MODELS_PATH}/{model}/evaluate.py --conf_path {conf}"
 
     #### input data characteristics
     data_spec:
@@ -27,7 +27,7 @@ model:
     training_mode: "supervised"
     model_url: "https://github.com/neuroneural/Vox2cortex_fork/"
     Zoo_function: "predict"
-    example: "nobrainer-zoo predict -m ohbmbrainhack2023/vox2cortex/1.0.0 <path_to_input>"
+    example: "nobrainer-zoo evaluate -m ohbmbrainhack2023/vox2cortex/1.0.0 <path_to_input>"
     note: ""
     input_file_type: "yaml"
     model_details: ""
