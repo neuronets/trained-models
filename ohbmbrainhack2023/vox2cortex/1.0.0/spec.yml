@@ -1,18 +1,18 @@
 #### container info
 image:
-  singularity: nobrainer-zoo_vox2cortex.sif
-  docker: neuronets/nobrainer-zoo:vox2cortex
+  singularity: nobrainer-ohbmbrainhack2023.sif
+  docker: neuronets/nobrainer-zoo:ohbmbrainhack2023
 
 #### repository info
 repository:  
     repo_url: "None"
     committish: "None"
-    repo_download: False
+    repo_download: true
     repo_download_location: "None"
     
 #### required fields for prediction
 inference:
-    prediction_script: "trained-models/ohbmbrainhack2023/vox2cortex/1.0.0/predict.py"
+    prediction_script: "trained-models/ohbmbrainhack2023/vox2cortex/1.0.0/evaluate.py"
     command: f"python {MODELS_PATH}/{model}/predict.py --conf_path {conf}"
 
     #### input data characteristics
