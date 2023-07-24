@@ -22,8 +22,8 @@ This README provides instructions for deploying a trained model using the **`nob
     - **Create a file named spec.yaml (you can refer to the template: docs/spec.yaml and documentation on docs/spec_file.md):**
     - This is the file that specifies the command for your script to run either predict, train, generate, etc.
     - Various examples of spec.yaml files can be found under each models ‘<org>/<model_name>/<version>’ folder.
-        1. [https://github.com/gaiborjosue/trained-models/blob/master/neuronets/ams/0.1.0/spec.yaml](https://github.com/gaiborjosue/trained-models/blob/master/neuronets/ams/0.1.0/spec.yaml)
-        2. [https://github.com/gaiborjosue/trained-models/blob/master/UCL/SynthSR/1.0.0/general/spec.yaml](https://github.com/gaiborjosue/trained-models/blob/master/UCL/SynthSR/1.0.0/general/spec.yaml)
+        1. [https://github.com/neuronets/trained-models/blob/master/neuronets/ams/0.1.0/spec.yaml](https://github.com/neuronets/trained-models/blob/master/neuronets/ams/0.1.0/spec.yaml)
+        2. [https://github.com/neuronets/trained-models/blob/master/UCL/SynthSR/1.0.0/general/spec.yaml](https://github.com/neuronets/trained-models/blob/master/UCL/SynthSR/1.0.0/general/spec.yaml)
     - **Upload your predict.py file that you use to process the model and give an output. Note: If you are using any other feature such as train or generate, add those files as well.**
     - **Depending on your Dockerfile you can add either a requirements.txt or a requirements.yaml file including all the necessary dependencies and libraries your container needs so that the prediction can run smoothly.**
     - **Add your Dockerfile.**
