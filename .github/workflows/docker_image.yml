@@ -99,8 +99,9 @@ jobs:
   
     - name: Fetch latest changes
       if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
-      run: git pull origin ${{ steps.branch_name.outputs.branch }}
 
+      run: git pull --rebase origin ${{ steps.branch_name.outputs.branch }}
+      
     # Commit the changes (spec.yaml file and model card)
     - name: Commit changes
       if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
