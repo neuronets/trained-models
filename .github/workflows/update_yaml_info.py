@@ -1,4 +1,4 @@
-import yaml
+import oyaml
 import os
 
 def edit_spec_yaml(path, model_name):
@@ -11,7 +11,7 @@ def edit_spec_yaml(path, model_name):
 
     # Read the content of the spec.yaml file
     with open(spec_file, "r") as f:
-        spec_data = yaml.safe_load(f)
+        spec_data = oyaml.safe_load(f)
 
     # Update the container info keys
     # The key is "image"
@@ -24,7 +24,7 @@ def edit_spec_yaml(path, model_name):
 
     # Write the updated data back to the spec.yaml file
     with open(spec_file, "w") as f:
-        yaml.dump(spec_data, f)
+        oyaml.dump(spec_data, f)
 
     return True
 
