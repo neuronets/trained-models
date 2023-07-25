@@ -1,0 +1,192 @@
+id: https://w3id.org/linkml/examples/personinfo
+name: personinfo
+prefixes:
+  linkml: https://w3id.org/linkml/
+  personinfo: https://w3id.org/linkml/examples/personinfo
+imports:
+  - linkml:types
+default_range: string
+default_prefix: personinfo
+  
+classes:
+  ModelCard:
+    attributes:
+      # Basic Information About the Model
+      organization:
+        range: string
+        description: "Person or Organization Developing Model."
+      modelDate:
+        range: string
+        description: "Model Date."
+      modelVersion:
+        range: float
+        description: "Model Version."
+      modelType:
+        range: string
+        description: "Model Type."
+      trainingApproaches:
+        range: string
+        description: "Information About Training Algorithms, Parameters, Fairness Constraints, or Other Applied Approaches, and Features."
+      moreInformation:
+        range: string
+        description: "Paper or Other Resource for More Information."
+      citationDetails:
+        range: string
+        description: "Citation Details."
+      contactInfo:
+        range: string
+        description: "Where to Send Questions or Comments About the Model."
+
+      # Intended Use
+      primaryIntendedUses:
+        range: string
+        description: "Primary Intended Uses."
+      primaryIntendedUsers:
+        range: string
+        description: "Primary Intended Users."
+      outOfScopeUseCases:
+        range: string
+        description: "Out-of-Scope Use Cases."
+
+      # Factors
+      relevantFactors:
+        range: string
+        description: "Relevant Factors."
+      evaluationFactors:
+        range: string
+        description: "Evaluation Factors."
+
+      # Metrics
+      modelPerformanceMeasures:
+        range: string
+        description: "Model Performance Measures."
+      decisionThresholds:
+        range: string
+        description: "Decision Thresholds."
+      variationApproaches:
+        range: string
+        description: "Variation Approaches."
+
+      # Evaluation Data
+      evaluationDatasets:
+        range: string
+        description: "Datasets for Evaluation."
+      evaluationMotivation:
+        range: string
+        description: "Motivation for Evaluation."
+      evaluationPreprocessing:
+        range: string
+        description: "Preprocessing for Evaluation."
+
+      # Training Data
+      trainingDatasets:
+        range: string
+        description: "Datasets for Training."
+      trainingMotivation:
+        range: string
+        description: "Motivation for Training."
+      trainingPreprocessing:
+        range: string
+        description: "Preprocessing for Training."
+
+      # Quantitative Analyses
+      unitaryResults:
+        range: string
+        description: "Unitary Results."
+      intersectionalResults:
+        range: string
+        description: "Intersectional Results."
+
+      # Ethical Considerations
+      ethicalConsiderations:
+        range: string
+        description: "Description of the ethical considerations of your model."
+
+      # Caveats and Recommendations
+      caveatsAndRecommendations:
+        range: string
+        description: "Description of the caveats and recommendations of your model."
+
+  ModelSpec:
+    attributes:
+      dockerImage:
+        range: string
+        required: true
+      singularityImage:
+        range: string
+        required: true
+      command:
+        range: string
+        required: true
+      n_files:
+        range: integer
+        required: true
+      on_files:
+        range: integer
+        required: true
+      prediction_script:
+        range: string
+        required: true
+      total:
+        range: integer
+      train:
+        range: integer
+      evaluate:
+        range: integer
+      test:
+        range: integer
+      male:
+        range: integer
+      female:
+        range: integer
+      age_histogram:
+        range: string
+      race:
+        range: string
+      imaging_contrast_info:
+        range: string
+      dataset_sources:
+        range: string
+      number_of_sites:
+        range: integer
+      sites:
+        range: string
+      scanner_models:
+        range: string
+      hardware:
+        range: string
+      input_shape:
+        range: string
+      block_shape:
+        range: string
+      n_classes:
+        range: integer
+      lr:
+        range: string
+      n_epochs:
+        range: integer
+      total_batch_size:
+        range: integer
+      number_of_gpus:
+        range: integer
+      loss_function:
+        range: string
+      metrics:
+        range: string
+      data_preprocessing:
+        range: string
+      data_augmentation:
+        range: string
+        
+  Container:
+    tree_root: true
+    attributes:
+      modelcards:
+        multivalued: true
+        inlined_as_list: true
+        range: ModelCard
+      modelSpecs:
+        multivalued: true
+        inlined_as_list: true
+        range: ModelSpec
+      

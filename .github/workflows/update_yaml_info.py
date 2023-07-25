@@ -37,3 +37,4 @@ if __name__ == "__main__":
         print("Spec.yaml file updated successfully!")
     else:
         print("Failed to update spec.yaml file.")
+        print("Failed to update spec.yaml file.")

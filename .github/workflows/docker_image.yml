@@ -29,8 +29,13 @@ jobs:
           pip install pyyaml
           pip install oyaml
 
+    # Install linkml
+    - name: Install LinkML
+      run: pip install linkml
+
     # Check if the PR description "Organization Name" has a value and matches the one in the model card
     - name: Check PR description
+      if: github.event_name == 'pull_request' && github.event.pull_request.merged != true
       id: check_pr_desc
       run: |
           python ./.github/workflows/check_pr_description.py
@@ -38,9 +43,11 @@ jobs:
     
     # Step 3: If the previous step failed, leave a comment and close the PR
     - name: Leave a comment and close PR
-      if: steps.check_pr_desc.outcome != 'success'
+      if: steps.check_pr_desc.outcome != 'success' && github.event_name == 'pull_request' && github.event.pull_request.merged != true
       run: |
-        echo "The PR description key 'Organization Name' is empty. Please fill in the required information." | gh pr comment ${{ github.event.number }}
+        comment_body="The PR description key 'Organization Name' is empty. Please fill in the required information."
+        
+        gh pr comment ${{ github.event.number }} --body "$comment_body"
 
         gh pr close ${{ github.event.number }}
 
@@ -90,9 +97,16 @@ jobs:
     - name: Build Docker image
       run: docker build -t ${{ env.image_name }} ${{ env.dockerfile_path }}
     
-    # Push the Docker image to Docker Hub (only if the PR is merged)
-    - name: Push Docker image
+      
+    # Commit the changes (spec.yaml file and model card)
+    - name: Commit changes
       if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
       run: |
-        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        docker push ${{ env.image_name }}
+        git config --global user.name "gaiborjosue"
+        git config --global user.email "gaibor.edward@cebi.edu.ec"
+
+        # Add, commit, and push the changes to the user's branch
+        git add ${{ env.dockerfile_path }}/spec.yaml ${{ env.dockerfile_path }}/model_card.md
+        git commit -m "Update"
+
+        git push origin HEAD:${{ github.head_ref }}
