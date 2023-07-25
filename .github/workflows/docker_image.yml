@@ -96,11 +96,6 @@ jobs:
     - name: Update yaml file
       id: update_yaml
       run: python ./.github/workflows/update_yaml_info.py
-  
-    - name: Fetch latest changes
-      if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
-
-      run: git pull --rebase origin ${{ steps.branch_name.outputs.branch }}
       
     # Commit the changes (spec.yaml file and model card)
     - name: Commit changes
@@ -113,5 +108,7 @@ jobs:
         git add ${{ env.dockerfile_path }}/spec.yaml ${{ env.dockerfile_path }}/model_card.yaml
 
         git commit -m "Update"
+
+        git pull --rebase origin ${{ steps.branch_name.outputs.branch }}
 
         git push origin HEAD:${{ github.head_ref }}
