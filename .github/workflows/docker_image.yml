@@ -23,6 +23,10 @@ jobs:
       with:
         python-version: 3.9
 
+    - name: Get branch name
+      id: branch_name
+      run: echo "::set-output name=branch::${GITHUB_HEAD_REF}"
+      
     # Install yaml
     - name: Install yaml and oyaml
       run: |
@@ -92,6 +96,10 @@ jobs:
     - name: Update yaml file
       id: update_yaml
       run: python ./.github/workflows/update_yaml_info.py
+  
+    - name: Fetch latest changes
+      if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
+      run: git pull origin ${{ steps.branch_name.outputs.branch }}
 
     # Commit the changes (spec.yaml file and model card)
     - name: Commit changes
