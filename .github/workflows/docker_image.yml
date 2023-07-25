@@ -92,12 +92,7 @@ jobs:
     - name: Update yaml file
       id: update_yaml
       run: python ./.github/workflows/update_yaml_info.py
-    
-    # Build the Docker image)
-    - name: Build Docker image
-      run: docker build -t ${{ env.image_name }} ${{ env.dockerfile_path }}
-    
-      
+
     # Commit the changes (spec.yaml file and model card)
     - name: Commit changes
       if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
@@ -106,7 +101,8 @@ jobs:
         git config --global user.email "gaibor.edward@cebi.edu.ec"
 
         # Add, commit, and push the changes to the user's branch
-        git add ${{ env.dockerfile_path }}/spec.yaml ${{ env.dockerfile_path }}/model_card.md
+        git add ${{ env.dockerfile_path }}/spec.yaml ${{ env.dockerfile_path }}/model_card.yaml
+
         git commit -m "Update"
 
         git push origin HEAD:${{ github.head_ref }}
