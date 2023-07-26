@@ -6,10 +6,9 @@ def create_model_card(card_path):
     # Load the infile yaml file
     with open(card_path, 'r') as file:
         data = oyaml.safe_load(file)
-
     # Extract the model details from the yaml file
-    model_details = data.get('Model Details', {})
-    model_intended_use = data.get('Intended Use', {})
+    model_details = data.get('Model_details', {})
+    model_intended_use = data.get('Intended_use', {})
     model_factors = data.get('Factors', {})
     model_metrics = data.get('Metrics', {})
     model_evaluation_data = data.get('Evaluation Data', {})
@@ -22,37 +21,28 @@ def create_model_card(card_path):
     # Create a ModelCard object
     model_card = ModelCard(
         organization=model_details.get('Organization', None),
-        modelDate=model_details.get('Model Date', None),
-        modelVersion=model_details.get('Model Version', None),
-        modelType=model_details.get('Model Type', None),
-        moreInformation=model_details.get('Information About the Model', {}).get(
-            'Paper or Other Resource for More Information', None),
-        citationDetails=model_details.get('Citation Details', None),
-        contactInfo=model_details.get(
-            'Where to Send Questions or Comments About the Model', None),
-        primaryIntendedUses=model_intended_use.get(
-            'Primary Intended Uses', None),
-        primaryIntendedUsers=model_intended_use.get(
-            'Primary Intended Users', None),
-        outOfScopeUseCases=model_intended_use.get(
-            'Out-of-Scope Use Cases', None),
-        relevantFactors=model_factors.get('Relevant Factors', None),
-        evaluationFactors=model_factors.get('Evaluation Factors', None),
-        modelPerformanceMeasures=model_metrics.get(
-            'Model Performance Measures', None),
+        modelDate=model_details.get('Model_date', None),
+        modelVersion=model_details.get('Model_version', None),
+        modelType=model_details.get('Model_type', None),
+        moreInformation=model_details.get('More_information', None),
+        citationDetails=model_details.get('Citation_details', None),
+        contactInfo=model_details.get('Contact_info', None),
+        primaryIntendedUses=model_intended_use.get('Primary_intended_uses', None),
+        primaryIntendedUsers=model_intended_use.get('Primary_intended_users', None),
+        outOfScopeUseCases=model_intended_use.get('Out_of_scope_use_cases', None),
+        relevantFactors=model_factors.get('Relevant_factors', None),
+        evaluationFactors=model_factors.get('Evaluation_factors', None),
+        modelPerformanceMeasures=model_metrics.get('Model Performance Measures', None),
         decisionThresholds=model_metrics.get('Decision Thresholds', None),
         variationApproaches=model_metrics.get('Variation Approaches', None),
         evaluationDatasets=model_evaluation_data.get('Datasets', None),
         evaluationMotivation=model_evaluation_data.get('Motivation', None),
-        evaluationPreprocessing=model_evaluation_data.get(
-            'Preprocessing', None),
+        evaluationPreprocessing=model_evaluation_data.get('Preprocessing', None),
         trainingDatasets=model_training_data.get('Datasets', None),
         trainingMotivation=model_training_data.get('Motivation', None),
         trainingPreprocessing=model_training_data.get('Preprocessing', None),
-        unitaryResults=model_quantitative_analyses.get(
-            'Unitary Results', None),
-        intersectionalResults=model_quantitative_analyses.get(
-            'Intersectional Results', None),
+        unitaryResults=model_quantitative_analyses.get('Unitary Results', None),
+        intersectionalResults=model_quantitative_analyses.get('Intersectional Results', None),
         ethicalConsiderations=model_ethical_considerations,
         caveatsAndRecommendations=model_caveats_and_recommendations
     )
@@ -123,6 +113,7 @@ def create_spec_yaml(model_path):
     model_inference = data.get('inference', {})
     model_training_data_info = data.get('training_data_info', {})
 
+    print(data)
     # Create a ModelSpec object
     model_spec = ModelSpec(
         dockerImage=model_image.get('docker', None),

@@ -96,7 +96,7 @@ jobs:
     - name: Update yaml file
       id: update_yaml
       run: python ./.github/workflows/update_yaml_info.py
-      
+
     # Commit the changes (spec.yaml file and model card)
     - name: Commit changes
       if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
@@ -111,4 +111,4 @@ jobs:
 
         git pull --rebase origin ${{ steps.branch_name.outputs.branch }}
 
-        git push origin HEAD:${{ github.head_ref }}
+        git push origin HEAD:master
