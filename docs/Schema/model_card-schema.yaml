@@ -115,18 +115,22 @@ classes:
       singularityImage:
         range: string
         required: true
+      repoUrl:
+        range: string
+      committish:
+        range: string
+      repoDownload:
+        range: string
+      repoDownloadLocation:
+        range: string
       command:
         range: string
-        required: true
       n_files:
         range: integer
-        required: true
       on_files:
         range: integer
-        required: true
       prediction_script:
         range: string
-        required: true
       total:
         range: integer
       train:
@@ -136,9 +140,9 @@ classes:
       test:
         range: integer
       male:
-        range: integer
+        range: boolean
       female:
-        range: integer
+        range: boolean
       age_histogram:
         range: string
       race:

@@ -97,17 +97,30 @@ jobs:
       id: update_yaml
       run: python ./.github/workflows/update_yaml_info.py
 
+    # Build the Docker image
+    - name: Build Docker image
+      id: build_image
+      run: |
+          docker build -t ${{ env.image_name }} ${{ env.dockerfile_path }}
+    
+    # Push the Docker image to Docker Hub (only if the PR is merged)
+    - name: Push Docker image
+      if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
+      run: |
+        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        docker push ${{ env.image_name }}
+
     # Commit the changes (spec.yaml file and model card)
     - name: Commit changes
       if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
       run: |
-        git config --global user.name "gaiborjosue"
-        git config --global user.email "gaibor.edward@cebi.edu.ec"
+        git config --global user.name "trained_models"
+        git config --global user.email "trained_models"
 
         # Add, commit, and push the changes to the user's branch
-        git add ${{ env.dockerfile_path }}/spec.yaml ${{ env.dockerfile_path }}/model_card.yaml
+        git add ${{ env.dockerfile_path }}/spec.yaml
 
-        git commit -m "Update"
+        git commit -m "Updated spec.yaml"
 
         git pull --rebase origin master
 

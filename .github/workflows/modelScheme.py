@@ -1,5 +1,5 @@
 # Auto generated from model_card-schema.yaml by pythongen.py version: 0.9.0
-# Generation date: 2023-07-25T10:24:13
+# Generation date: 2023-07-26T14:06:54
 # Schema: personinfo
 #
 # id: https://w3id.org/linkml/examples/personinfo
@@ -21,7 +21,8 @@ from linkml_runtime.utils.formatutils import camelcase, underscore, sfx
 from linkml_runtime.utils.enumerations import EnumDefinitionImpl
 from rdflib import Namespace, URIRef
 from linkml_runtime.utils.curienamespace import CurieNamespace
-from linkml_runtime.linkml_model.types import Float, Integer, String
+from linkml_runtime.linkml_model.types import Boolean, Float, Integer, String
+from linkml_runtime.utils.metamodelcore import Bool
 
 metamodel_version = "1.7.0"
 version = None
@@ -182,8 +183,8 @@ class ModelSpec(YAMLRoot):
     train: Optional[int] = None
     evaluate: Optional[int] = None
     test: Optional[int] = None
-    male: Optional[int] = None
-    female: Optional[int] = None
+    male: Optional[Union[bool, Bool]] = None
+    female: Optional[Union[bool, Bool]] = None
     age_histogram: Optional[str] = None
     race: Optional[str] = None
     imaging_contrast_info: Optional[str] = None
@@ -251,11 +252,11 @@ class ModelSpec(YAMLRoot):
         if self.test is not None and not isinstance(self.test, int):
             self.test = int(self.test)
 
-        if self.male is not None and not isinstance(self.male, int):
-            self.male = int(self.male)
+        if self.male is not None and not isinstance(self.male, Bool):
+            self.male = Bool(self.male)
 
-        if self.female is not None and not isinstance(self.female, int):
-            self.female = int(self.female)
+        if self.female is not None and not isinstance(self.female, Bool):
+            self.female = Bool(self.female)
 
         if self.age_histogram is not None and not isinstance(self.age_histogram, str):
             self.age_histogram = str(self.age_histogram)
@@ -469,10 +470,10 @@ slots.modelSpec__test = Slot(uri=PERSONINFO.test, name="modelSpec__test", curie=
                    model_uri=PERSONINFO.modelSpec__test, domain=None, range=Optional[int])
 
 slots.modelSpec__male = Slot(uri=PERSONINFO.male, name="modelSpec__male", curie=PERSONINFO.curie('male'),
-                   model_uri=PERSONINFO.modelSpec__male, domain=None, range=Optional[int])
+                   model_uri=PERSONINFO.modelSpec__male, domain=None, range=Optional[Union[bool, Bool]])
 
 slots.modelSpec__female = Slot(uri=PERSONINFO.female, name="modelSpec__female", curie=PERSONINFO.curie('female'),
-                   model_uri=PERSONINFO.modelSpec__female, domain=None, range=Optional[int])
+                   model_uri=PERSONINFO.modelSpec__female, domain=None, range=Optional[Union[bool, Bool]])
 
 slots.modelSpec__age_histogram = Slot(uri=PERSONINFO.age_histogram, name="modelSpec__age_histogram", curie=PERSONINFO.curie('age_histogram'),
                    model_uri=PERSONINFO.modelSpec__age_histogram, domain=None, range=Optional[str])

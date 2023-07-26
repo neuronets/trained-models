@@ -21,8 +21,8 @@ training_data_info:
     evaluate: 1
     test: 1
   biological_sex:
-    male: true
-    female: 1
+    male:
+    female:
   age_histogram: '1'
   race: '1'
   imaging_contrast_info: '1'

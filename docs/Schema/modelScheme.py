@@ -1,5 +1,5 @@
 # Auto generated from model_card-schema.yaml by pythongen.py version: 0.9.0
-# Generation date: 2023-07-24T16:34:06
+# Generation date: 2023-07-26T14:06:54
 # Schema: personinfo
 #
 # id: https://w3id.org/linkml/examples/personinfo
@@ -21,7 +21,8 @@ from linkml_runtime.utils.formatutils import camelcase, underscore, sfx
 from linkml_runtime.utils.enumerations import EnumDefinitionImpl
 from rdflib import Namespace, URIRef
 from linkml_runtime.utils.curienamespace import CurieNamespace
-from linkml_runtime.linkml_model.types import Float, Integer, String
+from linkml_runtime.linkml_model.types import Boolean, Float, Integer, String
+from linkml_runtime.utils.metamodelcore import Bool
 
 metamodel_version = "1.7.0"
 version = None
@@ -170,16 +171,20 @@ class ModelSpec(YAMLRoot):
 
     dockerImage: str = None
     singularityImage: str = None
-    command: str = None
-    n_files: int = None
-    on_files: int = None
-    prediction_script: str = None
+    repoUrl: Optional[str] = None
+    committish: Optional[str] = None
+    repoDownload: Optional[str] = None
+    repoDownloadLocation: Optional[str] = None
+    command: Optional[str] = None
+    n_files: Optional[int] = None
+    on_files: Optional[int] = None
+    prediction_script: Optional[str] = None
     total: Optional[int] = None
     train: Optional[int] = None
     evaluate: Optional[int] = None
     test: Optional[int] = None
-    male: Optional[int] = None
-    female: Optional[int] = None
+    male: Optional[Union[bool, Bool]] = None
+    female: Optional[Union[bool, Bool]] = None
     age_histogram: Optional[str] = None
     race: Optional[str] = None
     imaging_contrast_info: Optional[str] = None
@@ -211,24 +216,28 @@ class ModelSpec(YAMLRoot):
         if not isinstance(self.singularityImage, str):
             self.singularityImage = str(self.singularityImage)
 
-        if self._is_empty(self.command):
-            self.MissingRequiredField("command")
-        if not isinstance(self.command, str):
+        if self.repoUrl is not None and not isinstance(self.repoUrl, str):
+            self.repoUrl = str(self.repoUrl)
+
+        if self.committish is not None and not isinstance(self.committish, str):
+            self.committish = str(self.committish)
+
+        if self.repoDownload is not None and not isinstance(self.repoDownload, str):
+            self.repoDownload = str(self.repoDownload)
+
+        if self.repoDownloadLocation is not None and not isinstance(self.repoDownloadLocation, str):
+            self.repoDownloadLocation = str(self.repoDownloadLocation)
+
+        if self.command is not None and not isinstance(self.command, str):
             self.command = str(self.command)
 
-        if self._is_empty(self.n_files):
-            self.MissingRequiredField("n_files")
-        if not isinstance(self.n_files, int):
+        if self.n_files is not None and not isinstance(self.n_files, int):
             self.n_files = int(self.n_files)
 
-        if self._is_empty(self.on_files):
-            self.MissingRequiredField("on_files")
-        if not isinstance(self.on_files, int):
+        if self.on_files is not None and not isinstance(self.on_files, int):
             self.on_files = int(self.on_files)
 
-        if self._is_empty(self.prediction_script):
-            self.MissingRequiredField("prediction_script")
-        if not isinstance(self.prediction_script, str):
+        if self.prediction_script is not None and not isinstance(self.prediction_script, str):
             self.prediction_script = str(self.prediction_script)
 
         if self.total is not None and not isinstance(self.total, int):
@@ -243,11 +252,11 @@ class ModelSpec(YAMLRoot):
         if self.test is not None and not isinstance(self.test, int):
             self.test = int(self.test)
 
-        if self.male is not None and not isinstance(self.male, int):
-            self.male = int(self.male)
+        if self.male is not None and not isinstance(self.male, Bool):
+            self.male = Bool(self.male)
 
-        if self.female is not None and not isinstance(self.female, int):
-            self.female = int(self.female)
+        if self.female is not None and not isinstance(self.female, Bool):
+            self.female = Bool(self.female)
 
         if self.age_histogram is not None and not isinstance(self.age_histogram, str):
             self.age_histogram = str(self.age_histogram)
@@ -424,17 +433,29 @@ slots.modelSpec__dockerImage = Slot(uri=PERSONINFO.dockerImage, name="modelSpec_
 slots.modelSpec__singularityImage = Slot(uri=PERSONINFO.singularityImage, name="modelSpec__singularityImage", curie=PERSONINFO.curie('singularityImage'),
                    model_uri=PERSONINFO.modelSpec__singularityImage, domain=None, range=str)
 
+slots.modelSpec__repoUrl = Slot(uri=PERSONINFO.repoUrl, name="modelSpec__repoUrl", curie=PERSONINFO.curie('repoUrl'),
+                   model_uri=PERSONINFO.modelSpec__repoUrl, domain=None, range=Optional[str])
+
+slots.modelSpec__committish = Slot(uri=PERSONINFO.committish, name="modelSpec__committish", curie=PERSONINFO.curie('committish'),
+                   model_uri=PERSONINFO.modelSpec__committish, domain=None, range=Optional[str])
+
+slots.modelSpec__repoDownload = Slot(uri=PERSONINFO.repoDownload, name="modelSpec__repoDownload", curie=PERSONINFO.curie('repoDownload'),
+                   model_uri=PERSONINFO.modelSpec__repoDownload, domain=None, range=Optional[str])
+
+slots.modelSpec__repoDownloadLocation = Slot(uri=PERSONINFO.repoDownloadLocation, name="modelSpec__repoDownloadLocation", curie=PERSONINFO.curie('repoDownloadLocation'),
+                   model_uri=PERSONINFO.modelSpec__repoDownloadLocation, domain=None, range=Optional[str])
+
 slots.modelSpec__command = Slot(uri=PERSONINFO.command, name="modelSpec__command", curie=PERSONINFO.curie('command'),
-                   model_uri=PERSONINFO.modelSpec__command, domain=None, range=str)
+                   model_uri=PERSONINFO.modelSpec__command, domain=None, range=Optional[str])
 
 slots.modelSpec__n_files = Slot(uri=PERSONINFO.n_files, name="modelSpec__n_files", curie=PERSONINFO.curie('n_files'),
-                   model_uri=PERSONINFO.modelSpec__n_files, domain=None, range=int)
+                   model_uri=PERSONINFO.modelSpec__n_files, domain=None, range=Optional[int])
 
 slots.modelSpec__on_files = Slot(uri=PERSONINFO.on_files, name="modelSpec__on_files", curie=PERSONINFO.curie('on_files'),
-                   model_uri=PERSONINFO.modelSpec__on_files, domain=None, range=int)
+                   model_uri=PERSONINFO.modelSpec__on_files, domain=None, range=Optional[int])
 
 slots.modelSpec__prediction_script = Slot(uri=PERSONINFO.prediction_script, name="modelSpec__prediction_script", curie=PERSONINFO.curie('prediction_script'),
-                   model_uri=PERSONINFO.modelSpec__prediction_script, domain=None, range=str)
+                   model_uri=PERSONINFO.modelSpec__prediction_script, domain=None, range=Optional[str])
 
 slots.modelSpec__total = Slot(uri=PERSONINFO.total, name="modelSpec__total", curie=PERSONINFO.curie('total'),
                    model_uri=PERSONINFO.modelSpec__total, domain=None, range=Optional[int])
@@ -449,10 +470,10 @@ slots.modelSpec__test = Slot(uri=PERSONINFO.test, name="modelSpec__test", curie=
                    model_uri=PERSONINFO.modelSpec__test, domain=None, range=Optional[int])
 
 slots.modelSpec__male = Slot(uri=PERSONINFO.male, name="modelSpec__male", curie=PERSONINFO.curie('male'),
-                   model_uri=PERSONINFO.modelSpec__male, domain=None, range=Optional[int])
+                   model_uri=PERSONINFO.modelSpec__male, domain=None, range=Optional[Union[bool, Bool]])
 
 slots.modelSpec__female = Slot(uri=PERSONINFO.female, name="modelSpec__female", curie=PERSONINFO.curie('female'),
-                   model_uri=PERSONINFO.modelSpec__female, domain=None, range=Optional[int])
+                   model_uri=PERSONINFO.modelSpec__female, domain=None, range=Optional[Union[bool, Bool]])
 
 slots.modelSpec__age_histogram = Slot(uri=PERSONINFO.age_histogram, name="modelSpec__age_histogram", curie=PERSONINFO.curie('age_histogram'),
                    model_uri=PERSONINFO.modelSpec__age_histogram, domain=None, range=Optional[str])
