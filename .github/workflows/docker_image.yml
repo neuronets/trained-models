@@ -109,6 +109,6 @@ jobs:
 
         git commit -m "Update"
 
-        git pull --rebase origin ${{ steps.branch_name.outputs.branch }}
+        git pull --rebase origin master
 
         git push origin HEAD:master
