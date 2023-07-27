@@ -127,4 +127,4 @@ This README provides instructions for deploying a trained model using the **`nob
 
 After testing your model locally, you can create a pull request with your trained-models forked repository to merge your changes into the main **`trained-models`** repository.
 
-To do so, when creating a PR request, you will be prompted to fill in a template. Fill in the template with the required information, and remember that in 'Organization Name' you should put your model's parent folder since that is the organization name of your model (<org>/<model_name>/<version>).
+To do so, when creating a PR request, you will be prompted to fill in a template. Fill in the template with the required information, and remember that in 'Organization Name' you should put your model's parent folder since that is the organization name of your model (<org>/<model_name>/<version>). Also, input the model's version, it has to be the same as your version folder.

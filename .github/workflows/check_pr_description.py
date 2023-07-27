@@ -1,54 +1,15 @@
-import os
 import oyaml
-import sys
-
-# Get the PR description
-def get_pull_request_description():
-    # Fetch the GitHub Pull Request event payload using GitHub API
-    pr_event_url = os.environ.get('GITHUB_EVENT_PATH', None)
-    if pr_event_url is None:
-        print("Error: GITHUB_EVENT_PATH environment variable not set.")
-        exit()
-
-    with open(pr_event_url, 'r') as file:
-        pr_event_data = oyaml.safe_load(file)
-
-    # Extract the pull request description from the payload
-    pull_request_description = pr_event_data.get(
-        'pull_request', {}).get('body', None)
-
-    if pull_request_description is None:
-        print("Error: Pull Request Description not found in the event payload.")
-        exit()
-    else:
-        return pull_request_description
-
-# Get the path to the model files
-def get_dockerfile_path(model_folder):
-    for root, _, files in os.walk(model_folder):
-        for file in files:
-            if file.lower() == "dockerfile":
-                return os.path.join(root)
-    return None
+import os
+from Module.utils import extract_organization_name, get_dockerfile_path, get_pull_request_description
 
 def check_pr():
-    pr_description = oyaml.safe_load(get_pull_request_description())
-
-    # Check if the pull request description key "Organization Name:" is empty or not
-    model_details = pr_description.get('Model Details', {})
-    org_name = model_details.get('Organization Name', None)
+    pr_description = get_pull_request_description()
+    org_name, version_folder, model_name = extract_organization_name(pr_description)
 
     # Check if org_name is empty or not
     if org_name:
-        # Check if it matches the org name in model card
-        # Cd into the org folder
-        os.chdir(org_name)
-
-        # Assign current directory to model_n
-        model_n = os.getcwd()
-
         # Path to the model card
-        model_card_path = get_dockerfile_path(model_n) + "/model_card.yaml"
+        model_card_path = get_dockerfile_path() + "/model_card.yaml"
 
         # Load the model card
         with open(model_card_path, 'r') as file:

@@ -1,6 +1,7 @@
 import oyaml
 import os
 from modelScheme import ModelCard, ModelSpec
+from Module.utils import get_dockerfile_path
 
 def create_model_card(card_path):
     # Load the infile yaml file
@@ -216,72 +217,10 @@ def create_spec_yaml(model_path):
     with open(model_path, 'w') as file:
         oyaml.dump(spec_data, file)
 
-def get_pull_request_description():
-    # Fetch the GitHub Pull Request event payload using GitHub API
-    pr_event_url = os.environ.get('GITHUB_EVENT_PATH', None)
-    if pr_event_url is None:
-        print("Error: GITHUB_EVENT_PATH environment variable not set.")
-        exit()
-
-    with open(pr_event_url, 'r') as file:
-        pr_event_data = oyaml.safe_load(file)
-
-    # Extract the pull request description from the payload
-    pull_request_description = pr_event_data.get(
-        'pull_request', {}).get('body', None)
-
-    if pull_request_description is None:
-        print("Error: Pull Request Description not found in the event payload.")
-        exit()
-    else:
-        return pull_request_description
-
-
-def get_dockerfile_path(model_folder):
-    for root, _, files in os.walk(model_folder):
-        for file in files:
-            if file.lower() == "dockerfile":
-                return os.path.join(root)
-    return None
-
-
-def extract_organization_name(pull_request_description):
-    try:
-        data = oyaml.safe_load(pull_request_description)
-        model_details = data.get('Model Details', {})
-        org_name = model_details.get('Organization Name', None)
-        return org_name
-    except Exception as e:
-        print(f"Error while parsing YAML: {e}")
-        return None
-
-
-def get_latest_model_name():
-    pull_request_description = get_pull_request_description()
-
-    org_folder = extract_organization_name(pull_request_description)
-
-    # Cd into the org folder
-    os.chdir(org_folder)
-
-    # Assign current directory to model_n
-    model_n = os.getcwd()
-
-    if model_n == 'objects':
-        exit()
-    else:
-        return model_n
-
 
 if __name__ == "__main__":
-    # Get the PR description
-    pr_description = oyaml.safe_load(get_pull_request_description())
-
-    # Get the latest model name
-    model_folder = get_latest_model_name()
-
     # Get the dockerfile path
-    dockerfile_path = get_dockerfile_path(model_folder)
+    dockerfile_path = get_dockerfile_path()
 
     # Create the model card and spec yaml file
     card_path = dockerfile_path + "/model_card.yaml"
