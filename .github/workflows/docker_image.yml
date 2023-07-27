@@ -21,12 +21,8 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: 3.9
+        python-version: 3.11
 
-    - name: Get branch name
-      id: branch_name
-      run: echo "::set-output name=branch::${GITHUB_HEAD_REF}"
-      
     # Install yaml
     - name: Install yaml and oyaml
       run: |
@@ -39,7 +35,7 @@ jobs:
 
     # Check if the PR description "Organization Name" has a value and matches the one in the model card
     - name: Check PR description
-      if: github.event_name == 'pull_request' && github.event.pull_request.merged != true
+      if: github.event.action == 'opened'
       id: check_pr_desc
       run: |
           python ./.github/workflows/check_pr_description.py
@@ -47,7 +43,7 @@ jobs:
     
     # Step 3: If the previous step failed, leave a comment and close the PR
     - name: Leave a comment and close PR
-      if: steps.check_pr_desc.outcome != 'success' && github.event_name == 'pull_request' && github.event.pull_request.merged != true
+      if: steps.check_pr_desc.outcome != 'success' && github.event.action == 'opened'
       run: |
         comment_body="The PR description key 'Organization Name' is empty. Please fill in the required information."
         
@@ -60,65 +56,62 @@ jobs:
 
     # Get the new model's folder name
     - name: Get latest model folder
-      id: get_latest_folder
       run: |
           python ./.github/workflows/get_latest_model_name.py > latest_folder.txt
     
     # Read the new model's folder name and save it as an environment variable
     - name: Read latest folder name
       id: read_latest_folder
-      run: echo "model_folder=$(cat latest_folder.txt)" >> $GITHUB_ENV
+      run: echo "model_folder=$(cat latest_folder.txt)" >> $GITHUB_OUTPUT
     
-    # Get the path to the Dockerfile
+    # Get the path to the Dockerfile's parent folder (version folder)
     - name: Get Dockerfile path
-      id: get_dockerfile_path
       run: |
           python ./.github/workflows/get_dockerfile_path.py > dockerfile_path.txt
     
     # Read the path to the Dockerfile and save it as an environment variable
     - name: Read Dockerfile path
       id: read_dockerfile_path
-      run: echo "dockerfile_path=$(cat dockerfile_path.txt)" >> $GITHUB_ENV
+      run: echo "dockerfile_path=$(cat dockerfile_path.txt)" >> $GITHUB_OUTPUT
     
     # Set the Docker image name
     - name: Set Docker image name
       id: set_image_name
       run: |
-          echo "image_name=neuronets/${{ env.model_folder }}" >> $GITHUB_ENV
+          echo "image_name=neuronets/${{ steps.read_latest_folder.outputs.model_folder }}" >> $GITHUB_OUTPUT
     
     # Create model card and spec.yaml file
     - name: Generate model card and spec files
-      id: generate_card_spec
       run: |
+          echo "## Model Card and Spec Validation :white_check_mark:" >> $GITHUB_STEP_SUMMARY
+          echo "Model Card and spec yaml files are being validated here with LinkML Schema" >> $GITHUB_STEP_SUMMARY
           python ./.github/workflows/create_model_card_and_spec.py
 
     # Update the model's spec.yaml file
     - name: Update yaml file
-      id: update_yaml
       run: python ./.github/workflows/update_yaml_info.py
 
     # Build the Docker image
     - name: Build Docker image
-      id: build_image
       run: |
-          docker build -t ${{ env.image_name }} ${{ env.dockerfile_path }}
+          docker build -t ${{ steps.set_image_name.outputs.image_name }} ${{ steps.read_dockerfile_path.outputs.dockerfile_path }}
     
     # Push the Docker image to Docker Hub (only if the PR is merged)
     - name: Push Docker image
-      if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
+      if: github.event.pull_request.merged == true
       run: |
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        docker push ${{ env.image_name }}
+        docker push ${{ steps.set_image_name.outputs.image_name }}
 
     # Commit the changes (spec.yaml file and model card)
     - name: Commit changes
-      if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
+      if: github.event.pull_request.merged == true
       run: |
         git config --global user.name "trained_models"
         git config --global user.email "trained_models"
 
         # Add, commit, and push the changes to the user's branch
-        git add ${{ env.dockerfile_path }}/spec.yaml
+        git add ${{ steps.read_dockerfile_path.outputs.dockerfile_path }}/spec.yaml
 
         git commit -m "Updated spec.yaml"
 
