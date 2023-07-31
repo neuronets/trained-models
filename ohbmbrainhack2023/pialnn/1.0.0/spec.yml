@@ -1,0 +1,41 @@
+#### container info
+image:
+  singularity: nobrainer-ohbmbrainhack2023.sif
+  docker: neuronets/nobrainer-zoo:ohbmbrainhack2023
+
+#### repository info
+repository:  
+    repo_url: "https://github.com/m-qiang/PialNN.git"
+    committish: "None"
+    repo_download: true
+    repo_download_location: "f"{REPO_PATH}/{model_nm}-{ver}""
+    
+#### required fields for prediction
+inference:
+    prediction_script: "trained-models/ohbmbrainhack2023/pialnn/1.0.0/predict.py"
+    command: f"python {MODELS_PATH}/{model}/predict.py --conf_path {conf}"
+
+    #### input data characteristics
+    data_spec:
+      conf: {n_files: 1}
+
+#### model information and help
+model:
+    model_name: "pialnn"
+    description: "PialNN: A Fast Deep Learning Framework for Cortical Pial Surface Reconstruction"
+    structure: "CNN"
+    training_mode: "supervised"
+    model_url: "https://github.com/neuroneural/PialNN_fork"
+    Zoo_function: "predict"
+    example: "nobrainer-zoo predict -m ohbmbrainhack2023/pialnn/1.0.0 <path_to_input>"
+    note: ""
+    input_file_type: "yaml"
+    model_details: ""
+    intended_use: ""
+    factors: ""
+    metrics: ""
+    eval_data: ""
+    training_data: ""
+    quant_analyses: ""
+    ethical_considerations: ""
+    caveats_recs: ""
