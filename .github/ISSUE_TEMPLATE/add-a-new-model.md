@@ -7,6 +7,9 @@ assignees: ''
 
 ---
 
-Model Organization:
-Model Version:
-Model Name:
+```yaml
+Model Details:
+  Model Organization:
+  Model Version:
+  Model Name:
+```
