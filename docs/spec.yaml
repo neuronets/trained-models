@@ -10,54 +10,6 @@ repository:
     repo_download:
     repo_download_location:
 
-train:
-  #### Train Script
-  train_script: [Path to the training script goes here]
-
-  #### General Settings
-  name: [Model name goes here]
-  is_train: [Specify if it's training mode (true/false) goes here]
-  #use_visdom: [Specify if Visdom is used for visualization (true/false) goes here]
-  #visdom_port: [Port number for Visdom visualization goes here]
-
-  #### Datasets
-  n_classes: [Number of classes goes here]
-  dataset_train:
-    data_location: [Location of training data goes here]
-    shuffle_buffer_size: [Shuffle buffer size goes here]
-    block_shape: [Block shape goes here]
-    volume_shape: [Volume shape goes here]
-    batch_size: [Batch size for training goes here]
-    augment: [Specify if data augmentation is used (true/false) goes here]
-    n_train: [Number of training samples goes here]
-    num_parallel_calls: [Number of parallel calls goes here]
-
-  dataset_test:
-    data_location: [Location of test data goes here]
-    shuffle_buffer_size: [Shuffle buffer size goes here]
-    block_shape: [Block shape goes here]
-    volume_shape: [Volume shape goes here]
-    batch_size: [Batch size for testing goes here]
-    n_test: [Number of test samples goes here]
-    num_parallel_calls: [Number of parallel calls goes here]
-    augment: [Specify if data augmentation is used (true/false) goes here]
-
-  #### Network Structures
-  network:
-    model: [Model architecture goes here]
-    batchnorm: [Specify if batch normalization is used (true/false) goes here]
-
-  #### Training Settings: Learning rate scheme, loss
-  training:
-    epoch: [Number of epochs goes here]
-    lr: [Learning rate goes here]
-    loss: [Loss function goes here]
-    metrics: [List of evaluation metrics goes here]
-
-  #### Logger
-  logger:
-    ckpt_path: [Checkpoint path goes here]
-
 #### Training Data Characteristics
 training_data_info:
   data_number:
@@ -89,24 +41,3 @@ training_data_info:
     metrics: [List of evaluation metrics used for training goes here]
     data_preprocessing: [Description or details about the data preprocessing steps goes here]
     data_augmentation: [Description or details about the data augmentation techniques used goes here]
-
-#### Model Information and Help
-model:
-  model_name: [Model name goes here]
-  description: [Brief description of the model goes here]
-  structure: [Model structure goes here]
-  training_mode: [Training mode of the model goes here]
-  model_url: [URL of the model's repository goes here]
-  Zoo_function: [Zoo function or command to use the model goes here]
-  example: [Example usage of the model goes here]
-  note: [Any additional notes or instructions about the model go here]
-  input_file_type: [Type of input file expected by the model goes here]
-  model_details: [Detailed information about the model goes here]
-  intended_use: [Intended use or application of the model goes here]
-  factors: [Factors or considerations that may affect the model's performance or results go here]
-  metrics: [Evaluation metrics used for the model go here]
-  eval_data: [Details about the data used for model evaluation go here]
-  training_data: [Details about the data used for model training go here]
-  quant_analyses: [Quantitative analyses or experiments conducted with the model go here]
-  ethical_considerations: [Ethical considerations related to the model's usage or impact go here]
-  caveats_recs: [Any caveats, recommendations, or limitations of the model go here]
