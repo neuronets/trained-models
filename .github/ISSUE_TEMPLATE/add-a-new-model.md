@@ -11,3 +11,4 @@ Model Details:
   Model Organization:
   Model Version:
   Model Name:
+  Model Repo:
