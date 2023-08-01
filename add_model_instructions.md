@@ -24,6 +24,7 @@ This README provides instructions for deploying a trained model using the **`nob
     - Various examples of spec.yaml files can be found under each models ‘<org>/<model_name>/<version>’ folder.
         1. [https://github.com/neuronets/trained-models/blob/master/neuronets/ams/0.1.0/spec.yaml](https://github.com/neuronets/trained-models/blob/master/neuronets/ams/0.1.0/spec.yaml)
         2. [https://github.com/neuronets/trained-models/blob/master/UCL/SynthSR/1.0.0/general/spec.yaml](https://github.com/neuronets/trained-models/blob/master/UCL/SynthSR/1.0.0/general/spec.yaml)
+    - **Create a file named model_card.yaml and fill in the details** For more information you can refer to: [https://arxiv.org/pdf/1810.03993.pdf](https://arxiv.org/pdf/1810.03993.pdf)
     - **Upload your predict.py file that you use to process the model and give an output. Note: If you are using any other feature such as train or generate, add those files as well.**
     - **Depending on your Dockerfile you can add either a requirements.txt or a requirements.yaml file including all the necessary dependencies and libraries your container needs so that the prediction can run smoothly.**
     - **Add your Dockerfile.**
