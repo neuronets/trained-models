@@ -10,6 +10,15 @@ repository:
     repo_download:
     repo_download_location:
 
+### Inference
+#### required fields for prediction
+inference:
+    prediction_script: 
+    command:
+
+    #### input data characteristics
+    data_spec:
+
 #### Training Data Characteristics
 training_data_info:
   data_number:
