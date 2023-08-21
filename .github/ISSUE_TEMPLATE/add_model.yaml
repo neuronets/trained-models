@@ -1,0 +1,62 @@
+name: Add a new model
+description: Add a new model to the nobrainer-zoo
+title: "{org}/{model}/{version}: New Model"
+labels: ["new model"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Recommendations to the user:
+
+        1. Include a docker folder inside your project which includes the dockerfile and everything associated with it (absolutely recommended).
+
+        2. For your prediction script (if applicable), specify path to the best_model (or weights) at the command line using flags.
+
+        3. Please avoid absolute paths in any of your scripts. Ideally, relative paths with respect to the root (project) folder is preferable.
+
+        Please fill all the details of this form to add your model sucessfully to the zoo. Thank you!
+
+  - type: input
+    id: weights
+    attributes:
+      label: Best model weights
+      description: Please enter the link to the best weights for your model (.pth, .h5, etc). 
+      placeholder: Ensure it is available publicly (Google Drive, Onedrive, etc.)
+    validations:
+      required: true
+    - type: input
+    id: docker
+    attributes:
+      label: Docker information
+      description: Please enter the link to the docker folder. Following recommendation 1. 
+      placeholder: Enter the github link to the docker folder here.
+    validations:
+      required: true
+  - type: textarea
+    id: python-scripts
+    attributes:
+      label: Model's python scripts
+      description: Please provide URL's to all your python scripts. It can be a standalone script but could also be a mix of folders and single scripts. 
+      placeholder: If multiple URLs please enter one per line.
+    validations:
+      required: true
+  - type: textarea
+    id: model_info
+    attributes:
+      label: Model's card and spec
+      description: Please provide a URL for your model_card.yaml and model_spec.yaml files.
+      placeholder: One per line please.
+  - type: input
+    id: sample-data
+    attributes:
+      label: Sample data
+      description: Please provide a link to a sample dataset that can be used to test your model.
+      placeholder: Enter the sample-dataset here.
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Read & Followed recommendations
+      description: By submitting this issue, you will be sharing your model's data. Therefore, you are ensuring us that you have followed the recommendations to the user.
+      options:
+        - label: I have read and followed the recommedations in this form.
+          required: true
