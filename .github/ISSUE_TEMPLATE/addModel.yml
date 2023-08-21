@@ -15,7 +15,6 @@ body:
         3. Please avoid absolute paths in any of your scripts. Ideally, relative paths with respect to the root (project) folder is preferable.
 
         Please fill all the details of this form to add your model sucessfully to the zoo. Thank you!
-
   - type: input
     id: weights
     attributes:
