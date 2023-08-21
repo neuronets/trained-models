@@ -25,7 +25,7 @@ body:
       placeholder: Ensure it is available publicly (Google Drive, Onedrive, etc.)
     validations:
       required: true
-    - type: input
+  - type: input
     id: docker
     attributes:
       label: Docker information
