@@ -1,7 +1,9 @@
 name: Add a new model
-description: Add a new model to the nobrainer-zoo
+about: Add a new model to the nobrainer-zoo
 title: "{org}/{model}/{version}: New Model"
-labels: ["new model"]
+labels: ''
+assignees: ''
+
 body:
   - type: markdown
     attributes:
