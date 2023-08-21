@@ -1,6 +1,6 @@
 name: Add a new model
 description: Add a new model to the nobrainer-zoo
-title: "{org}/{model}/{version}: New Model"
+title: "New Model: {org}/{model}/{version}"
 labels: ["enhancement"]
 
 body:
@@ -15,7 +15,17 @@ body:
 
         3. Please avoid absolute paths in any of your scripts. Ideally, relative paths with respect to the root (project) folder is preferable.
 
+        4. This issue's title should start with "New Model:"
+
         Please fill all the details of this form to add your model sucessfully to the zoo. Thank you!
+  - type: input
+    id: path
+    attributes:
+      label: Model's repository path
+      description: Please enter the folder structure for your model {org}/{model}/{version}. 
+      placeholder: ex. DeepCSR/deepcsr/1.0
+    validations:
+      required: true
   - type: input
     id: weights
     attributes:
