@@ -1,0 +1,242 @@
+name: Add a new model
+
+# Trigger the workflow on pull request
+on:
+  issues:
+    types: [ assigned ]
+
+jobs:
+
+  create_new_branch:
+    if: ${{startsWith(github.event.issue.title, 'New Model:')}}
+
+    runs-on: ubuntu-latest
+
+    outputs:
+      BRANCHNAME: ${{ steps.branch.outputs.branchName }}
+
+      # All the issue form data
+      MODELPATH: ${{ steps.get_path.outputs.path }}
+      WEIGHTS: ${{ steps.get_weights.outputs.weights }}
+      DOCKER: ${{ steps.get_docker.outputs.docker }}
+      PYTHON: ${{ steps.python_scripts.outputs.pythons }}
+      MODELINFO: ${{ env.model_info }}
+      SAMPLEDATA: ${{ steps.get_data.outputs.sample_data }}
+      PYTHONS: ${{ env.pythons }}
+
+    steps:
+    # This will automatically create a new branch from this issue, using custom config at /.github/issue-branch.yml 🟢
+    - name: Create Issue Branch
+      id: branch
+      uses: robvanderleek/create-issue-branch@main
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    # Set up Python 🟢
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.11
+
+    # Checkout the repository to the GitHub Actions runner 🟢
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ steps.branch.outputs.branchName }}
+        
+    # Scrape the info from the issue 🟢
+    - uses: stefanbuck/github-issue-parser@v3
+      id: issue-parser
+      with:
+        template-path: .github/ISSUE_TEMPLATE/addModel.yml # optional but recommended
+    
+    # Scrape info from the form 🟢
+    - name: Get the Path
+      id: get_path
+      run: echo "path=${{ steps.issue-parser.outputs.issueparser_path }}" >> $GITHUB_OUTPUT
+    
+    - name: Get the Weights
+      id: get_weights
+      run: echo "weights=${{ steps.issue-parser.outputs.issueparser_weights }}" >> $GITHUB_OUTPUT
+    
+    - name: Get docker folder
+      id: get_docker
+      run: echo "docker=${{ steps.issue-parser.outputs.issueparser_docker }}" >> $GITHUB_OUTPUT
+
+    - name: Get Python Scripts
+      id: python_scripts
+      run: |
+        echo "pythons<<EOF" >> $GITHUB_ENV
+        echo "${{ steps.issue-parser.outputs.issueparser_python-scripts }}" >> $GITHUB_ENV
+        echo "EOF" >> $GITHUB_ENV
+
+    - name: Get Model Info
+      id: get_model_info
+      run: |
+        echo "model_info<<EOF" >> $GITHUB_ENV
+        echo "${{ steps.issue-parser.outputs.issueparser_model_info }}" >> $GITHUB_ENV
+        echo "EOF" >> $GITHUB_ENV
+
+    - name: Get Sample Data
+      id: get_data
+      run: echo "sample_data=${{ steps.issue-parser.outputs.issueparser_sample-data }}" >> $GITHUB_OUTPUT
+
+
+  push-model:
+    needs: create_new_branch
+
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository to the GitHub Actions runner to the new branch created for the issue 🟢
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
+
+      # Install git-annex 🟢
+      - name: Install git-annex
+        run: |
+          sudo apt-get update
+          sudo apt-get install git-annex
+    
+      - name: Verify git-annex Installation
+        run: git-annex version
+
+      # Install datalad 🟢
+      - name: Install Datalad
+        run: sudo apt-get install datalad
+
+      # Install svn to clone subdir of github repos 🟢
+      - name: Install svn
+        run: sudo apt-get install subversion
+
+      # Git annex addurl the weights
+      - name: Git-annex add the weights
+        run: |
+          git annex addurl --preserve-filename --file=${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model ${{ needs.create_new_branch.outputs.WEIGHTS }}
+
+      # Datalad save the weights
+      - name: Datalad Save & Push
+        run: |
+          datalad save -m "Added weights"
+          datalad push
+      
+      # Get svn url for exporting docker 🟢
+      - name: Clone docker folder
+        run: |
+          url="${{ needs.create_new_branch.outputs.DOCKER }}"
+          
+          svn_url=$(echo "$url" | sed -E 's|/tree/[^/]+|/trunk|; s|/blob/[^/]+|/trunk|')
+
+          svn export --force $svn_url ./${{ needs.create_new_branch.outputs.MODELPATH }}
+      
+      # Get svn url for exporting 🟢
+      - name: Generate Python SVN URLs
+        id: generate_urls
+        run: |
+          echo "pythons2<<EOF" >> $GITHUB_ENV
+          python ./.github/workflows/getPythonScripts.py >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+        env:
+            pythons: ${{ needs.create_new_branch.outputs.PYTHONS }}
+      
+      # Export the urls/clone the scripts 🟢
+      - name: Clone python scripts
+        run: |
+          svn_urls="${{ env.pythons2 }}"
+          for svn_url in $svn_urls; do
+            svn export --force $svn_url ./${{ needs.create_new_branch.outputs.MODELPATH }}
+          done
+      
+      # Get svn urls for exporting card and spec urls 🟢
+      - name: Generate Model Info SVN URLs
+        id: generate_model_info_urls
+        run: |
+          echo "model_info2<<EOF" >> $GITHUB_ENV
+          python ./.github/workflows/getModelInfo.py >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+        env:
+            model_info: ${{ needs.create_new_branch.outputs.MODELINFO }}
+
+      # Export the urls/clone the model info 🟢
+      - name: Clone model info
+        run: |
+          model_info="${{ env.model_info2 }}"
+          for svn_url in $model_info; do
+            svn export --force $svn_url ./${{ needs.create_new_branch.outputs.MODELPATH }}
+          done
+    
+      # Commit the new created files and folders to the branch needs.create_new_branch.outputs.BRANCHNAME 🟢
+      - name: Commit the new files
+        run: |
+          git config --global user.name "trained_models"
+          git config --global user.email "trained_models"
+          git add ${{ needs.create_new_branch.outputs.MODELPATH }}
+          git commit -m "Added model files"
+          git push origin ${{ needs.create_new_branch.outputs.BRANCHNAME }}
+  
+  build:
+    needs: [create_new_branch, push-model]
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout the repository to the GitHub Actions runner 🟢
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
+
+    # Set up Python
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.11
+
+    # Install yaml
+    - name: Install yaml and oyaml
+      run: |
+          pip install pyyaml
+          pip install oyaml
+
+    # Install linkml
+    - name: Install LinkML
+      run: pip install linkml
+        
+    # Create model card and spec.yaml file
+    - name: Validate model card and spec files
+      run: |
+          echo "## Model Card and Spec Validation :white_check_mark:" >> $GITHUB_STEP_SUMMARY
+          echo "Model Card and spec yaml files are being validated here with LinkML Schema" >> $GITHUB_STEP_SUMMARY
+          python ./.github/workflows/create_model_card_and_spec.py
+      env:
+          model_path: ${{ needs.create_new_branch.outputs.MODELPATH }}
+      
+    # Update the model's spec.yaml file
+    - name: Update yaml file
+      run: python ./.github/workflows/update_yaml_info.py
+    
+    # Get image name
+    - name: Set docker image name
+      id: set_image_name
+      run: |
+        full_path="${{ needs.create_new_branch.outputs.MODELPATH }}"
+        model_name=$(echo "$full_path" | awk -F '/' '{print $(NF-1)}')
+        echo "image_name=neuronets/$model_name" >> $GITHUB_OUTPUT
+    
+    # Build the Docker image
+    - name: Build Docker image
+      run: |
+        docker build -t ${{ steps.set_image_name.outputs.image_name }} ./${{ needs.create_new_branch.outputs.MODELPATH }}
+    
+    # Push the Docker image to Docker Hub (only if the PR is merged) 🟢
+    - name: Push Docker image
+      run: |
+        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        docker push ${{ steps.set_image_name.outputs.image_name }}
+
+    # Commit the changes (spec.yaml file and model card) 🟢
+    - name: Commit changes
+      run: |
+        git config --global user.name "trained_models"
+        git config --global user.email "trained_models"
+        git add ${{ needs.create_new_branch.outputs.MODELPATH }}/spec.yaml
+        git commit -m "Updated spec.yaml"
+        git push origin ${{ needs.create_new_branch.outputs.BRANCHNAME }}

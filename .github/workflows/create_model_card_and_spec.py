@@ -1,7 +1,6 @@
 import oyaml
 import os
 from modelScheme import ModelCard, ModelSpec
-from Module.utils import get_dockerfile_path
 
 def create_model_card(card_path):
     # Load the infile yaml file
@@ -220,7 +219,7 @@ def create_spec_yaml(model_path):
 
 if __name__ == "__main__":
     # Get the dockerfile path
-    dockerfile_path = get_dockerfile_path()
+    dockerfile_path = os.environ.get("model_path")
 
     # Create the model card and spec yaml file
     card_path = dockerfile_path + "/model_card.yaml"
