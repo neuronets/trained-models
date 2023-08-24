@@ -3,12 +3,12 @@ name: Add a new model
 # Trigger the workflow on pull request
 on:
   issues:
-    types: [ assigned ]
+    types: [ assigned, labeled ]
 
 jobs:
 
   create_new_branch:
-    if: ${{startsWith(github.event.issue.title, 'New Model:')}}
+    if: ${{startsWith(github.event.issue.title, 'New Model:') && contains(github.event.issue.labels.*.name, 'failed') != true}}
 
     runs-on: ubuntu-latest
 
@@ -80,7 +80,6 @@ jobs:
       id: get_data
       run: echo "sample_data=${{ steps.issue-parser.outputs.issueparser_sample-data }}" >> $GITHUB_OUTPUT
 
-
   push-model:
     needs: create_new_branch
 
@@ -108,17 +107,6 @@ jobs:
       # Install svn to clone subdir of github repos 🟢
       - name: Install svn
         run: sudo apt-get install subversion
-
-      # Git annex addurl the weights
-      - name: Git-annex add the weights
-        run: |
-          git annex addurl --preserve-filename --file=${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model ${{ needs.create_new_branch.outputs.WEIGHTS }}
-
-      # Datalad save the weights
-      - name: Datalad Save & Push
-        run: |
-          datalad save -m "Added weights"
-          datalad push
       
       # Get svn url for exporting docker 🟢
       - name: Clone docker folder
@@ -127,7 +115,7 @@ jobs:
           
           svn_url=$(echo "$url" | sed -E 's|/tree/[^/]+|/trunk|; s|/blob/[^/]+|/trunk|')
 
-          svn export --force $svn_url ./${{ needs.create_new_branch.outputs.MODELPATH }}
+          svn export --force $svn_url ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker
       
       # Get svn url for exporting 🟢
       - name: Generate Python SVN URLs
@@ -166,7 +154,7 @@ jobs:
           done
     
       # Commit the new created files and folders to the branch needs.create_new_branch.outputs.BRANCHNAME 🟢
-      - name: Commit the new files
+      - name: Commit and Push the new files
         run: |
           git config --global user.name "trained_models"
           git config --global user.email "trained_models"
@@ -177,6 +165,10 @@ jobs:
   build:
     needs: [create_new_branch, push-model]
     runs-on: ubuntu-latest
+
+    outputs:
+      IMAGENAME: ${{ steps.set_image_name.outputs.image_name }}
+      MODELNAME: ${{ steps.set_image_name.outputs.model_name }}
 
     steps:
     # Checkout the repository to the GitHub Actions runner 🟢
@@ -213,24 +205,14 @@ jobs:
     - name: Update yaml file
       run: python ./.github/workflows/update_yaml_info.py
     
-    # Get image name
+    # Get image name 🟢
     - name: Set docker image name
       id: set_image_name
       run: |
         full_path="${{ needs.create_new_branch.outputs.MODELPATH }}"
         model_name=$(echo "$full_path" | awk -F '/' '{print $(NF-1)}')
         echo "image_name=neuronets/$model_name" >> $GITHUB_OUTPUT
-    
-    # Build the Docker image
-    - name: Build Docker image
-      run: |
-        docker build -t ${{ steps.set_image_name.outputs.image_name }} ./${{ needs.create_new_branch.outputs.MODELPATH }}
-    
-    # Push the Docker image to Docker Hub (only if the PR is merged) 🟢
-    - name: Push Docker image
-      run: |
-        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        docker push ${{ steps.set_image_name.outputs.image_name }}
+        echo "model_name=$model_name" >> $GITHUB_OUTPUT
 
     # Commit the changes (spec.yaml file and model card) 🟢
     - name: Commit changes
@@ -240,3 +222,92 @@ jobs:
         git add ${{ needs.create_new_branch.outputs.MODELPATH }}/spec.yaml
         git commit -m "Updated spec.yaml"
         git push origin ${{ needs.create_new_branch.outputs.BRANCHNAME }}
+
+
+    # Build the Docker image 🟢
+    - name: Build Docker image
+      run: |
+        docker build -t ${{ steps.set_image_name.outputs.model_name }} ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker
+        docker save --output ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ steps.set_image_name.outputs.model_name }}.tar ${{ steps.set_image_name.outputs.model_name }}
+
+    # Upload artifact 🟢
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ steps.set_image_name.outputs.model_name }}
+        path: ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ steps.set_image_name.outputs.model_name }}.tar
+
+  test_and_push:
+    needs: [create_new_branch, push-model, build]
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository to the GitHub Actions runner to the new branch created for the issue 🟢
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
+
+      # Git annex addurl the weights
+      - name: Git-annex add the weights
+        run: |
+          git config --global user.name "trained_models"
+          git config --global user.email "trained_models"
+          git annex addurl --preserve-filename --file=${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model ${{ needs.create_new_branch.outputs.WEIGHTS }}
+
+      # Datalad save the weights
+      - name: Datalad Save & Push
+        env:
+          OSF_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          datalad siblings
+          datalad siblings configure -s origin --publish-depends osf-storage
+          datalad save -m "Added weights"
+          datalad push --to origin -d $GITHUB_WORKSPACE
+
+      # Download docker artifact 🟢
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ needs.build.outputs.MODELNAME }}
+          path: ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker
+
+      # Load the Docker image 🟢
+      - name: Load Docker image
+        run: |
+          docker load --i "./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build.outputs.MODELNAME }}.tar"
+
+      # Push the Docker image to Docker Hub (only if the PR is merged) 🟢
+      - name: Push Docker image
+        run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker tag ${{ needs.build.outputs.MODELNAME }} ${{ needs.build.outputs.IMAGENAME }}
+          docker push ${{ needs.build.outputs.IMAGENAME }}
+
+  failed:
+    runs-on: ubuntu-latest
+
+    needs: [create_new_branch, push-model, build, test_and_push]
+
+    if: ${{ always() && contains(needs.*.result, 'failure') }}
+
+    steps:
+      - name: Set labels
+        uses: actions-cool/issues-helper@v3
+        with:
+          actions: 'set-labels'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.issue.number }}
+          labels: 'failed'
+
+      - name: Create comment
+        uses: actions-cool/issues-helper@v3
+        with:
+          actions: 'create-comment'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+              Hello @${{ github.event.issue.user.login }}. The folders/scripts you provided did not pass our tests. Please check out the Action, and modify this issue accordingly with other/same urls. 
+
+              When ready, just change the label of this issue to "Ready for testing".
+  
+          emoji: '+1,eyes'

@@ -15,7 +15,7 @@ body:
 
         3. Please avoid absolute paths in any of your scripts. Ideally, relative paths with respect to the root (project) folder is preferable.
 
-        4. This issue's title should start with "New Model:"
+        4. This issue's title should start with "New Model:" and you HAVE to assign yourself to this issue.
 
         Please fill all the details of this form to add your model sucessfully to the zoo. Thank you!
   - type: input
@@ -66,7 +66,7 @@ body:
     id: terms
     attributes:
       label: Read & Followed recommendations
-      description: By submitting this issue, you will be sharing your model's data. Therefore, you are ensuring us that you have followed the recommendations to the user.
+      description: By submitting this issue, you will be sharing your model's data. Therefore, you are ensuring us that you have followed our recommendations.
       options:
-        - label: I have read and followed the recommedations in this form.
+        - label: I have read and followed the recommedations in this form and have assigned myself to the issue.
           required: true

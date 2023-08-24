@@ -1,3 +1,5 @@
-branchName: short
+branchName: 'issue-${issue.number}'
 openDraftPR: true
 prSkipCI: true
+autoCloseIssue: true
+commentMessage: 'Branch ${branchName} created for issue: ${issue.title}'
