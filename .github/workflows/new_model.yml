@@ -163,6 +163,7 @@ jobs:
           git push origin ${{ needs.create_new_branch.outputs.BRANCHNAME }}
   
   build:
+
     needs: [create_new_branch, push-model]
     runs-on: ubuntu-latest
 
@@ -171,6 +172,15 @@ jobs:
       MODELNAME: ${{ steps.set_image_name.outputs.model_name }}
 
     steps:
+    # Cleanup steps to free up disk space
+    - name: Cleanup disk space
+      if: runner.os == 'Linux'
+      run: |
+        sudo rm -rf /usr/share/dotnet
+        sudo rm -rf /opt/ghc
+        sudo rm -rf "/usr/local/share/boost"
+        sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+        
     # Checkout the repository to the GitHub Actions runner 🟢
     - uses: actions/checkout@v3
       with:
