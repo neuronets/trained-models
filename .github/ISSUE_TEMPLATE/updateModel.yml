@@ -8,13 +8,39 @@ body:
     attributes:
       value: |
         ## Recommendations to the user:
+        ## 1. Major Version Update (X.0.0):
+        - Major updates indicate significant changes that may affect the overall behavior or compatibility of the model. These updates often require thorough testing and validation.
+        *Recommended Changes*:
+        - Major updates should be considered when significant changes to the model's architecture, behavior, or compatibility exist.
+        - Changes to the input/output formats or core functionality.
+        - Structural changes to the weights folder include changing the model architecture or introducing new model components.
+        - Modifications to the Docker configuration that significantly alter the deployment environment.
+        - Changes to the sample data that affect the overall behavior of the model.
+        ## 2. Minor Version Update (X.Y.0):
+        - Minor updates introduce new features, enhancements, or optimizations to the model without drastically affecting existing functionality.
+        *Recommended Changes*:
+        - New features or improvements added to the model.
+        - Changes to the Python scripts that enhance performance add new functionality or optimize existing code.
+        - Addition of new sample data for testing or demonstration purposes.
+        - Adjustments to the Docker configuration to support new features.
+        ## 3. Patch Version Update (X.Y.Z):
+        - Patch updates include bug fixes, small improvements, and updates that do not introduce new features or major changes.
+        *Recommended Changes*:
+        - Bug fixes to address issues reported by users.
+        - Updates to the model's documentation, such as clarifications or corrections.
+        - Minor adjustments to the Docker configuration or deployment process.
+        - Updates to metadata files like **`spec.yaml`** or **`model_card.yaml`** to provide more accurate or updated information.
+        ## 4. Special Case: Weight Update (Major Change):
+        - Whenever there is an update to the weights folder, it should be considered a major change due to its potential impact on model behavior and compatibility.
+        *Recommended Changes*:
+        - Any modifications to the weights folder, including changes to weights, biases, model parameters, or model architecture.
 
   - type: input
     id: path
     attributes:
-      label: Model's repository path
-      description: Please enter the folder structure for your model {org}/{model}/{version}. 
-      placeholder: ex. DeepCSR/deepcsr/1.0
+      label: Updated Model's repository path
+      description: Please enter the folder structure for your model {org}/{model}/{version} with the updated version (read recommendations). 
+      placeholder: ex. DeepCSR/deepcsr/1.0.1 for patch, or DeepCSR/deepcsr/1.1.0 for minor change, or DeepCSR/deepcsr/2.0.0 for major change.
     validations:
       required: true
   - type: input
@@ -37,7 +63,7 @@ body:
     id: python-scripts
     attributes:
       label: Update the Model's python scripts
-      description: Please provide URL's to all your python scripts. It can be a standalone script but could also be a mix of folders and single scripts. 
+      description: Please provide URL's to all your python scripts. It can be a standalone script and a mix of folders and single scripts. 
       placeholder: If multiple URLs please enter one per line.
     validations:
       required: false
@@ -59,22 +85,22 @@ body:
       label: Select what is being updated
       description: Please select all the checkboxes that apply to this update.
       options:
-        - label: Model's weights
+        - label: ModelWeights
           required: false
-        - label: Docker information
+        - label: DockerInformation
           required: false
-        - label: Model's python scripts
+        - label: ModelPythonScripts
           required: false
-        - label: Model's card and spec
+        - label: ModelCardAndSpec
           required: false
-        - label: Sample dataset
+        - label: SampleDataset
           required: false
 
   - type: checkboxes
     id: terms
     attributes:
       label: Read & Followed recommendations
-      description: By submitting this issue, you will be sharing your model's data. Therefore, you are ensuring us that you have followed our recommendations.
+      description: By submitting this issue, you will share your model's data. So, we are making sure that you have followed our recommendations.
       options:
-        - label: I have read and followed the recommedations in this form and have assigned myself to the issue.
+        - label: I have read and followed the recommendations in this form and have assigned myself to the issue.
           required: true
