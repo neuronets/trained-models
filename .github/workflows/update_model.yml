@@ -3,9 +3,7 @@ name: Update an existing model
 #####################
 ## ----- TO-DO
 #####################
-# - Create a new folder within the model's directory with the new version.
-# - Clone folders/files that are not being updated from the immediate past version 
-# - Commit to the new folder the updated files/folders.
+# Test predict scripts
 
 # Trigger the workflow on pull request
 on:
