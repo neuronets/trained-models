@@ -170,6 +170,7 @@ jobs:
         run: |
           git config --global user.name "trained_models"
           git config --global user.email "trained_models"
+          git gc --prune=now
           git add ${{ needs.create_new_branch.outputs.MODELPATH }}
           git commit -m "Added model files"
           git push origin ${{ needs.create_new_branch.outputs.BRANCHNAME }}
