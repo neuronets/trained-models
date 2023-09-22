@@ -222,7 +222,7 @@ jobs:
           datalad siblings
           datalad siblings configure -s origin --publish-depends osf-storage
           datalad save -m "Added weights"
-          datalad push --to origin -d $GITHUB_WORKSPACE
+          datalad push --to origin
 
   failed:
     runs-on: ubuntu-latest
