@@ -1,4 +1,4 @@
-name: Add a new model
+name: Testing Datalad
 
 # Trigger the workflow on pull request
 on:
