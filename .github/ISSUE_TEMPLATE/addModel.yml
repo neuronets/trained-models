@@ -62,6 +62,12 @@ body:
       label: Sample data
       description: Please provide a link to a sample dataset that can be used to test your model.
       placeholder: Enter the sample-dataset here.
+  - type: input
+    id: deepcsrConfig
+    attributes:
+      label: DeepCSR config
+      description: Please provide a link to the DeepCSR config.
+      placeholder: Enter the DeepCSR config here.
   - type: checkboxes
     id: terms
     attributes:

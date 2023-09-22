@@ -23,6 +23,7 @@ jobs:
       MODELINFO: ${{ env.model_info }}
       SAMPLEDATA: ${{ steps.get_data.outputs.sample_data }}
       PYTHONS: ${{ env.pythons }}
+      DEEPCSR: ${{ steps.get_model_config.outputs.deepcsr_config }}
 
     steps:
     # This will automatically create a new branch from this issue, using custom config at /.github/issue-branch.yml 🟢
@@ -76,6 +77,11 @@ jobs:
         echo "${{ steps.issue-parser.outputs.issueparser_model_info }}" >> $GITHUB_ENV
         echo "EOF" >> $GITHUB_ENV
 
+    - name: Get Config
+      id: get_model_config
+      run: |
+        echo "deepcsr_config=${{ steps.issue-parser.outputs.issueparser_deepcsrConfig }}" >> $GITHUB_OUTPUT
+
     - name: Get Sample Data
       id: get_data
       run: echo "sample_data=${{ steps.issue-parser.outputs.issueparser_sample-data }}" >> $GITHUB_OUTPUT
@@ -103,6 +109,16 @@ jobs:
           svn_url=$(echo "$url" | sed -E 's|/tree/[^/]+|/trunk|; s|/blob/[^/]+|/trunk|')
 
           svn export --force $svn_url ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker
+
+      # Clone deepcsr config files
+      - name: Deepcsr config clone
+        run: |
+          url="${{ needs.create_new_branch.outputs.DEEPCSR }}"
+          
+          svn_url=$(echo "$url" | sed -E 's|/tree/[^/]+|/trunk|; s|/blob/[^/]+|/trunk|')
+
+          svn export --force $svn_url ./${{ needs.create_new_branch.outputs.MODELPATH }}/
+
       
       # Get svn url for exporting 🟢
       - name: Generate Python SVN URLs
