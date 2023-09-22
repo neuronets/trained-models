@@ -173,7 +173,7 @@ jobs:
           git fetch --prune
           git add ${{ needs.create_new_branch.outputs.MODELPATH }}
           git commit -m "Added model files"
-          git push -f origin ${{ needs.create_new_branch.outputs.BRANCHNAME }}
+          git push origin ${{ needs.create_new_branch.outputs.BRANCHNAME }}
   
       
 
