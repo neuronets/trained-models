@@ -1,0 +1,33 @@
+Model_details:
+  Organization: DeepCSR
+  Model_date: t
+  Model_version: 1.0
+  Model_type: t
+  More_information: t
+  Citation_details: t
+  Contact_info: t
+Intended_use:
+  Primary_intended_uses: t
+  Primary_intended_users: t
+  Out_of_scope_use_cases: t
+Factors:
+  Relevant_factors: t
+  Evaluation_factors: t
+  Model_performance_measures: t
+Metrics:
+  Model Performance Measures: t
+  Decision Thresholds: t
+  Variation Approaches: t
+Evaluation Data:
+  Datasets: t
+  Motivation: t
+  Preprocessing: t
+Training Data:
+  Datasets: t
+  Motivation: t
+  Preprocessing: t
+Quantitative Analyses:
+  Unitary Results: t
+  Intersectional Results: t
+Ethical Considerations: t
+Caveats and Recommendations: t

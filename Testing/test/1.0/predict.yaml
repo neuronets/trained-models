@@ -1,0 +1,49 @@
+# pass via cli to override configurations
+user_config: null
+
+# input configuration
+inputs:
+  # unique id for the input mri
+  mri_id: 123_S_0050_bl
+  # input mri path
+  mri_vol_path: /scratch1/fon022/datasets/SURF_ADNI_AFFINE_PPDIST/123_S_0050_bl/mri.nii.gz
+  # model weights checkpoint
+  model_checkpoint: /scratch1/fon022/DeepCSR/checkpoints/training/exp_01/best_model.pth
+  # model predicted surfaces
+  model_surfaces: ['lh_pial', 'lh_white', 'rh_pial', 'rh_white']
+
+# surface prediction parameters
+generator:
+  # template bouding box plus some padding
+  bbox_size: [192., 228., 192.]
+  # resolution of implicit surface volume
+  resolution: 512
+  # batch size of points to predict implicit surface rpr.
+  points_batch_size: 1000000
+  # post-processing prediction using connected components
+  isrpr_vol_post_process: True
+  # smooth implicit surface representation (Gaussian kernel radius)
+  isrpr_vol_smooth: 1.0
+  # fix topology using nighres
+  fix_topology: True  
+  # extracted iso-surface. Attention to the used implicit surface representation to train the model. sdf or occupancy in logit space.  
+  iso_surface_level: 0.0  
+
+# DeepCSR model configuration
+model:
+  hypercol: True
+  device: 'cuda:0'
+
+# output configuration (ATTENTION it MUST be override from command line to work with hydra log files)
+outputs:
+  # output directory
+  output_dir: /scratch1/fon022/DeepCSR/checkpoints/predict_debug/
+  # save intermediate files for debugging
+  save_all: False
+
+# hydra configurations and log files
+hydra:
+  run:
+    dir: ${outputs.output_dir}
+  output_subdir: null
+
