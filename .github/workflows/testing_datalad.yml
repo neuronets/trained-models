@@ -93,9 +93,18 @@ jobs:
 
     steps:
       # Checkout the repository to the GitHub Actions runner to the new branch created for the issue 🟢
+      # Checkout the repository to the GitHub Actions runner to the new branch created for the issue 🟢
       - uses: actions/checkout@v3
+        if: needs.create_new_branch.outputs.BRANCHNAME == ''
         with:
-          ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
+          ref: issue-${{ github.event.issue.number }}
+
+      # If branchName is empty use issue number, else, use the branchName 🟢
+      - uses: actions/checkout@v3
+        if: needs.create_new_branch.outputs.BRANCHNAME != ''
+        with:
+            ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
+
 
       # Install svn to clone subdir of github repos 🟢
       - name: Install svn
@@ -174,8 +183,15 @@ jobs:
     steps:
       # Checkout the repository to the GitHub Actions runner to the new branch created for the issue 🟢
       - uses: actions/checkout@v3
+        if: needs.create_new_branch.outputs.BRANCHNAME == ''
         with:
-          ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
+          ref: issue-${{ github.event.issue.number }}
+
+      # If branchName is empty use issue number, else, use the branchName 🟢
+      - uses: actions/checkout@v3
+        if: needs.create_new_branch.outputs.BRANCHNAME != ''
+        with:
+            ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
       # Install git-annex 🟢
       - name: Install git-annex
         run: |
@@ -194,6 +210,7 @@ jobs:
         run: |
           git config --global user.name "trained_models"
           git config --global user.email "trained_models"
+          git-annex init
           git annex addurl --preserve-filename --file=${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model.pth ${{ needs.create_new_branch.outputs.WEIGHTS }}
 
       # Datalad save the weights 
