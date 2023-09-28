@@ -177,7 +177,7 @@ jobs:
   
       
 
-  test_and_push:
+  push-weights:
     needs: [create_new_branch, push-model]
     runs-on: ubuntu-latest
 
@@ -226,7 +226,64 @@ jobs:
           git annex addurl --relaxed --file=${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model.pth ${{ needs.create_new_branch.outputs.WEIGHTS }}
           datalad save . -m "Added weights"
           datalad push
-      
+
+          
+  start-runner:
+    needs: [create_new_branch, push-model, push-weights]
+
+    runs-on: ubuntu-latest
+
+    outputs:
+      label: ${{ steps.start-ec2-runner.outputs.label }}
+      ec2-instance-id: ${{ steps.start-ec2-runner.outputs.ec2-instance-id }}
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_KEY_SECRET }}
+          aws-region: ${{ vars.AWS_REGION }}
+      - name: Start EC2 runner
+        id: start-ec2-runner
+        uses: machulav/ec2-github-runner@v2
+        with:
+          mode: start
+          github-token: ${{ secrets.GH_TOKEN }}
+          ec2-image-id: ${{ vars.AWS_IMAGE_ID }}
+          ec2-instance-type: ${{ vars.AWS_INSTANCE_TYPE }}
+          subnet-id: ${{ vars.AWS_SUBNET }}
+          security-group-id: ${{ vars.AWS_SECURITY_GROUP }}
+
+  test-model:
+    name: Do the job on the runner
+    needs: [create_new_branch, push-model, push-weights, start-runner] # required to start the main job when the runner is ready
+    runs-on: ${{ needs.start-runner.outputs.label }} # run the job on the newly created runner
+    steps:
+      - name: Hello World
+        run: echo 'Hello World!'
+        
+  stop-runner:
+    name: Stop self-hosted EC2 runner
+    needs: [create_new_branch, push-model, push-weights, start-runner, test-model] # required to wait when the main job is done
+
+    runs-on: ubuntu-latest
+
+    if: ${{ always() }} # required to stop the runner even if the error happened in the previous jobs
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+            aws-access-key-id: ${{ secrets.AWS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_KEY_SECRET }}
+            aws-region: ${{ vars.AWS_REGION }}
+      - name: Stop EC2 runner
+        uses: machulav/ec2-github-runner@v2
+        with:
+          mode: stop
+          github-token: ${{ secrets.GH_TOKEN }}
+          label: ${{ needs.start-runner.outputs.label }}
+          ec2-instance-id: ${{ needs.start-runner.outputs.ec2-instance-id }}
+
   failed:
     runs-on: ubuntu-latest
 
