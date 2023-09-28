@@ -222,6 +222,7 @@ jobs:
           OSF_TOKEN: ${{ secrets.OSF_TOKEN }}
         run: |
           datalad siblings
+          datalad siblings query
 
       
 
