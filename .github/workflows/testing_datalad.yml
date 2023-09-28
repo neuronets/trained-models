@@ -211,7 +211,7 @@ jobs:
         run: |
           git config --global user.name "trained_models"
           git config --global user.email "trained_models"
-          git-annex init
+          git annex init
           git annex addurl --file=${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model.pth ${{ needs.create_new_branch.outputs.WEIGHTS }}
 
       # Datalad save the weights 
