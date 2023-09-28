@@ -211,13 +211,14 @@ jobs:
         env:
           OSF_TOKEN: ${{ secrets.OSF_TOKEN }}
         run: |
-          git config --global user.name "trained_models"
-          git config --global user.email "trained_models"
-          git annex init
           datalad siblings
           datalad siblings configure -s origin --publish-depends osf-storage
-          datalad save . -m "Added weights"
+          git config --global user.name "trained_models"
+          git config --global user.email "trained_models"
+          git init
+          git annex init
           git annex addurl --file=${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model.pth ${{ needs.create_new_branch.outputs.WEIGHTS }}
+          datalad save . -m "Added weights"
           datalad push
 
       
