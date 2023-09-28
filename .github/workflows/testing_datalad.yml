@@ -207,22 +207,19 @@ jobs:
         run: sudo apt-get install datalad
 
       # Git annex addurl the weights
-      - name: Git-annex add the weights
+      - name: Git-annex and Datalad
+        env:
+          OSF_TOKEN: ${{ secrets.OSF_TOKEN }}
         run: |
           git config --global user.name "trained_models"
           git config --global user.email "trained_models"
           git annex init
           git annex addurl --file=${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model.pth ${{ needs.create_new_branch.outputs.WEIGHTS }}
-
-      # Datalad save the weights 
-      - name: Datalad Save & Push
-        env:
-          OSF_TOKEN: ${{ secrets.OSF_TOKEN }}
-        run: |
-          datalad siblings
           datalad siblings configure -s origin --publish-depends osf-storage
-          datalad save -m "Added weights"
+          datalad save . -m "Added weights"
           datalad push
+
+      
 
   failed:
     runs-on: ubuntu-latest
