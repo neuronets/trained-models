@@ -184,8 +184,15 @@ jobs:
     steps:
       # Checkout the repository to the GitHub Actions runner to the new branch created for the issue 🟢
       - uses: actions/checkout@v3
+        if: needs.create_new_branch.outputs.BRANCHNAME == ''
         with:
-          ref: master
+          ref: issue-${{ github.event.issue.number }}
+
+      # If branchName is empty use issue number, else, use the branchName 🟢
+      - uses: actions/checkout@v3
+        if: needs.create_new_branch.outputs.BRANCHNAME != ''
+        with:
+            ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
 
       - name: Set up Python 3.11
         uses: actions/setup-python@v4.2.0
@@ -214,10 +221,10 @@ jobs:
         env:
           OSF_TOKEN: ${{ secrets.OSF_TOKEN }}
         run: |
-          datalad siblings
-
+          git annex addurl --file=${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model.pth ${{ needs.create_new_branch.outputs.WEIGHTS }}
+          datalad save . -m "Added weights"
+          datalad push
       
-
   failed:
     runs-on: ubuntu-latest
 
