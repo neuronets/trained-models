@@ -184,15 +184,8 @@ jobs:
     steps:
       # Checkout the repository to the GitHub Actions runner to the new branch created for the issue 🟢
       - uses: actions/checkout@v3
-        if: needs.create_new_branch.outputs.BRANCHNAME == ''
         with:
-          ref: issue-${{ github.event.issue.number }}
-
-      # If branchName is empty use issue number, else, use the branchName 🟢
-      - uses: actions/checkout@v3
-        if: needs.create_new_branch.outputs.BRANCHNAME != ''
-        with:
-            ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
+          ref: master
 
       - name: Set up Python 3.11
         uses: actions/setup-python@v4.2.0
@@ -222,7 +215,6 @@ jobs:
           OSF_TOKEN: ${{ secrets.OSF_TOKEN }}
         run: |
           datalad siblings
-          datalad siblings query
 
       
 
