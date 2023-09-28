@@ -259,9 +259,48 @@ jobs:
     needs: [create_new_branch, push-model, push-weights, start-runner] # required to start the main job when the runner is ready
     runs-on: ${{ needs.start-runner.outputs.label }} # run the job on the newly created runner
     steps:
-      - name: Hello World
-        run: echo 'Hello World!'
-        
+      - uses: actions/checkout@v3
+        if: needs.create_new_branch.outputs.BRANCHNAME == ''
+        with:
+          ref: issue-${{ github.event.issue.number }}
+
+      # If branchName is empty use issue number, else, use the branchName 🟢
+      - uses: actions/checkout@v3
+        if: needs.create_new_branch.outputs.BRANCHNAME != ''
+        with:
+            ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
+
+      # Setups singularity to the job to make it accessible to other steps
+      - uses: eWaterCycle/setup-singularity@v7
+
+      # Download the artifact of the docker image
+      - name: Download docker image
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ needs.build.outputs.MODELNAME }}
+          path: ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker
+
+      # Convert the docker image to a singularity image
+      - name: Convert docker image to singularity image
+        run: |
+          singularity build ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build.outputs.MODELNAME }}.sif ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build.outputs.MODELNAME }}.tar
+
+      # Run in singularity the test command saved under needs.create_new_branch.outputs.DEEPCSR
+      - name: Run test command in Singularity
+        run: |
+          singularity exec --nv -B ./${{ needs.create_new_branch.outputs.MODELPATH }}, ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/:/output/ ./${{ needs.build.outputs.MODELNAME }}.sif echo "Hello World!"
+
+      # Load the docker image
+      - name: Load the docker image
+        run: |
+          docker load -i ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build.outputs.MODELNAME }}.tar
+
+      # Run in docker the test command saved under needs.create_new_branch.outputs.DEEPCSR
+      - name: Run test command in Docker
+        run: |
+          docker run -t -i ${{ needs.build.outputs.IMAGENAME }} ${{ needs.create_new_branch.outputs.DEEPCSR }}
+
+
   stop-runner:
     name: Stop self-hosted EC2 runner
     needs: [create_new_branch, push-model, push-weights, start-runner, test-model] # required to wait when the main job is done

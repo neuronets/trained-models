@@ -91,19 +91,6 @@ jobs:
         with:
           ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
 
-      # Install git-annex 🟢
-      - name: Install git-annex
-        run: |
-          sudo apt-get update
-          sudo apt-get install git-annex
-    
-      - name: Verify git-annex Installation
-        run: git-annex version
-
-      # Install datalad 🟢
-      - name: Install Datalad
-        run: sudo apt-get install datalad
-
       # Install svn to clone subdir of github repos 🟢
       - name: Install svn
         run: sudo apt-get install subversion
@@ -173,7 +160,7 @@ jobs:
 
     steps:
     # Cleanup steps to free up disk space
-    - name: Cleanup disk space
+    - name: Cleanup disk space for large docker images
       if: runner.os == 'Linux'
       run: |
         sudo rm -rf /usr/share/dotnet
@@ -257,22 +244,129 @@ jobs:
         with:
           ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
 
-      # Git annex addurl the weights
-      - name: Git-annex add the weights
+      # Install git-annex 🟢
+      - name: Install git-annex
         run: |
+          sudo apt-get update
+          sudo apt-get install git-annex
+    
+      - name: Verify git-annex Installation
+        run: git-annex version
+
+      # Install datalad 🟢
+      - name: Install Datalad
+        run: |
+          sudo apt-get install datalad
+          python3 -m pip install datalad-osf
           git config --global user.name "trained_models"
           git config --global user.email "trained_models"
-          git annex addurl --preserve-filename --file=${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model ${{ needs.create_new_branch.outputs.WEIGHTS }}
 
-      # Datalad save the weights
-      - name: Datalad Save & Push
+
+      # Git annex addurl the weights
+      - name: Git-annex/Datalad add the weights
         env:
           OSF_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          git annex init
           datalad siblings
-          datalad siblings configure -s origin --publish-depends osf-storage
-          datalad save -m "Added weights"
-          datalad push --to origin -d $GITHUB_WORKSPACE
+          git annex addurl --relaxed --file=${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model.pth ${{ needs.create_new_branch.outputs.WEIGHTS }}
+          datalad save . -m "Added weights"
+          datalad push
+
+start-runner:
+    needs: [create_new_branch, push-model, push-weights]
+
+    runs-on: ubuntu-latest
+
+    outputs:
+      label: ${{ steps.start-ec2-runner.outputs.label }}
+      ec2-instance-id: ${{ steps.start-ec2-runner.outputs.ec2-instance-id }}
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_KEY_SECRET }}
+          aws-region: ${{ vars.AWS_REGION }}
+      - name: Start EC2 runner
+        id: start-ec2-runner
+        uses: machulav/ec2-github-runner@v2
+        with:
+          mode: start
+          github-token: ${{ secrets.GH_TOKEN }}
+          ec2-image-id: ${{ vars.AWS_IMAGE_ID }}
+          ec2-instance-type: ${{ vars.AWS_INSTANCE_TYPE }}
+          subnet-id: ${{ vars.AWS_SUBNET }}
+          security-group-id: ${{ vars.AWS_SECURITY_GROUP }}
+
+  test-model:
+    name: Do the job on the runner
+    needs: [create_new_branch, push-model, push-weights, start-runner] # required to start the main job when the runner is ready
+    runs-on: ${{ needs.start-runner.outputs.label }} # run the job on the newly created runner
+    steps:
+      - uses: actions/checkout@v3
+        if: needs.create_new_branch.outputs.BRANCHNAME == ''
+        with:
+          ref: issue-${{ github.event.issue.number }}
+
+      # If branchName is empty use issue number, else, use the branchName 🟢
+      - uses: actions/checkout@v3
+        if: needs.create_new_branch.outputs.BRANCHNAME != ''
+        with:
+            ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
+
+      # Setups singularity to the job to make it accessible to other steps
+      - uses: eWaterCycle/setup-singularity@v7
+
+      # Download the artifact of the docker image
+      - name: Download docker image
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ needs.build.outputs.MODELNAME }}
+          path: ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker
+
+      # Convert the docker image to a singularity image
+      - name: Convert docker image to singularity image
+        run: |
+          singularity build ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build.outputs.MODELNAME }}.sif ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build.outputs.MODELNAME }}.tar
+
+      # Run in singularity the test command saved under needs.create_new_branch.outputs.DEEPCSR
+      - name: Run test command in Singularity
+        run: |
+          singularity exec --nv -B ./${{ needs.create_new_branch.outputs.MODELPATH }}, ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/:/output/ ./${{ needs.build.outputs.MODELNAME }}.sif echo "Hello World!"
+
+      # Load the docker image
+      - name: Load the docker image
+        run: |
+          docker load -i ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build.outputs.MODELNAME }}.tar
+
+      # Run in docker the test command saved under needs.create_new_branch.outputs.DEEPCSR
+      - name: Run test command in Docker
+        run: |
+          docker run -t -i ${{ needs.build.outputs.IMAGENAME }} ${{ needs.create_new_branch.outputs.DEEPCSR }}
+
+
+  stop-runner:
+    name: Stop self-hosted EC2 runner
+    needs: [create_new_branch, push-model, push-weights, start-runner, test-model] # required to wait when the main job is done
+
+    runs-on: ubuntu-latest
+
+    if: ${{ always() }} # required to stop the runner even if the error happened in the previous jobs
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+            aws-access-key-id: ${{ secrets.AWS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_KEY_SECRET }}
+            aws-region: ${{ vars.AWS_REGION }}
+      - name: Stop EC2 runner
+        uses: machulav/ec2-github-runner@v2
+        with:
+          mode: stop
+          github-token: ${{ secrets.GH_TOKEN }}
+          label: ${{ needs.start-runner.outputs.label }}
+          ec2-instance-id: ${{ needs.start-runner.outputs.ec2-instance-id }}
 
       # Download docker artifact 🟢
       - name: Download artifact
