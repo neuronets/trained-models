@@ -193,6 +193,12 @@ jobs:
         if: needs.create_new_branch.outputs.BRANCHNAME != ''
         with:
             ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4.2.0
+        with:
+          python-version: 3.11
+
       # Install git-annex 🟢
       - name: Install git-annex
         run: |
@@ -201,23 +207,22 @@ jobs:
         
       - name: Verify git-annex Installation
         run: git-annex version
-    
-      # Install datalad 🟢
-      - name: Install Datalad
-        run: sudo apt-get install datalad
+
+      # Install datalad and setup git🟢
+      - name: Install Datalad and setup Git
+        run: |
+          sudo apt-get install datalad
+          python3 -m pip install datalad-osf
+          git config --global user.name "trained_models"
+          git config --global user.email "trained_models"
 
       # Git annex addurl the weights
       - name: Git-annex and Datalad
         env:
           OSF_TOKEN: ${{ secrets.OSF_TOKEN }}
         run: |
-
-          git config --global user.name "trained_models"
-          git config --global user.email "trained_models"
-          git init
           datalad siblings
-          datalad siblings configure -s origin --publish-depends osf
-          git annex init
+          datalad siblings configure -s origin --publish-depends osf-storage
           git annex addurl --file=${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model.pth ${{ needs.create_new_branch.outputs.WEIGHTS }}
           datalad save . -m "Added weights"
           datalad push
