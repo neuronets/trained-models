@@ -216,7 +216,7 @@ jobs:
           git config --global user.email "trained_models"
           git init
           datalad siblings
-          datalad siblings configure -s origin --publish-depends osf-storage
+          datalad siblings configure -s origin --publish-depends osf
           git annex init
           git annex addurl --file=${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model.pth ${{ needs.create_new_branch.outputs.WEIGHTS }}
           datalad save . -m "Added weights"
