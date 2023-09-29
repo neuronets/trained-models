@@ -216,15 +216,6 @@ jobs:
     - name: Update yaml file
       run: python ./.github/workflows/update_yaml_info.py
     
-    # Get image name 🟢
-    - name: Set docker image name
-      id: set_image_name
-      run: |
-        full_path="${{ needs.create_new_branch.outputs.MODELPATH }}"
-        model_name=$(echo "$full_path" | awk -F '/' '{print $(NF-1)}')
-        echo "image_name=neuronets/$model_name" >> $GITHUB_OUTPUT
-        echo "model_name=$model_name" >> $GITHUB_OUTPUT
-
     # Commit the changes (spec.yaml file and model card) 🟢
     - name: Commit changes
       run: |
@@ -234,22 +225,43 @@ jobs:
         git commit -m "Updated spec.yaml"
         git push origin ${{ needs.create_new_branch.outputs.BRANCHNAME }}
 
+  build-docker:
+    needs: [create_new_branch, push-model, build]
 
-    # Build the Docker image 🟢
-    - name: Build Docker image
-      run: |
-        docker build -t ${{ steps.set_image_name.outputs.model_name }} ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker
-        docker save --output ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ steps.set_image_name.outputs.model_name }}.tar ${{ steps.set_image_name.outputs.model_name }}
+    runs-on: ubuntu-latest
 
-    # Upload artifact 🟢
-    - name: Upload artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: ${{ steps.set_image_name.outputs.model_name }}
-        path: ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ steps.set_image_name.outputs.model_name }}.tar
+    steps:
+          # Cleanup steps to free up disk space
+      - name: Cleanup disk space for large docker images
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf "/usr/local/share/boost"
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+      # Get image name 🟢
+      - name: Set docker image name
+        id: set_image_name
+        run: |
+          full_path="${{ needs.create_new_branch.outputs.MODELPATH }}"
+          model_name=$(echo "$full_path" | awk -F '/' '{print $(NF-1)}')
+          echo "image_name=neuronets/$model_name" >> $GITHUB_OUTPUT
+          echo "model_name=$model_name" >> $GITHUB_OUTPUT
+
+      # Build the Docker image 🟢
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ steps.set_image_name.outputs.model_name }} ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker
+          docker save --output ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ steps.set_image_name.outputs.model_name }}.tar ${{ steps.set_image_name.outputs.model_name }}
+
+      # Upload artifact 🟢
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ steps.set_image_name.outputs.model_name }}
+          path: ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ steps.set_image_name.outputs.model_name }}.tar
 
   push-weights:
-    needs: [create_new_branch, push-model, build]
+    needs: [create_new_branch, push-model, build, build-docker]
     runs-on: ubuntu-latest
 
     steps:
@@ -294,7 +306,7 @@ jobs:
           datalad push
 
   start-runner:
-    needs: [create_new_branch, push-model, build, push-weights]
+    needs: [create_new_branch, push-model, build, build-docker, push-weights]
 
     runs-on: ubuntu-latest
 
@@ -321,7 +333,7 @@ jobs:
 
   test-model:
     name: Do the job on the runner
-    needs: [create_new_branch, push-model, build, push-weights, start-runner] # required to start the main job when the runner is ready
+    needs: [create_new_branch, push-model, build, build-docker, push-weights, start-runner] # required to start the main job when the runner is ready
     runs-on: ${{ needs.start-runner.outputs.label }} # run the job on the newly created runner
     steps:
       - uses: actions/checkout@v3
@@ -367,7 +379,7 @@ jobs:
 
   stop-runner:
     name: Stop self-hosted EC2 runner
-    needs: [create_new_branch, push-model, build, push-weights, start-runner, test-model] # required to wait when the main job is done
+    needs: [create_new_branch, push-model, build, build-docker, push-weights, start-runner, test-model] # required to wait when the main job is done
 
     runs-on: ubuntu-latest
 
@@ -409,7 +421,7 @@ jobs:
   failed:
     runs-on: ubuntu-latest
 
-    needs: [create_new_branch, push-model, build, push-weights, start-runner, test-model, stop-runner]
+    needs: [create_new_branch, push-model, build, build-docker, push-weights, start-runner, test-model, stop-runner]
 
     if: ${{ always() && contains(needs.*.result, 'failure') }}
 
