@@ -88,8 +88,15 @@ jobs:
     steps:
       # Checkout the repository to the GitHub Actions runner to the new branch created for the issue 🟢
       - uses: actions/checkout@v3
+        if: needs.create_new_branch.outputs.BRANCHNAME == ''
         with:
-          ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
+          ref: issue-${{ github.event.issue.number }}
+
+      # If branchName is empty use issue number, else, use the branchName 🟢
+      - uses: actions/checkout@v3
+        if: needs.create_new_branch.outputs.BRANCHNAME != ''
+        with:
+            ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
 
       # Install svn to clone subdir of github repos 🟢
       - name: Install svn
@@ -170,8 +177,15 @@ jobs:
         
     # Checkout the repository to the GitHub Actions runner 🟢
     - uses: actions/checkout@v3
+      if: needs.create_new_branch.outputs.BRANCHNAME == ''
       with:
-        ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
+        ref: issue-${{ github.event.issue.number }}
+
+    # If branchName is empty use issue number, else, use the branchName 🟢
+    - uses: actions/checkout@v3
+      if: needs.create_new_branch.outputs.BRANCHNAME != ''
+      with:
+          ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
 
     # Set up Python
     - name: Set up Python
@@ -234,15 +248,22 @@ jobs:
         name: ${{ steps.set_image_name.outputs.model_name }}
         path: ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ steps.set_image_name.outputs.model_name }}.tar
 
-  test_and_push:
+  push-weights:
     needs: [create_new_branch, push-model, build]
     runs-on: ubuntu-latest
 
     steps:
       # Checkout the repository to the GitHub Actions runner to the new branch created for the issue 🟢
       - uses: actions/checkout@v3
+        if: needs.create_new_branch.outputs.BRANCHNAME == ''
         with:
-          ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
+          ref: issue-${{ github.event.issue.number }}
+
+      # If branchName is empty use issue number, else, use the branchName 🟢
+      - uses: actions/checkout@v3
+        if: needs.create_new_branch.outputs.BRANCHNAME != ''
+        with:
+            ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
 
       # Install git-annex 🟢
       - name: Install git-annex
@@ -261,7 +282,6 @@ jobs:
           git config --global user.name "trained_models"
           git config --global user.email "trained_models"
 
-
       # Git annex addurl the weights
       - name: Git-annex/Datalad add the weights
         env:
@@ -273,8 +293,8 @@ jobs:
           datalad save . -m "Added weights"
           datalad push
 
-start-runner:
-    needs: [create_new_branch, push-model, push-weights]
+  start-runner:
+    needs: [create_new_branch, push-model, build, push-weights]
 
     runs-on: ubuntu-latest
 
@@ -301,7 +321,7 @@ start-runner:
 
   test-model:
     name: Do the job on the runner
-    needs: [create_new_branch, push-model, push-weights, start-runner] # required to start the main job when the runner is ready
+    needs: [create_new_branch, push-model, build, push-weights, start-runner] # required to start the main job when the runner is ready
     runs-on: ${{ needs.start-runner.outputs.label }} # run the job on the newly created runner
     steps:
       - uses: actions/checkout@v3
@@ -345,10 +365,9 @@ start-runner:
         run: |
           docker run -t -i ${{ needs.build.outputs.IMAGENAME }} ${{ needs.create_new_branch.outputs.DEEPCSR }}
 
-
   stop-runner:
     name: Stop self-hosted EC2 runner
-    needs: [create_new_branch, push-model, push-weights, start-runner, test-model] # required to wait when the main job is done
+    needs: [create_new_branch, push-model, build, push-weights, start-runner, test-model] # required to wait when the main job is done
 
     runs-on: ubuntu-latest
 
@@ -390,7 +409,7 @@ start-runner:
   failed:
     runs-on: ubuntu-latest
 
-    needs: [create_new_branch, push-model, build, test_and_push]
+    needs: [create_new_branch, push-model, build, push-weights, start-runner, test-model, stop-runner]
 
     if: ${{ always() && contains(needs.*.result, 'failure') }}
 
