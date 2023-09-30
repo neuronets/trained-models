@@ -231,7 +231,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-          # Cleanup steps to free up disk space
+      # Checkout the repository to the GitHub Actions runner 🟢
+      - uses: actions/checkout@v3
+        if: needs.create_new_branch.outputs.BRANCHNAME == ''
+        with:
+          ref: issue-${{ github.event.issue.number }}
+
+      # If branchName is empty use issue number, else, use the branchName 🟢
+      - uses: actions/checkout@v3
+        if: needs.create_new_branch.outputs.BRANCHNAME != ''
+        with:
+            ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
+            
+      # Cleanup steps to free up disk space
       - name: Cleanup disk space for large docker images
         run: |
           sudo rm -rf /usr/share/dotnet
