@@ -231,6 +231,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Cleanup steps to free up disk space
+      - name: Cleanup disk space for large docker images
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf "/usr/local/share/boost"
+          sudo rm -rf /opt/hostedtoolcache
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+          
       # Checkout the repository to the GitHub Actions runner 🟢
       - uses: actions/checkout@v3
         if: needs.create_new_branch.outputs.BRANCHNAME == ''
@@ -242,14 +251,7 @@ jobs:
         if: needs.create_new_branch.outputs.BRANCHNAME != ''
         with:
             ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
-            
-      # Cleanup steps to free up disk space
-      - name: Cleanup disk space for large docker images
-        run: |
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /opt/ghc
-          sudo rm -rf "/usr/local/share/boost"
-          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+
       # Get image name 🟢
       - name: Set docker image name
         id: set_image_name
