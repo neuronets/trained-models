@@ -277,19 +277,6 @@ jobs:
           echo "image_name=neuronets/$model_name" >> $GITHUB_OUTPUT
           echo "model_name=$model_name" >> $GITHUB_OUTPUT
 
-      # Build the Docker image 🟢
-      - name: Build Docker image
-        run: |
-          docker build -t ${{ steps.set_image_name.outputs.model_name }} ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker
-          docker save --output ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ steps.set_image_name.outputs.model_name }}.tar ${{ steps.set_image_name.outputs.model_name }}
-
-      # Upload artifact 🟢
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ steps.set_image_name.outputs.model_name }}
-          path: ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ steps.set_image_name.outputs.model_name }}.tar
-
   push-weights:
     needs: [create_new_branch, push-model, build, build-docker]
     runs-on: ubuntu-latest
@@ -379,6 +366,8 @@ jobs:
 
       # Setups singularity to the job to make it accessible to other steps
       - uses: eWaterCycle/setup-singularity@v7
+        with:
+          singularity-version: 3.8.3
 
       # Download the artifact of the docker image
       - name: Download docker image
