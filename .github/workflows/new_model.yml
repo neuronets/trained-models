@@ -359,9 +359,7 @@ jobs:
               sudo apt-get update && \
               sudo apt-get install -y build-essential \
               libseccomp-dev pkg-config squashfs-tools cryptsetup
-
-              sudo rm -r /usr/local/go
-
+              
               export VERSION=1.21.1 OS=linux ARCH=amd64  # change this as you need
 
               wget -O /tmp/go${VERSION}.${OS}-${ARCH}.tar.gz https://dl.google.com/go/go${VERSION}.${OS}-${ARCH}.tar.gz && \
