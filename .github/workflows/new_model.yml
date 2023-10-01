@@ -371,7 +371,7 @@ jobs:
     
               tar -xzvf singularity-3.8.3.tar.gz
     
-              cd singularity
+              cd singularity-3.8.3
     
               ./mconfig
     
