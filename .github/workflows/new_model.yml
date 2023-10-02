@@ -353,8 +353,20 @@ jobs:
     needs: [create_new_branch, push-model, build, build-docker, push-weights, start-runner] # required to start the main job when the runner is ready
     runs-on: ${{ needs.start-runner.outputs.label }} # run the job on the newly created runner
     steps:
-            # Setups singularity to the job to make it accessible to other steps
-              
+        # Setups singularity to the job to make it accessible to other steps
+        # Cleanup steps to free up disk space
+      - name: Cleanup disk space for large docker images
+        run: |
+              sudo rm -rf /usr/share/dotnet
+              sudo rm -rf /opt/ghc
+              sudo rm -rf "/usr/local/share/boost"
+              sudo rm -rf /opt/hostedtoolcache
+              sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+            
+    
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
+        
       - uses: actions/checkout@v3
         if: needs.create_new_branch.outputs.BRANCHNAME == ''
         with:
