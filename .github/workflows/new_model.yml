@@ -23,6 +23,7 @@ jobs:
       MODELINFO: ${{ env.model_info }}
       SAMPLEDATA: ${{ steps.get_data.outputs.sample_data }}
       PYTHONS: ${{ env.pythons }}
+      DEEPCSR: ${{ steps.get_model_config.outputs.deepcsr_config }}
 
     steps:
     # This will automatically create a new branch from this issue, using custom config at /.github/issue-branch.yml 🟢
@@ -31,6 +32,7 @@ jobs:
       uses: robvanderleek/create-issue-branch@main
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
 
     # Set up Python 🟢
     - name: Set up Python
@@ -79,6 +81,11 @@ jobs:
     - name: Get Sample Data
       id: get_data
       run: echo "sample_data=${{ steps.issue-parser.outputs.issueparser_sample-data }}" >> $GITHUB_OUTPUT
+    
+    - name: Get Config
+      id: get_model_config
+      run: |
+        echo "deepcsr_config=${{ steps.issue-parser.outputs.issueparser_deepcsrConfig }}" >> $GITHUB_OUTPUT
 
   push-model:
     needs: create_new_branch
@@ -146,6 +153,15 @@ jobs:
           for svn_url in $model_info; do
             svn export --force $svn_url ./${{ needs.create_new_branch.outputs.MODELPATH }}
           done
+
+      # Clone deepcsr config files
+      - name: Deepcsr config clone
+        run: |
+          url="${{ needs.create_new_branch.outputs.DEEPCSR }}"
+              
+          svn_url=$(echo "$url" | sed -E 's|/tree/[^/]+|/trunk|; s|/blob/[^/]+|/trunk|')
+    
+          svn export --force $svn_url ./${{ needs.create_new_branch.outputs.MODELPATH }}/
     
       # Commit the new created files and folders to the branch needs.create_new_branch.outputs.BRANCHNAME 🟢
       - name: Commit and Push the new files
@@ -389,7 +405,7 @@ jobs:
       # Convert the docker image to a singularity image
       - name: Convert docker image to singularity image
         run: |
-          singularity pull ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build-docker.outputs.MODELNAME }}.sif docker://edwardjosue2005/deepcsr@latest
+          singularity pull ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build-docker.outputs.MODELNAME }}.sif docker://edwardjosue2005/deepcsr
       # Run in singularity the test command saved under needs.create_new_branch.outputs.DEEPCSR
       - name: Run test command in Singularity
         run: |
