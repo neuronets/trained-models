@@ -154,11 +154,6 @@ jobs:
             svn export --force $svn_url ./${{ needs.create_new_branch.outputs.MODELPATH }}
           done
 
-      # Clone sample data
-      - name: Clone sample data
-        run: |
-          pip install datalad
-          datalad download-url -O /${{ needs.create_new_branch.outputs.MODELPATH }}/Sample/mri.nii --nosave "${{ needs.create_new_branch.outputs.SAMPLEDATA }}"
 
       # Clone deepcsr config files
       - name: Deepcsr config clone
