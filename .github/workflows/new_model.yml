@@ -154,6 +154,12 @@ jobs:
             svn export --force $svn_url ./${{ needs.create_new_branch.outputs.MODELPATH }}
           done
 
+      # Clone sample data
+      - name: Clone sample data
+        run: |
+          pip install datalad
+          datalad download-url -O /${{ needs.create_new_branch.outputs.MODELPATH }}/Sample/mri.nii.gz --nosave "${{ needs.create_new_branch.outputs.SAMPLEDATA }}"
+
       # Clone deepcsr config files
       - name: Deepcsr config clone
         run: |
@@ -300,6 +306,7 @@ jobs:
         run: |
           sudo apt-get install datalad
           python3 -m pip install datalad-osf
+          pip install requests
           git config --global user.name "trained_models"
           git config --global user.email "trained_models"
 
@@ -308,11 +315,11 @@ jobs:
         env:
           OSF_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git annex init
           datalad siblings
-          git annex addurl --relaxed --file=${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model.pth ${{ needs.create_new_branch.outputs.WEIGHTS }}
-          datalad save . -m "Added weights"
-          datalad push
+          datalad download-url -m "Added Weights" -O ./${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model.pth ${{ needs.create_new_branch.outputs.WEIGHTS }}
+          datalad save . -m "Added model weights"
+          datalad push --to osf-annex2-storage
+          datalad push --to origin
 
   start-runner:
     needs: [create_new_branch, push-model, build, build-docker, push-weights]
@@ -355,7 +362,6 @@ jobs:
               sudo rm -rf /opt/hostedtoolcache
               sudo rm -rf "$AGENT_TOOLSDIRECTORY"
             
-    
       - name: Free Disk Space (Ubuntu)
         uses: jlumbroso/free-disk-space@main
         with:
@@ -405,7 +411,8 @@ jobs:
       # Convert the docker image to a singularity image
       - name: Convert docker image to singularity image
         run: |
-          singularity pull ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build-docker.outputs.MODELNAME }}.sif docker://edwardjosue2005/deepcsr
+          singularity pull ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build-docker.outputs.MODELNAME }}.sif docker://edwardjosue2005/docker101tutorial
+
       # Run in singularity the test command saved under needs.create_new_branch.outputs.DEEPCSR
       - name: Run test command in Singularity
         run: |
