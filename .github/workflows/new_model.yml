@@ -161,10 +161,6 @@ jobs:
     needs: [create_new_branch, push-model]
     runs-on: ubuntu-latest
 
-    outputs:
-      IMAGENAME: ${{ steps.set_image_name.outputs.image_name }}
-      MODELNAME: ${{ steps.set_image_name.outputs.model_name }}
-
     steps:
     # Cleanup steps to free up disk space
     - name: Cleanup disk space for large docker images
@@ -229,6 +225,10 @@ jobs:
     needs: [create_new_branch, push-model, build]
 
     runs-on: ubuntu-latest
+
+    outputs:
+      IMAGENAME: ${{ steps.set_image_name.outputs.image_name }}
+      MODELNAME: ${{ steps.set_image_name.outputs.model_name }}
 
     steps:
       # Cleanup steps to free up disk space
@@ -413,21 +413,21 @@ jobs:
       # Convert the docker image to a singularity image
       - name: Convert docker image to singularity image
         run: |
-          singularity pull ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build.outputs.MODELNAME }}.sif docker://edwardjosue2005/deepcsr
+          singularity pull ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build-docker.outputs.MODELNAME }}.sif docker://edwardjosue2005/deepcsr
       # Run in singularity the test command saved under needs.create_new_branch.outputs.DEEPCSR
       - name: Run test command in Singularity
         run: |
-          singularity exec --nv -B ./${{ needs.create_new_branch.outputs.MODELPATH }}, ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/:/output/ ./${{ needs.build.outputs.MODELNAME }}.sif echo "Hello World!"
+          singularity exec --nv -B ./${{ needs.create_new_branch.outputs.MODELPATH }}, ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/:/output/ ./${{ needs.build-docker.outputs.MODELNAME }}.sif echo "Hello World!"
 
       # Load the docker image
       - name: Load the docker image
         run: |
-          docker load -i ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build.outputs.MODELNAME }}.tar
+          docker load -i ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build-docker.outputs.MODELNAME }}.tar
 
       # Run in docker the test command saved under needs.create_new_branch.outputs.DEEPCSR
       - name: Run test command in Docker
         run: |
-          docker run -t -i ${{ needs.build.outputs.IMAGENAME }} ${{ needs.create_new_branch.outputs.DEEPCSR }}
+          docker run -t -i ${{ needs.build-docker.outputs.IMAGENAME }} ${{ needs.create_new_branch.outputs.DEEPCSR }}
 
   stop-runner:
     name: Stop self-hosted EC2 runner
