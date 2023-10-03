@@ -412,12 +412,12 @@ jobs:
           sudo apt install ./singularity-ce_4.0.0-jammy_amd64.deb -y
           singularity version
 
-      # Download the artifact of the docker image
-      #- name: Download docker image
-        #uses: actions/download-artifact@v3
-        #with:
-          #name: ${{ needs.build.outputs.MODELNAME }}
-          #path: ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker
+      #Download the artifact of the docker image
+      - name: Download docker image
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ needs.build-docker.outputs.MODELNAME }}
+          path: ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker
 
       # Convert the docker image to a singularity image
       - name: Convert docker image to singularity image
