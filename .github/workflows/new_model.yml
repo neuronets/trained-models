@@ -131,9 +131,10 @@ jobs:
       # Export the urls/clone the scripts 🟢
       - name: Clone python scripts
         run: |
+          cd ./${{ needs.create_new_branch.outputs.MODELPATH }}
           svn_urls="${{ env.pythons2 }}"
           for svn_url in $svn_urls; do
-            svn export --force $svn_url ./${{ needs.create_new_branch.outputs.MODELPATH }}
+            svn export --force $svn_url
           done
       
       # Get svn urls for exporting card and spec urls 🟢
@@ -305,16 +306,7 @@ jobs:
           git config --global user.name "trained_models"
           git config --global user.email "trained_models"
 
-      # Git annex addurl the weights
-      - name: Git-annex/Datalad add the weights
-        env:
-          OSF_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          datalad siblings
-          datalad download-url -m "Added Weights" -O ./${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model.pth ${{ needs.create_new_branch.outputs.WEIGHTS }}
-          datalad save . -m "Added model weights"
-          datalad push --to osf-annex2-storage
-          datalad push --to origin
+
 
   start-runner:
     needs: [create_new_branch, push-model, build, build-docker, push-weights]
@@ -411,7 +403,7 @@ jobs:
       # Run in singularity the test command saved under needs.create_new_branch.outputs.DEEPCSR
       - name: Run test command in Singularity
         run: |
-          singularity exec --nv -B ./${{ needs.create_new_branch.outputs.MODELPATH }}, ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/:/output/ ./${{ needs.build-docker.outputs.MODELNAME }}.sif echo "Hello World!"
+          singularity exec --nv -B ./${{ needs.create_new_branch.outputs.MODELPATH }}, ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/:/output -W /output ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build-docker.outputs.MODELNAME }}.sif 
 
       # Load the docker image
       - name: Load the docker image
