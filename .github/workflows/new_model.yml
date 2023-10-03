@@ -162,15 +162,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # Cleanup steps to free up disk space
-    - name: Cleanup disk space for large docker images
-      if: runner.os == 'Linux'
-      run: |
-        sudo rm -rf /usr/share/dotnet
-        sudo rm -rf /opt/ghc
-        sudo rm -rf "/usr/local/share/boost"
-        sudo rm -rf "$AGENT_TOOLSDIRECTORY"
-        
     # Checkout the repository to the GitHub Actions runner 🟢
     - uses: actions/checkout@v3
       if: needs.create_new_branch.outputs.BRANCHNAME == ''
@@ -240,21 +231,6 @@ jobs:
           sudo rm -rf /opt/hostedtoolcache
           sudo rm -rf "$AGENT_TOOLSDIRECTORY"
         
-
-      - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space@main
-        with:
-          # this might remove tools that are actually needed,
-          # if set to "true" but frees about 6 GB
-          tool-cache: false
-          
-          # all of these default to true, but feel free to set to
-          # "false" if necessary for your workflow
-          android: true
-          dotnet: true
-          haskell: true
-          large-packages: true
-          docker-images: false
 
       # Checkout the repository to the GitHub Actions runner 🟢
       - uses: actions/checkout@v3
