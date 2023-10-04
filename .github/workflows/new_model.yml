@@ -420,7 +420,7 @@ jobs:
       # Convert the docker image to a singularity image
       - name: Convert docker image to singularity image
         run: |
-          singularity pull /${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build-docker.outputs.MODELNAME }}.sif docker://edwardjosue2005/deepcsr
+          singularity pull ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build-docker.outputs.MODELNAME }}.sif docker://edwardjosue2005/deepcsr
 
       # Datalad get the sample dataset
       - name: Get sample dataset & weights
