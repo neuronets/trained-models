@@ -155,14 +155,6 @@ jobs:
             svn export --force $svn_url ./${{ needs.create_new_branch.outputs.MODELPATH }}
           done
 
-      # Download sample dataset
-      - name: Dowload Sample Dataset
-        run: |
-          sudo apt install python3-pip
-          pip install datalad
-
-          datalad download-url -m "Added Sample Dataset" -O ${{needs.create_new_branch.outputs.MODELPATH}}/example-data/sample.nii.gz ${{needs.create_new_branch.outputs.SAMPLEDATA}}
-
       # Clone deepcsr config files
       - name: Deepcsr config clone
         run: |
@@ -326,17 +318,17 @@ jobs:
           git config --global user.name "trained_models"
           git config --global user.email "trained_models"
       
-      
-      # Git annex addurl the weights
-      #- name: Git-annex/Datalad add the weights
-        #env:
-          #OSF_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        #run: |
-              #datalad siblings
-              #datalad download-url -m "Added Weights" -O ./${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model.pth ${{ needs.create_new_branch.outputs.WEIGHTS }}
-              #datalad save . -m "Added model weights"
-              #datalad push --to osf-annex2-storage
-              #datalad push --to origin
+      #Git annex addurl the weights
+      - name: Git-annex/Datalad add the weights and sample data
+        env:
+          OSF_TOKEN: ${{ secrets.OSF_TOKEN }}
+        run: |
+              datalad siblings
+              datalad download-url -m "Added Weights" -O ./${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model.pth ${{ needs.create_new_branch.outputs.WEIGHTS }}
+              datalad download-url -m "Added Sample Dataset" -O ./${{needs.create_new_branch.outputs.MODELPATH}}/example-data/sample.nii.gz ${{needs.create_new_branch.outputs.SAMPLEDATA}}
+              datalad save . -m "Added model weights and sample data"
+              datalad push --to osf-annex2-storage
+              datalad push --to origin
 
   start-runner:
     needs: [create_new_branch, push-model, build, build-docker, push-weights]
@@ -444,23 +436,6 @@ jobs:
       - name: Run test command in Singularity
         run: |
           singularity exec --nv --bind /actions-runner,/actions-runner/_work/,/actions-runner/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/${{ needs.create_new_branch.outputs.MODELPATH }},/actions-runner/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/${{ needs.create_new_branch.outputs.MODELPATH }}/docker,/actions-runner/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/${{ needs.create_new_branch.outputs.MODELPATH }}/weights,/actions-runner/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/${{ needs.create_new_branch.outputs.MODELPATH }}/example-data:/output ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build-docker.outputs.MODELNAME }}.sif python /output/predict.py --conf_path /output/predict.yaml --model_checkpoint /output/best_model.pth --dataset /output/sample.nii.gz --output_dir /output
-
-      # Load the docker image
-      - name: Load the docker image
-        run: |
-          docker load -i ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build-docker.outputs.MODELNAME }}.tar
-
-      # Run in docker the test command saved under needs.create_new_branch.outputs.DEEPCSR
-      - name: Run test command in Docker
-        run: |
-          docker run -t -i ${{ needs.build-docker.outputs.IMAGENAME }} ${{ needs.create_new_branch.outputs.DEEPCSR }}
-
-      # Push the Docker image to Docker Hub (only if the PR is merged) 🟢
-      - name: Push Docker image
-        run: |
-          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker tag ${{ needs.build-docker.outputs.MODELNAME }} ${{ needs.build-docker.outputs.IMAGENAME }}
-          docker push ${{ needs.build-docker.outputs.IMAGENAME }}
 
   stop-runner:
     name: Stop self-hosted EC2 runner
