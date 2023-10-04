@@ -271,17 +271,17 @@ jobs:
           echo "model_name=$model_name" >> $GITHUB_OUTPUT
 
       # Build the Docker image 🟢
-      - name: Build Docker image
-        run: |
-          docker build -t ${{ steps.set_image_name.outputs.model_name }} ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker
-          docker save --output ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ steps.set_image_name.outputs.model_name }}.tar ${{ steps.set_image_name.outputs.model_name }}
+      #- name: Build Docker image
+        #run: |
+          #docker build -t ${{ steps.set_image_name.outputs.model_name }} ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker
+          #docker save --output ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ steps.set_image_name.outputs.model_name }}.tar ${{ steps.set_image_name.outputs.model_name }}
 
       # Upload artifact 🟢
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ steps.set_image_name.outputs.model_name }}
-          path: ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ steps.set_image_name.outputs.model_name }}.tar
+      #- name: Upload artifact
+        #uses: actions/upload-artifact@v3
+        #with:
+          #name: ${{ steps.set_image_name.outputs.model_name }}
+          #path: ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ steps.set_image_name.outputs.model_name }}.tar
 
   push-weights:
     needs: [create_new_branch, push-model, build, build-docker]
@@ -411,11 +411,11 @@ jobs:
           singularity version
 
       #Download the artifact of the docker image
-      - name: Download docker image
-        uses: actions/download-artifact@v3
-        with:
-          name: ${{ needs.build-docker.outputs.MODELNAME }}
-          path: ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker
+      #- name: Download docker image
+        #uses: actions/download-artifact@v3
+        #with:
+          #name: ${{ needs.build-docker.outputs.MODELNAME }}
+          #path: ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker
 
       # Convert the docker image to a singularity image
       - name: Convert docker image to singularity image
