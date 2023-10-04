@@ -155,6 +155,13 @@ jobs:
             svn export --force $svn_url ./${{ needs.create_new_branch.outputs.MODELPATH }}
           done
 
+      # Download sample dataset
+      - name: Dowload Sample Dataset
+        run: |
+          sudo apt install python3-pip
+          pip install datalad
+
+          datalad download-url -m "Added Sample Dataset" -O ${{needs.create_new_branch.outputs.MODELPATH}}/example-data/sample.nii.gz ${{needs.create_new_branch.outputs.SAMPLEDATA}}
 
       # Clone deepcsr config files
       - name: Deepcsr config clone
@@ -271,19 +278,18 @@ jobs:
           echo "image_name=neuronets/$model_name" >> $GITHUB_OUTPUT
           echo "model_name=$model_name" >> $GITHUB_OUTPUT
 
-      # Build the docker image 🟢
-      - name: Build docker image
+      # Build the Docker image 🟢
+      - name: Build Docker image
         run: |
-          cd ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker
-          docker build -t ${{  steps.set_image_name.outputs.IMAGENAME }} .
-          docker save ${{ steps.set_image_name.outputs.IMAGENAME }} > ${{ steps.set_image_name.outputs.MODELNAME }}.tar
+          docker build -t ${{ steps.set_image_name.outputs.model_name }} ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker
+          docker save --output ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ steps.set_image_name.outputs.model_name }}.tar ${{ steps.set_image_name.outputs.model_name }}
 
-      # Upload as artifact
+      # Upload artifact 🟢
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ steps.set_image_name.outputs.MODELNAME }}
-          path: ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker
+          name: ${{ steps.set_image_name.outputs.model_name }}
+          path: ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ steps.set_image_name.outputs.model_name }}.tar
 
   push-weights:
     needs: [create_new_branch, push-model, build, build-docker]
@@ -422,12 +428,22 @@ jobs:
       # Convert the docker image to a singularity image
       - name: Convert docker image to singularity image
         run: |
-          singularity pull ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build-docker.outputs.MODELNAME }}.sif docker://edwardjosue2005/deepcsr
+          singularity pull /${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build-docker.outputs.MODELNAME }}.sif docker://edwardjosue2005/deepcsr
+
+      # Datalad get the sample dataset
+      - name: Get sample dataset & weights
+        run: |
+          sudo apt install python3-pip
+          pip install datalad
+
+          datalad get ./${{ needs.create_new_branch.outputs.MODELPATH }}/example-data/sample.nii.gz
+
+          datalad get ./${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model.pth
 
       # Run in singularity the test command saved under needs.create_new_branch.outputs.DEEPCSR
       - name: Run test command in Singularity
         run: |
-          singularity exec --nv --bind ./${{ needs.create_new_branch.outputs.MODELPATH }}, ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker:/output -W /output ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build-docker.outputs.MODELNAME }}.sif python ./${{ needs.create_new_branch.outputs.MODELPATH }}/predict.py --conf_path "./${{ needs.create_new_branch.outputs.MODELPATH }}/predict.yaml" --model_checkpoint "./${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model.pth" --dataset "./${{ needs.create_new_branch.outputs.MODELPATH }}/mri.nii.gz" --output_dir "./${{ needs.create_new_branch.outputs.MODELPATH }}/output"
+          singularity exec --nv --bind /actions-runner,/actions-runner/_work/,/actions-runner/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/${{ needs.create_new_branch.outputs.MODELPATH }},/actions-runner/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/${{ needs.create_new_branch.outputs.MODELPATH }}/docker,/actions-runner/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/${{ needs.create_new_branch.outputs.MODELPATH }}/weights,/actions-runner/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/${{ needs.create_new_branch.outputs.MODELPATH }}/example-data:/output ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build-docker.outputs.MODELNAME }}.sif python /output/predict.py --conf_path /output/predict.yaml --model_checkpoint /output/best_model.pth --dataset /output/sample.nii.gz --output_dir /output
 
       # Load the docker image
       - name: Load the docker image
@@ -438,6 +454,13 @@ jobs:
       - name: Run test command in Docker
         run: |
           docker run -t -i ${{ needs.build-docker.outputs.IMAGENAME }} ${{ needs.create_new_branch.outputs.DEEPCSR }}
+
+      # Push the Docker image to Docker Hub (only if the PR is merged) 🟢
+      - name: Push Docker image
+        run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker tag ${{ needs.build-docker.outputs.MODELNAME }} ${{ needs.build-docker.outputs.IMAGENAME }}
+          docker push ${{ needs.build-docker.outputs.IMAGENAME }}
 
   stop-runner:
     name: Stop self-hosted EC2 runner
@@ -460,25 +483,6 @@ jobs:
           github-token: ${{ secrets.GH_TOKEN }}
           label: ${{ needs.start-runner.outputs.label }}
           ec2-instance-id: ${{ needs.start-runner.outputs.ec2-instance-id }}
-
-      # Download docker artifact 🟢
-      - name: Download artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: ${{ needs.build-docker.outputs.MODELNAME }}
-          path: ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker
-
-      # Load the Docker image 🟢
-      - name: Load Docker image
-        run: |
-          docker load --i "./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build-docker.outputs.MODELNAME }}.tar"
-
-      # Push the Docker image to Docker Hub (only if the PR is merged) 🟢
-      - name: Push Docker image
-        run: |
-          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker tag ${{ needs.build-docker.outputs.MODELNAME }} ${{ needs.build-docker.outputs.IMAGENAME }}
-          docker push ${{ needs.build-docker.outputs.IMAGENAME }}
 
   failed:
     runs-on: ubuntu-latest
