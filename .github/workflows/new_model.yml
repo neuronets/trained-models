@@ -324,7 +324,7 @@ jobs:
           OSF_TOKEN: ${{ secrets.OSF_TOKEN }}
         run: |
               datalad siblings
-              datalad download-url -m "Added Weights" -O ./${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model.pth ${{ needs.create_new_branch.outputs.WEIGHTS }}
+              datalad download-url -m "Added Weights" -O ./${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model.pth "${{ needs.create_new_branch.outputs.WEIGHTS }}"
               datalad download-url -m "Added Sample Dataset" -O ./${{needs.create_new_branch.outputs.MODELPATH}}/example-data/sample.nii.gz ${{needs.create_new_branch.outputs.SAMPLEDATA}}
               datalad save . -m "Added model weights and sample data"
               #datalad push --to osf-annex2-storage
