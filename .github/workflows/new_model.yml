@@ -5,8 +5,9 @@ on:
   issues:
     types: [ assigned, labeled ]
 
-jobs:
 
+jobs:
+  
   create_new_branch:
     if: ${{startsWith(github.event.issue.title, 'New Model:') && contains(github.event.issue.labels.*.name, 'failed') != true}}
 
@@ -88,6 +89,7 @@ jobs:
         echo "deepcsr_config=${{ steps.issue-parser.outputs.issueparser_deepcsrConfig }}" >> $GITHUB_OUTPUT
 
   push-model:
+    if: ${{startsWith(github.event.issue.title, 'New Model:') && contains(github.event.issue.labels.*.name, 'failed') != true}}
     needs: create_new_branch
 
     runs-on: ubuntu-latest
