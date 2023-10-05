@@ -317,6 +317,23 @@ jobs:
           pip install requests
           git config --global user.name "trained_models"
           git config --global user.email "trained_models"
+
+      # Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11
+
+      # Get file extensions for the weights and sample data
+      - name: Get extensions for weights
+        id: get_extensions_weights
+        run: |
+          echo "weights_ext=${{python ./.github/workflows/getExtensions.py '${{ needs.create_new_branch.outputs.WEIGHTS }}'}}" >> $GITHUB_OUTPUT
+
+      - name: Get extensions for sample data
+        id: get_extensions_sample_data
+        run: |
+          echo "sample_ext=${{ python ./.github/workflows/getExtensions.py '${{ needs.create_new_branch.outputs.SAMPLEDATA }}'}}" >> $GITHUB_OUTPUT
       
       #Git annex addurl the weights
       - name: Git-annex/Datalad add the weights and sample data
@@ -324,8 +341,8 @@ jobs:
           OSF_TOKEN: ${{ secrets.OSF_TOKEN }}
         run: |
               datalad siblings
-              datalad download-url -m "Added Weights" -O ./${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model.pth "${{ needs.create_new_branch.outputs.WEIGHTS }}"
-              datalad download-url -m "Added Sample Dataset" -O ./${{needs.create_new_branch.outputs.MODELPATH}}/example-data/sample.nii.gz "${{needs.create_new_branch.outputs.SAMPLEDATA}}"
+              datalad download-url -m "Added Weights" -O ./${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model.${{ steps.get_extensions_weights.outputs.weights_ext }} "${{ needs.create_new_branch.outputs.WEIGHTS }}"
+              datalad download-url -m "Added Sample Dataset" -O ./${{needs.create_new_branch.outputs.MODELPATH}}/example-data/sample.${{ steps.get_extensions_sample_data.outputs.sample_ext }} "${{needs.create_new_branch.outputs.SAMPLEDATA}}"
               datalad save . -m "Added model weights and sample data"
               #datalad push --to osf-annex2-storage
               datalad push --to origin
