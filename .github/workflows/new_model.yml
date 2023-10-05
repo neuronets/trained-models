@@ -332,12 +332,16 @@ jobs:
       - name: Get extensions for weights
         id: get_extensions_weights
         run: |
-          echo "weights_ext=${{python ./.github/workflows/getExtensions.py '${{ needs.create_new_branch.outputs.WEIGHTS }}'}}" >> $GITHUB_OUTPUT
+          echo "weights_ext<<EOF" >> $GITHUB_OUTPUT
+          python ./.github/workflows/getExtensions.py "${{ needs.create_new_branch.outputs.WEIGHTS }}" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Get extensions for sample data
         id: get_extensions_sample_data
         run: |
-          echo "sample_ext=${{ python ./.github/workflows/getExtensions.py '${{ needs.create_new_branch.outputs.SAMPLEDATA }}'}}" >> $GITHUB_OUTPUT
+          echo "sample_ext<<EOF" >> $GITHUB_OUTPUT
+          python ./.github/workflows/getExtensions.py "${{ needs.create_new_branch.outputs.SAMPLEDATA }}" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
       
       #Git annex addurl the weights
       - name: Git-annex/Datalad add the weights and sample data
