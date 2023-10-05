@@ -89,7 +89,7 @@ jobs:
         echo "deepcsr_config=${{ steps.issue-parser.outputs.issueparser_deepcsrConfig }}" >> $GITHUB_OUTPUT
 
   push-model:
-    if: ${{startsWith(github.event.issue.title, 'New Model:') && contains(github.event.issue.labels.*.name, 'failed') != true}}
+    if: ${{startsWith(github.event.issue.title, 'New Model:') && github.event.label.name != 'failed'}}
     needs: create_new_branch
 
     runs-on: ubuntu-latest
@@ -176,7 +176,7 @@ jobs:
           git push origin ${{ needs.create_new_branch.outputs.BRANCHNAME }}
   
   build:
-    if: ${{startsWith(github.event.issue.title, 'New Model:') && contains(github.event.issue.labels.*.name, 'failed') != true}}
+    if: ${{startsWith(github.event.issue.title, 'New Model:') && github.event.label.name != 'failed'}}
     needs: [create_new_branch, push-model]
     runs-on: ubuntu-latest
 
@@ -232,7 +232,7 @@ jobs:
         git push origin ${{ needs.create_new_branch.outputs.BRANCHNAME }}
 
   build-docker:
-    if: ${{startsWith(github.event.issue.title, 'New Model:') && contains(github.event.issue.labels.*.name, 'failed') != true}}
+    if: ${{startsWith(github.event.issue.title, 'New Model:') && github.event.label.name != 'failed'}}
     needs: [create_new_branch, push-model, build]
 
     runs-on: ubuntu-latest
@@ -287,7 +287,7 @@ jobs:
           #path: ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ steps.set_image_name.outputs.model_name }}.tar
 
   push-weights:
-    if: ${{startsWith(github.event.issue.title, 'New Model:') && contains(github.event.issue.labels.*.name, 'failed') != true}}
+    if: ${{startsWith(github.event.issue.title, 'New Model:') && github.event.label.name != 'failed'}}
     needs: [create_new_branch, push-model, build, build-docker]
     runs-on: ubuntu-latest
 
@@ -335,7 +335,7 @@ jobs:
               datalad push --to origin
 
   start-runner:
-    if: ${{startsWith(github.event.issue.title, 'New Model:') && contains(github.event.issue.labels.*.name, 'failed') != true}}
+    if: ${{startsWith(github.event.issue.title, 'New Model:') && github.event.label.name != 'failed'}}
     needs: [create_new_branch, push-model, build, build-docker, push-weights]
 
     runs-on: ubuntu-latest
@@ -362,7 +362,7 @@ jobs:
           security-group-id: ${{ vars.AWS_SECURITY_GROUP }}
 
   test-model:
-    if: ${{startsWith(github.event.issue.title, 'New Model:') && contains(github.event.issue.labels.*.name, 'failed') != true}}
+    if: ${{startsWith(github.event.issue.title, 'New Model:') && github.event.label.name != 'failed'}}
     name: Do the job on the runner
     needs: [create_new_branch, push-model, build, build-docker, push-weights, start-runner] # required to start the main job when the runner is ready
     runs-on: ${{ needs.start-runner.outputs.label }} # run the job on the newly created runner
@@ -450,7 +450,7 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    if: ${{ always() && startsWith(github.event.issue.title, 'New Model:') && contains(github.event.issue.labels.*.name, 'failed') != true}}
+    if: ${{always() && startsWith(github.event.issue.title, 'New Model:') && github.event.label.name != 'failed'}}
     # required to stop the runner even if the error happened in the previous jobs
     steps:
       - name: Configure AWS credentials
