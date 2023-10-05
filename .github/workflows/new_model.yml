@@ -496,8 +496,6 @@ jobs:
       
       needs: [create_new_branch, push-model, build, build-docker, push-weights, start-runner, test-model, stop-runner]
         
-      if: ${{ always() && contains(needs.*.result, 'success') }}
-
       runs-on: ubuntu-latest
         
       steps:
