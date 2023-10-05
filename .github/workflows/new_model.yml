@@ -462,6 +462,21 @@ jobs:
         run: |
 
           singularity exec --nv --bind /actions-runner,/actions-runner/_work/,/actions-runner/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/${{ needs.create_new_branch.outputs.MODELPATH }}/,/actions-runner/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/${{ needs.create_new_branch.outputs.MODELPATH }}/docker,/actions-runner/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/${{ needs.create_new_branch.outputs.MODELPATH }}/weights,/actions-runner/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/${{ needs.create_new_branch.outputs.MODELPATH }}/example-data:/output ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build-docker.outputs.MODELNAME }}.sif python ./${{ needs.create_new_branch.outputs.MODELPATH }}/predict.py --conf_path ./${{ needs.create_new_branch.outputs.MODELPATH }}/predict.yaml --model_checkpoint ./${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model.${{ needs.push-weights.outputs.WEIGHTS_EXT }} --dataset ./${{ needs.create_new_branch.outputs.MODELPATH }}/example-data/sample.${{ needs.push-weights.outputs.SAMPLE_EXT }} --output_dir .
+
+      # Load the Docker image 🟢
+      - name: Load Docker image
+        run: |
+          docker load --i "./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build-docker.outputs.MODELNAME }}.tar"
+
+      # Test model with docker image as well
+
+      # Push the Docker image to Docker Hub (only if the PR is merged) 🟢
+      - name: Push Docker image
+        run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker tag ${{ needs.build-docker.outputs.MODELNAME }} ${{ needs.build-docker.outputs.IMAGENAME }}
+          docker push ${{ needs.build-docker.outputs.IMAGENAME }}
+
          
   stop-runner:
     name: Stop self-hosted EC2 runner
@@ -546,3 +561,24 @@ jobs:
                       Thank you for adding a model to Nobrainer-Zoo!
           
                   emoji: '+1,hooray,rocket'
+
+
+##########################################
+
+# This workflow will add a new model to the zoo
+
+# The flow of the workflow is as follows:
+
+# 1. Create a new branch from the issue
+# 2. Scrape the info from the issue
+# 3. Scrape info from the form
+# 4. Push the new created files and folders to the branch
+# 5. Build the model card and spec.yaml file
+# 6. Update the model's spec.yaml file
+# 7. Build the docker image
+# 8. Push the weights and sample data to the datalad repo
+# 9. Start the self-hosted runner
+# 10. Test the model/Push docker image to dockerhub
+# 11. Stop the self-hosted runner
+# 12. If the model fails, add the failed label and comment
+# 13. If the model succeeds, add the success label and comment
