@@ -435,7 +435,6 @@ jobs:
       # Run in singularity the test command saved under needs.create_new_branch.outputs.DEEPCSR
       - name: Run test command in Singularity
         run: |
-          ls Testing/testing/1.0
 
           singularity exec --nv --bind /actions-runner,/actions-runner/_work/,/actions-runner/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/${{ needs.create_new_branch.outputs.MODELPATH }}/,/actions-runner/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/${{ needs.create_new_branch.outputs.MODELPATH }}/docker,/actions-runner/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/${{ needs.create_new_branch.outputs.MODELPATH }}/weights,/actions-runner/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/${{ needs.create_new_branch.outputs.MODELPATH }}/example-data:/output ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build-docker.outputs.MODELNAME }}.sif python ./${{ needs.create_new_branch.outputs.MODELPATH }}/predict.py --conf_path ./${{ needs.create_new_branch.outputs.MODELPATH }}/predict.yaml --model_checkpoint ./${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model.pth --dataset ./${{ needs.create_new_branch.outputs.MODELPATH }}/example-data/sample.nii.gz --output_dir .
          
