@@ -313,6 +313,12 @@ jobs:
       - name: Verify git-annex Installation
         run: git-annex version
 
+      # Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11
+
       # Install datalad 🟢
       - name: Install Datalad
         run: |
@@ -321,12 +327,6 @@ jobs:
           pip install requests
           git config --global user.name "trained_models"
           git config --global user.email "trained_models"
-
-      # Set up Python
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.11
 
       # Get file extensions for the weights and sample data
       - name: Get extensions for weights
