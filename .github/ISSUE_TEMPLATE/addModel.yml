@@ -62,11 +62,17 @@ body:
       description: Please provide a link to a sample dataset that can be used to test your model.
       placeholder: Enter the sample-dataset here.
   - type: input
-    id: deepcsrConfig
+    id: modelConfig
     attributes:
-      label: DeepCSR config
-      description: Please provide a link to the DeepCSR config.
-      placeholder: Enter the DeepCSR config here.
+      label: Model config
+      description: Please provide a link in github to your model's config file.
+      placeholder: Enter the config file here.
+  - type: input
+    id: testCommand
+    attributes:
+      label: Test Command
+      description: Please provide a test command for your python script. If any flag has a value that is a path, it is REQUIRED to use relative paths. Relative paths should be referenced within the current repo structure. Weight files are saved to ./<Org>/<model>/<version>/weights/best_model.FILE_FORMAT and Sample Dataset file is saved to ./<Org>/<model>/<version>/example-data/sample.FILE_FORMAT
+      placeholder: Enter your test command. i.e python predict.py --model_checkpoint ./DeepCSR/deepcsr/1.0/weights/best_model.pth --dataset ./DeepCSR/deepcsr/1.0/example-data/test.nii.gz --output_dir .
   - type: checkboxes
     id: terms
     attributes:
