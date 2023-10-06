@@ -169,7 +169,7 @@ jobs:
               
           svn_url=$(echo "$url" | sed -E 's|/tree/[^/]+|/trunk|; s|/blob/[^/]+|/trunk|')
     
-          svn export --force $svn_url ./${{ needs.create_new_branch.outputs.MODELPATH }}/config/
+          svn export --force $svn_url ./${{ needs.create_new_branch.outputs.MODELPATH }}/config
     
       # Commit the new created files and folders to the branch needs.create_new_branch.outputs.BRANCHNAME 🟢
       - name: Commit and Push the new files
