@@ -10,13 +10,16 @@ body:
 
         1. Include a docker folder inside your project which includes the dockerfile and everything associated with it (absolutely recommended).
 
-        2. For your prediction script (if applicable), specify path to the best_model (or weights) at the command line using flags.
+        2. For your prediction script (if applicable), specify path to the best_model (or weights) and 'sample' dataset at the command line using flags.
 
-        3. Please avoid absolute paths in any of your scripts. Ideally, relative paths with respect to the root (project) folder is preferable.
+        3. Please avoid absolute paths in any of your scripts. Ideally, relative paths with respect to the root (project) folder is mandatory in the test-command.
 
-        4. This issue's title should start with "New Model:" and you HAVE to assign yourself to this issue.
+        4. This issue's title should start with "New Model:" plus our model's org/model/version. You also HAVE to assign yourself to this issue.
 
         Please fill all the details of this form to add your model sucessfully to the zoo. Thank you!
+
+        *If the automatic checks fail, this issue will be tagged as 'failed.' However, fix the issues and change the label to "Ready-for-testing" to test the checks again.
+        
   - type: input
     id: path
     attributes:

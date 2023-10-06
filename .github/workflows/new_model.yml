@@ -165,6 +165,7 @@ jobs:
       # Clone config files
       - name: Config file clone
         run: |
+          mkdir ./${{ needs.create_new_branch.outputs.MODELPATH }}/config
           url="${{ needs.create_new_branch.outputs.CONFIG }}"
               
           svn_url=$(echo "$url" | sed -E 's|/tree/[^/]+|/trunk|; s|/blob/[^/]+|/trunk|')
