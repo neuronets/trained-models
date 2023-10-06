@@ -253,7 +253,21 @@ jobs:
           sudo rm -rf "/usr/local/share/boost"
           sudo rm -rf /opt/hostedtoolcache
           sudo rm -rf "$AGENT_TOOLSDIRECTORY"
-        
+      
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
+        with:
+            # this might remove tools that are actually needed,
+            # if set to "true" but frees about 6 GB
+            tool-cache: false
+            
+            # all of these default to true, but feel free to set to
+            # "false" if necessary for your workflow
+            android: true
+            dotnet: true
+            haskell: true
+            large-packages: true
+            docker-images: false
 
       # Checkout the repository to the GitHub Actions runner 🟢
       - uses: actions/checkout@v3
@@ -483,6 +497,9 @@ jobs:
           # Parent directory as a bind path in a env variable
 
           singularity exec --nv --bind /actions-runner,/actions-runner/_work/,/actions-runner/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/${{ needs.create_new_branch.outputs.MODELPATH }}/,/actions-runner/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/${{ needs.create_new_branch.outputs.MODELPATH }}/docker,/actions-runner/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/${{ needs.create_new_branch.outputs.MODELPATH }}/weights,/actions-runner/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/${{ needs.create_new_branch.outputs.MODELPATH }}/example-data:/output ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build-docker.outputs.MODELNAME }}.sif ${{ needs.create_new_branch.outputs.TESTCOMMAND }}
+
+
+          python ./${{ needs.create_new_branch.outputs.MODELPATH }}/predict.py --conf_path ./${{ needs.create_new_branch.outputs.MODELPATH }}/predict.yaml --model_checkpoint ./${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model.${{ needs.push-weights.outputs.WEIGHTS_EXT }} --dataset ./${{ needs.create_new_branch.outputs.MODELPATH }}/example-data/sample.${{ needs.push-weights.outputs.SAMPLE_EXT }} --output_dir .
 
       # Load the Docker image 🟢
       - name: Load Docker image
