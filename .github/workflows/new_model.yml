@@ -502,7 +502,7 @@ jobs:
       # Load the Docker image 🟢
       - name: Load Docker image
         run: |
-          docker load --i "./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build-docker.outputs.MODELNAME }}.tar"
+          docker load --input "./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build-docker.outputs.MODELNAME }}.tar"
 
       - name: Collect Workflow Telemetry
         uses: runforesight/workflow-telemetry-action@v1
