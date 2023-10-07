@@ -8,7 +8,7 @@ repository:
   repo_download_location: None
 inference:
   prediction_script: trained-models/DeepCSR/deepcsr/1.0/predict.py
-  command: f"python {MODELS_PATH}/{model}/predict.py --conf_path {conf}"
+  command: f"python {MODELS_PATH}/{model}/predict.py --conf_path {conf} --model_checkpoint {infile[0]} --dataset {infile[1]}"
   data_spec:
     infile:
       n_files: 1
