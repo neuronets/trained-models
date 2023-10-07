@@ -514,7 +514,7 @@ jobs:
       # Test model with docker image as well
       - name: Run test command in Docker
         run: |
-          docker run --gpus all -v ./actions-runner/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/${{ needs.create_new_branch.outputs.MODELPATH }}:/output ${{ needs.build-docker.outputs.MODELNAME }} "${{ needs.create_new_branch.outputs.TESTCOMMAND }}"
+          docker run --gpus all -v /actions-runner/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}:/output ${{ needs.build-docker.outputs.MODELNAME }} "${{ needs.create_new_branch.outputs.TESTCOMMAND }}"
           
       # Push the Docker image to Docker Hub (only if the PR is merged) 🟢
       # - name: Push Docker image
