@@ -290,27 +290,6 @@ jobs:
           model_name=$(echo "$full_path" | awk -F '/' '{print $(NF-1)}')
           echo "image_name=neuronets/$model_name" >> $GITHUB_OUTPUT
           echo "model_name=$model_name" >> $GITHUB_OUTPUT
-      
-      
-      - name: Collect Workflow Telemetry
-        uses: runforesight/workflow-telemetry-action@v1
-        with:
-          job_summary: true
-          proc_trace_sys_enable: true
-          proc_trace_table_show: true
-
-      # Build the Docker image 🟢
-      - name: Build Docker image
-        run: |
-          docker build -t ${{ steps.set_image_name.outputs.model_name }} ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker
-          docker save --output ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ steps.set_image_name.outputs.model_name }}.tar ${{ steps.set_image_name.outputs.model_name }}
-
-      # Upload artifact 🟢
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ steps.set_image_name.outputs.model_name }}
-          path: ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ steps.set_image_name.outputs.model_name }}.tar
 
   push-weights:
     needs: [create_new_branch, push-model, build, build-docker]
@@ -463,12 +442,11 @@ jobs:
           sudo apt install ./singularity-ce_4.0.0-focal_amd64.deb -y
           singularity version
 
-      #Download the artifact of the docker image
-      - name: Download docker image
-        uses: actions/download-artifact@v3
-        with:
-          name: ${{ needs.build-docker.outputs.MODELNAME }}
-          path: ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker
+      # Build the Docker image 🟢
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ needs.build-docker.outputs.MODELNAME }} ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker
+          docker save --output ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build-docker.outputs.MODELNAME }}.tar ${{ needs.build-docker.outputs.MODELNAME }}
 
       # Convert the docker image to a singularity image
       - name: Convert docker image to singularity image

@@ -70,7 +70,7 @@ body:
       label: Model config
       description: Please provide a link in github to your model's config file.
       placeholder: Enter the config file here.
-  - type: input
+  - type: textarea
     id: testCommand
     attributes:
       label: Test Command
