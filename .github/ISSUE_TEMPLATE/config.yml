@@ -1,1 +1,4 @@
 blank_issues_enabled: true
+contact_links:
+  - name: "How to add a model?"
+    url: "https://github.com/neuronets/trained-models/blob/master/add_model_instructions.md"
