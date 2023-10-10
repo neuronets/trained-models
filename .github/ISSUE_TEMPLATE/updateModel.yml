@@ -103,7 +103,6 @@ body:
       description: Please write a brief description of this update.
       placeholder: Describe the update and its purpose.
       required: true
-
   - type: checkboxes
     id: terms
     attributes:
