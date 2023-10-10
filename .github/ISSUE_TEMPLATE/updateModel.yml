@@ -102,6 +102,7 @@ body:
       label: Changelog
       description: Please write a brief description of this update.
       placeholder: Describe the update and its purpose.
+    validations: 
       required: true
   - type: checkboxes
     id: terms
