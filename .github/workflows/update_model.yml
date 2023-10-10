@@ -20,7 +20,6 @@ jobs:
       MODELPATH: ${{ steps.Create_Issue_Branch.outputs.MODELPATH }}
       WEIGHTS: ${{ steps.Create_Issue_Branch.outputs.WEIGHTS }}
       DOCKER: ${{ steps.Create_Issue_Branch.outputs.DOCKER }}
-      PYTHON: ${{ steps.Create_Issue_Branch.outputs.PYTHONS }}
       MODELINFO: ${{ steps.Create_Issue_Branch.outputs.MODELINFO }}
       SAMPLEDATA: ${{ steps.Create_Issue_Branch.outputs.SAMPLEDATA }}
       PYTHONS: ${{ steps.Create_Issue_Branch.outputs.PYTHONS }}
@@ -276,15 +275,6 @@ jobs:
         if: needs.create_new_branch.outputs.BRANCHNAME != ''
         with:
             ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
-
-      # Install git-annex 🟢
-      - name: Install git-annex
-        run: |
-          sudo apt-get update
-          sudo apt-get install git-annex
-    
-      - name: Verify git-annex Installation
-        run: git-annex version
 
       # Set up Python
       - name: Set up Python
