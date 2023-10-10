@@ -1,7 +1,6 @@
 name: ♻️ Update an existing model
 description: Update your model
 title: "Update Model: {org}/{model}/{version}"
-labels: ["update"]
 
 body:
   - type: markdown
@@ -34,6 +33,8 @@ body:
         - Whenever there is an update to the weights folder, it should be considered a major change due to its potential impact on model behavior and compatibility.
         *Recommended Changes*:
         - Any modifications to the weights folder, including changes to weights, biases, model parameters, or model architecture.
+
+        *Please note that even if you are not updating certain fields, it is still required to fill them. For example, if you are not updating the python scripts, you should paste the current URLs to the scripts, do not leave it in blank 👍
 
   - type: input
     id: pathNew
@@ -83,22 +84,25 @@ body:
       placeholder: Enter the sample-dataset here. Even if you are not updating this, input the same url from your old model.
     validations:
       required: true
-  - type: checkboxes
+  - type: input
+    id: modelConfig
+    attributes:
+      label: Model config
+      description: Please provide a link in github to your model's config file (if applicable).
+      placeholder: Enter the config file here.
+  - type: textarea
+    id: testCommand
+    attributes:
+      label: Test Command
+      description: Please provide read our documentation @root/add_model_instructions.md
+      placeholder: Enter your test command.
+  - type: textarea
     id: updates
     attributes:
-      label: Select what is being updated
-      description: Please select all the checkboxes that apply to this update.
-      options:
-        - label: ModelWeights
-          required: false
-        - label: DockerInformation
-          required: false
-        - label: ModelPythonScripts
-          required: false
-        - label: ModelCardAndSpec
-          required: false
-        - label: SampleDataset
-          required: false
+      label: Changelog
+      description: Please write a brief description of this update.
+      placeholder: Describe the update and its purpose.
+      required: true
 
   - type: checkboxes
     id: terms

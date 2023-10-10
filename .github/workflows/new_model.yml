@@ -225,7 +225,9 @@ jobs:
       
     # Update the model's spec.yaml file
     - name: Update yaml file
-      run: python ./.github/workflows/update_yaml_info.py
+      run: |
+        model_name=$(echo "${{ needs.create_new_branch.outputs.MODELPATH }}" | awk -F '/' '{print $(NF-1)}')
+        python ./.github/workflows/update_yaml_info.py ${{ needs.create_new_branch.outputs.MODELPATH }}/docker $model_name
     
     # Commit the changes (spec.yaml file and model card) 🟢
     - name: Commit changes
@@ -357,10 +359,10 @@ jobs:
           OSF_TOKEN: ${{ secrets.OSF_TOKEN }}
         run: |
               datalad siblings
-              datalad download-url -m "Added Weights" -O ./${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model.${{ steps.get_extensions_weights.outputs.weights_ext }} "${{ needs.create_new_branch.outputs.WEIGHTS }}"
-              datalad download-url -m "Added Sample Dataset" -O ./${{needs.create_new_branch.outputs.MODELPATH}}/example-data/sample.${{ steps.get_extensions_sample_data.outputs.sample_ext }} "${{needs.create_new_branch.outputs.SAMPLEDATA}}"
+              datalad download-url --overwrite -m "Added Weights" -O ./${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model.${{ steps.get_extensions_weights.outputs.weights_ext }} "${{ needs.create_new_branch.outputs.WEIGHTS }}"
+              datalad download-url --overwrite -m "Added Sample Dataset" -O ./${{needs.create_new_branch.outputs.MODELPATH}}/example-data/sample.${{ steps.get_extensions_sample_data.outputs.sample_ext }} "${{needs.create_new_branch.outputs.SAMPLEDATA}}"
               datalad save . -m "Added model weights and sample data"
-              #datalad push --to osf-annex2-storage
+              datalad push --to osf-annex2-storage
               datalad push --to origin
 
   start-runner:
@@ -493,13 +495,23 @@ jobs:
       - name: Run test command in Docker
         run: |
           docker run --gpus all -v /actions-runner/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}:/output ${{ needs.build-docker.outputs.MODELNAME }} "cd /output; ${{ needs.create_new_branch.outputs.TESTCOMMAND }}"
+      
+      # Get model's version from model's path
+      - name: Get model's version
+        id: modelVersion
+        run: |
+          # Get the version
+          model_version=$(echo "${{ needs.create_new_branch.outputs.MODELPATH }}" | awk -F '/' '{print $(NF)}')
           
+          # Set the version as an output
+          echo "model_version=$model_version" >> $GITHUB_OUTPUT
+      
       # Push the Docker image to Docker Hub (only if the PR is merged) 🟢
-      # - name: Push Docker image
-        # run: |
-          # docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          #docker tag ${{ needs.build-docker.outputs.MODELNAME }} ${{ needs.build-docker.outputs.IMAGENAME }}
-          #docker push ${{ needs.build-docker.outputs.IMAGENAME }}
+      - name: Push Docker image
+        run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker tag ${{ needs.build-docker.outputs.MODELNAME }} ${{ needs.build-docker.outputs.IMAGENAME }}:${{ steps.modelVersion.outputs.model_version }}
+          docker push ${{ needs.build-docker.outputs.IMAGENAME }}
     
   stop-runner:
     name: Stop self-hosted EC2 runner

@@ -1,6 +1,7 @@
 import oyaml
 import os
-from Module.utils import get_dockerfile_path, get_latest_model_name
+import sys
+
 
 def edit_spec_yaml(path, model_name):
     spec_file = f"{path}/spec.yaml"
@@ -30,8 +31,8 @@ def edit_spec_yaml(path, model_name):
     return True
 
 if __name__ == "__main__":
-    model_folder = get_latest_model_name()
-    dockerfile_path = get_dockerfile_path()
+    model_folder = sys.argv[1]
+    dockerfile_path = sys.argv[2]
 
     success = edit_spec_yaml(dockerfile_path, model_folder)
     

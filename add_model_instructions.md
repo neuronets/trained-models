@@ -9,7 +9,7 @@ Thank you for your interest in contributing your trained model to our "Trained-M
 
 3. Select the appropriate issue template:
    - If you want to add a new model, choose "Add New Model."
-   - If you want to push a new version of an existing model, choose "Update Model."
+   - If you want to update an existing model, choose "Update a Model."
 
 4. In the issue title, start with "New Model: " for new models or "Update Model: " for model updates.
 
