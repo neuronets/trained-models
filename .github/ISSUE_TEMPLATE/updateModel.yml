@@ -96,6 +96,8 @@ body:
       label: Test Command
       description: Please provide read our documentation @root/add_model_instructions.md
       placeholder: Enter your test command.
+    validations:
+      required: true
   - type: textarea
     id: updates
     attributes:
