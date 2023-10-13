@@ -360,7 +360,12 @@ jobs:
         run: |
               datalad siblings
               datalad download-url --overwrite -m "Added Weights" -O ./${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model.${{ steps.get_extensions_weights.outputs.weights_ext }} "${{ needs.create_new_branch.outputs.WEIGHTS }}"
-              datalad download-url --overwrite -m "Added Sample Dataset" -O ./${{needs.create_new_branch.outputs.MODELPATH}}/example-data/sample.${{ steps.get_extensions_sample_data.outputs.sample_ext }} "${{needs.create_new_branch.outputs.SAMPLEDATA}}"
+              mkdir ./${{ needs.create_new_branch.outputs.MODELPATH }}/example-data
+              cd ./${{ needs.create_new_branch.outputs.MODELPATH }}/example-data
+              # datalad download-url --overwrite -m "Added Sample Dataset" -O ./${{needs.create_new_branch.outputs.MODELPATH}}/example-data/sample.${{ steps.get_extensions_sample_data.outputs.sample_ext }} "${{needs.create_new_branch.outputs.SAMPLEDATA}}"
+
+              datalad download-url --overwrite -m "Added Sample Dataset" "${{ needs.create_new_branch.outputs.SAMPLEDATA }}"
+
               datalad save . -m "Added model weights and sample data"
               datalad push --to osf-annex2-storage
               datalad push --to origin
@@ -463,8 +468,31 @@ jobs:
 
           datalad get ./${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model.${{ needs.push-weights.outputs.WEIGHTS_EXT }}
 
-          datalad get ./${{ needs.create_new_branch.outputs.MODELPATH }}/example-data/sample.${{ needs.push-weights.outputs.SAMPLE_EXT }}
+          datalad get ./${{ needs.create_new_branch.outputs.MODELPATH }}/example-data/
 
+          sudo apt install unzip
+
+          cd ./${{ needs.create_new_branch.outputs.MODELPATH }}/example-data/
+
+          !bin/sh \
+            for zip in *.zip \
+            do \
+              dirname='echo $zip | sed 's/\.zip$//'' \
+              if mkdir "$dirname" \
+              then \
+                if cd "$dirname" \
+                then \
+                  unzip ../"$zip" \
+                  cd .. \
+                else \
+                  echo "Could not unpack $zip - cd failed" >&2 \
+                fi \
+              else \
+                echo "Could not unpack $zip - mkdir failed" >&2 \
+              fi \
+            done
+
+            
       - name: Collect Workflow Telemetry
         uses: runforesight/workflow-telemetry-action@v1
         with:
