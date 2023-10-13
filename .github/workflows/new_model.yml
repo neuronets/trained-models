@@ -33,7 +33,7 @@ jobs:
       id: branch
       uses: robvanderleek/create-issue-branch@main
       env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         
     # Set up Python 🟢
     - name: Set up Python
