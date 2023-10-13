@@ -9,7 +9,7 @@ on:
 jobs:
   
   create_new_branch:
-    if: ${{startsWith(github.event.issue.title, 'New Model:') && github.event.label.name != 'failed'}}
+    if: ${{ startsWith(github.event.issue.title, 'New Model:') && github.event.label.name != 'failed' }}
 
     runs-on: ubuntu-latest
 
@@ -42,7 +42,7 @@ jobs:
         python-version: 3.11
 
     # Checkout the repository to the GitHub Actions runner 🟢
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         ref: ${{ steps.branch.outputs.branchName }}
         
@@ -296,7 +296,7 @@ jobs:
   push-weights:
     needs: [create_new_branch, push-model, build, build-docker]
     runs-on: ubuntu-latest
-    
+
     steps:
       # Checkout the repository to the GitHub Actions runner to the new branch created for the issue 🟢
       - uses: actions/checkout@v3
