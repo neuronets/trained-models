@@ -346,12 +346,12 @@ jobs:
           python ./.github/workflows/getFileExtension.py "${{ needs.create_new_branch.outputs.WEIGHTS }}" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Get extensions for sample data
-        id: get_extensions_sample_data
-        run: |
-          echo "sample_ext<<EOF" >> $GITHUB_OUTPUT
-          python ./.github/workflows/getFileExtension.py "${{ needs.create_new_branch.outputs.SAMPLEDATA }}" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+      # - name: Get extensions for sample data
+        # id: get_extensions_sample_data
+        # run: |
+          # echo "sample_ext<<EOF" >> $GITHUB_OUTPUT
+          # python ./.github/workflows/getFileExtension.py "${{ needs.create_new_branch.outputs.SAMPLEDATA }}" >> $GITHUB_OUTPUT
+          # echo "EOF" >> $GITHUB_OUTPUT
       
       #Git annex addurl the weights
       - name: Git-annex/Datalad add the weights and sample data
@@ -365,7 +365,8 @@ jobs:
               # datalad download-url --overwrite -m "Added Sample Dataset" -O ./${{needs.create_new_branch.outputs.MODELPATH}}/example-data/sample.${{ steps.get_extensions_sample_data.outputs.sample_ext }} "${{needs.create_new_branch.outputs.SAMPLEDATA}}"
 
               datalad download-url --overwrite -m "Added Sample Dataset" "${{ needs.create_new_branch.outputs.SAMPLEDATA }}"
-
+              cd ..
+  
               datalad save . -m "Added model weights and sample data"
               datalad push --to osf-annex2-storage
               datalad push --to origin
@@ -487,7 +488,7 @@ jobs:
               fi \
             done
 
-            
+
       - name: Collect Workflow Telemetry
         uses: runforesight/workflow-telemetry-action@v1
         with:
