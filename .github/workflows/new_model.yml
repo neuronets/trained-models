@@ -471,7 +471,7 @@ jobs:
 
           cd ./${{ needs.create_new_branch.outputs.MODELPATH }}/example-data/
 
-          !bin/sh \
+          #!/bin/sh \
             for zip in *.zip \
             do \
               dirname='echo $zip | sed 's/\.zip$//'' \
