@@ -324,17 +324,11 @@ jobs:
       - name: Install Datalad
         id: testing
         run: |
-          sudo apt-get install dataloud
+          sudo apt-get install datalad
           python3 -m pip install datalad-osf
           pip install requests
           git config --global user.name "trained_models"
           git config --global user.email "trained_models"
-        continue-on-error: true
-      - uses: mainmatter/continue-on-error-comment@v1
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          outcome: ${{ steps.testing.outcome }}
-          test-id: Error code ${{ matrix.code }}
 
       # Get file extensions for the weights and sample data
       # - name: Get extensions for weights
