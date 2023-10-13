@@ -1,6 +1,7 @@
 name: ♻️ Update an existing model
 description: Update your model
 title: "Update Model: {org}/{model}/{version}"
+labels: ["Ready-to-test"]
 
 body:
   - type: markdown

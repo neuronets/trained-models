@@ -297,10 +297,6 @@ jobs:
     needs: [create_new_branch, push-model, build, build-docker]
     runs-on: ubuntu-latest
 
-    outputs:
-      WEIGHTS_EXT: ${{ steps.get_extensions_weights.outputs.weights_ext }}
-      SAMPLE_EXT: ${{ steps.get_extensions_sample_data.outputs.sample_ext }}
-
     steps:
       # Checkout the repository to the GitHub Actions runner to the new branch created for the issue 🟢
       - uses: actions/checkout@v3
@@ -313,15 +309,6 @@ jobs:
         if: needs.create_new_branch.outputs.BRANCHNAME != ''
         with:
             ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
-
-      # Install git-annex 🟢
-      - name: Install git-annex
-        run: |
-          sudo apt-get update
-          sudo apt-get install git-annex
-    
-      - name: Verify git-annex Installation
-        run: git-annex version
 
       # Set up Python
       - name: Set up Python
@@ -339,12 +326,12 @@ jobs:
           git config --global user.email "trained_models"
 
       # Get file extensions for the weights and sample data
-      - name: Get extensions for weights
-        id: get_extensions_weights
-        run: |
-          echo "weights_ext<<EOF" >> $GITHUB_OUTPUT
-          python ./.github/workflows/getFileExtension.py "${{ needs.create_new_branch.outputs.WEIGHTS }}" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+      # - name: Get extensions for weights
+        # id: get_extensions_weights
+        # run: |
+          # echo "weights_ext<<EOF" >> $GITHUB_OUTPUT
+          # python ./.github/workflows/getFileExtension.py "${{ needs.create_new_branch.outputs.WEIGHTS }}" >> $GITHUB_OUTPUT
+          # echo "EOF" >> $GITHUB_OUTPUT
 
       # - name: Get extensions for sample data
         # id: get_extensions_sample_data
@@ -359,14 +346,26 @@ jobs:
           OSF_TOKEN: ${{ secrets.OSF_TOKEN }}
         run: |
               # datalad siblings
-              datalad download-url --overwrite -m "Added Weights" -O ./${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model.${{ steps.get_extensions_weights.outputs.weights_ext }} "${{ needs.create_new_branch.outputs.WEIGHTS }}"
+              mkdir ./${{ needs.create_new_branch.outputs.MODELPATH }}/weights
+
+              cd ./${{ needs.create_new_branch.outputs.MODELPATH }}/weights
+
+              # datalad download-url --overwrite -m "Added Weights" -O ./${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model.${{ steps.get_extensions_weights.outputs.weights_ext }} "${{ needs.create_new_branch.outputs.WEIGHTS }}"
+
+              datalad download-url --overwrite -m "Added Sample Dataset" "${{ needs.create_new_branch.outputs.WEIGHTS }}"
+
+              cd /
+
               mkdir ./${{ needs.create_new_branch.outputs.MODELPATH }}/example-data
+
               cd ./${{ needs.create_new_branch.outputs.MODELPATH }}/example-data
+
               # datalad download-url --overwrite -m "Added Sample Dataset" -O ./${{needs.create_new_branch.outputs.MODELPATH}}/example-data/sample.${{ steps.get_extensions_sample_data.outputs.sample_ext }} "${{needs.create_new_branch.outputs.SAMPLEDATA}}"
 
               datalad download-url --overwrite -m "Added Sample Dataset" "${{ needs.create_new_branch.outputs.SAMPLEDATA }}"
-              cd ..
-  
+
+              cd /
+
               datalad save . -m "Added model weights and sample data"
               
               # datalad push --to osf-annex2-storage
@@ -463,13 +462,19 @@ jobs:
           sudo apt install python3-pip -y
           pip install datalad
 
-          datalad get ./${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model.${{ needs.push-weights.outputs.WEIGHTS_EXT }}
+          datalad get ./${{ needs.create_new_branch.outputs.MODELPATH }}/weights/
 
           datalad get ./${{ needs.create_new_branch.outputs.MODELPATH }}/example-data/
 
           sudo apt install unzip
 
           cd ./${{ needs.create_new_branch.outputs.MODELPATH }}/example-data/
+          
+          find . -name "*.zip" -exec unzip {} \;
+
+          cd /
+
+          cd ./${{ needs.create_new_branch.outputs.MODELPATH }}/weights/
 
           find . -name "*.zip" -exec unzip {} \;
 
