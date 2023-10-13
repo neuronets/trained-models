@@ -368,7 +368,8 @@ jobs:
               cd ..
   
               datalad save . -m "Added model weights and sample data"
-              datalad push --to osf-annex2-storage
+              
+              # datalad push --to osf-annex2-storage
               datalad push --to origin
 
   start-runner:
@@ -519,7 +520,7 @@ jobs:
       - name: Run test command in Docker
         run: |
           docker run --gpus all -v /actions-runner/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}:/output ${{ needs.build-docker.outputs.MODELNAME }} "cd /output; ${{ needs.create_new_branch.outputs.TESTCOMMAND }}"
-      
+          
       # Get model's version from model's path
       - name: Get model's version
         id: modelVersion
