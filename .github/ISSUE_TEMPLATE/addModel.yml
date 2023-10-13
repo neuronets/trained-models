@@ -56,14 +56,18 @@ body:
     id: model_info
     attributes:
       label: Model's card and spec
-      description: Please provide a URL for your model_card.yaml and model_spec.yaml files.
-      placeholder: One per line please.
+      description: Please provide a URL for your model_card.yaml and model_spec.yaml files. For info on creating these files, please see [Docs](https://github.com/neuronets/trained-models/tree/master/docs)
+      placeholder: One link per line please.
+    validations:
+      required: true
   - type: input
     id: sample-data
     attributes:
       label: Sample data
       description: Please provide a link to a sample dataset that can be used to test your model. Must be direct download url.
       placeholder: Enter the sample-dataset here.
+    validations:
+      required: true
   - type: input
     id: modelConfig
     attributes:
