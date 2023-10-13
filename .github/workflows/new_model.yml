@@ -33,7 +33,7 @@ jobs:
       id: branch
       uses: robvanderleek/create-issue-branch@main
       env:
-        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
     # Set up Python 🟢
     - name: Set up Python
@@ -110,7 +110,7 @@ jobs:
       - uses: actions/checkout@v4
         if: needs.create_new_branch.outputs.BRANCHNAME != ''
         with:
-            ref: issue-${{ needs.create_new_branch.outputs.BRANCHNAME }}
+            ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
 
       # Install svn to clone subdir of github repos 🟢
       - name: Install svn
