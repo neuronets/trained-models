@@ -531,11 +531,11 @@ jobs:
           echo "model_version=$model_version" >> $GITHUB_OUTPUT
       
       # Push the Docker image to Docker Hub (only if the PR is merged) 🟢
-      - name: Push Docker image
-        run: |
-          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker tag ${{ needs.build-docker.outputs.MODELNAME }} ${{ needs.build-docker.outputs.IMAGENAME }}:${{ steps.modelVersion.outputs.model_version }}
-          docker push ${{ needs.build-docker.outputs.IMAGENAME }}
+      # - name: Push Docker image
+        # run: |
+          # docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          # docker tag ${{ needs.build-docker.outputs.MODELNAME }} ${{ needs.build-docker.outputs.IMAGENAME }}:${{ steps.modelVersion.outputs.model_version }}
+          # docker push ${{ needs.build-docker.outputs.IMAGENAME }}
     
   stop-runner:
     name: Stop self-hosted EC2 runner
