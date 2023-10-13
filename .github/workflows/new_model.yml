@@ -471,24 +471,7 @@ jobs:
 
           cd ./${{ needs.create_new_branch.outputs.MODELPATH }}/example-data/
 
-          bash << EOF
-            for zip in *.zip \
-            do \
-              dirname='echo $zip | sed 's/\.zip$//'' \
-              if mkdir "$dirname" \
-              then \
-                if cd "$dirname" \
-                then \
-                  unzip ../"$zip" \
-                  cd .. \
-                else \
-                  echo "Could not unpack $zip - cd failed" \
-                fi \
-              else \
-                echo "Could not unpack $zip - mkdir failed" \
-              fi \
-            done
-          EOF
+          find . -name "*.zip" -exec unzip {} \;
 
 
       - name: Collect Workflow Telemetry
