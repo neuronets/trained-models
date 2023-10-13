@@ -482,10 +482,10 @@ jobs:
                   unzip ../"$zip" \
                   cd .. \
                 else \
-                  echo "Could not unpack $zip - cd failed" >&2 \
+                  echo "Could not unpack $zip - cd failed" \
                 fi \
               else \
-                echo "Could not unpack $zip - mkdir failed" >&2 \
+                echo "Could not unpack $zip - mkdir failed" \
               fi \
             done
 
