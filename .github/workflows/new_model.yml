@@ -1,10 +1,10 @@
 name: Add a new model
 
+
 # Trigger the workflow on pull request
 on:
   issues:
     types: [ assigned, labeled ]
-
 
 jobs:
   
