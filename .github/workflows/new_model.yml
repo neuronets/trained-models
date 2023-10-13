@@ -297,6 +297,10 @@ jobs:
     needs: [create_new_branch, push-model, build, build-docker]
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        code: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
     steps:
       # Checkout the repository to the GitHub Actions runner to the new branch created for the issue 🟢
       - uses: actions/checkout@v3
@@ -318,12 +322,19 @@ jobs:
 
       # Install datalad 🟢
       - name: Install Datalad
+        id: testing
         run: |
-          sudo apt-get install datalad
+          sudo apt-get install dataloud
           python3 -m pip install datalad-osf
           pip install requests
           git config --global user.name "trained_models"
           git config --global user.email "trained_models"
+        continue-on-error: true
+      - uses: mainmatter/continue-on-error-comment@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          outcome: ${{ steps.testing.outcome }}
+          test-id: Error code ${{ matrix.code }}
 
       # Get file extensions for the weights and sample data
       # - name: Get extensions for weights
