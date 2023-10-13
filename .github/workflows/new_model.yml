@@ -101,13 +101,13 @@ jobs:
 
     steps:
       # Checkout the repository to the GitHub Actions runner to the new branch created for the issue 🟢
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         if: needs.create_new_branch.outputs.BRANCHNAME == ''
         with:
           ref: issue-${{ github.event.issue.number }}
 
       # If branchName is empty use issue number, else, use the branchName 🟢
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         if: needs.create_new_branch.outputs.BRANCHNAME != ''
         with:
             ref: issue-${{ needs.create_new_branch.outputs.BRANCHNAME }}
