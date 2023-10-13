@@ -33,7 +33,7 @@ jobs:
       id: branch
       uses: robvanderleek/create-issue-branch@main
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
         
     # Set up Python 🟢
     - name: Set up Python
@@ -565,7 +565,7 @@ jobs:
         uses: actions-cool/issues-helper@v3
         with:
           actions: 'set-labels'
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
           labels: 'failed'
 
@@ -573,7 +573,7 @@ jobs:
         uses: actions-cool/issues-helper@v3
         with:
           actions: 'create-comment'
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
           body: |
               Hello @${{ github.event.issue.user.login }}. The folders/scripts you provided did not pass our tests. Please check out the Action, and modify this issue accordingly with other/same urls. 
@@ -593,7 +593,7 @@ jobs:
             uses: actions-cool/issues-helper@v3
             with:
               actions: 'set-labels'
-              token: ${{ secrets.GITHUB_TOKEN }}
+              token: ${{ secrets.GH_TOKEN }}
               issue-number: ${{ github.event.issue.number }}
               labels: 'success'
         
@@ -601,7 +601,7 @@ jobs:
             uses: actions-cool/issues-helper@v3
             with:
                   actions: 'create-comment'
-                  token: ${{ secrets.GITHUB_TOKEN }}
+                  token: ${{ secrets.GH_TOKEN }}
                   issue-number: ${{ github.event.issue.number }}
                   body: |
                       Hello @${{ github.event.issue.user.login }}. The workflow linked to adding your model finished successfully! Please double check that this issue's tag is "success."  
