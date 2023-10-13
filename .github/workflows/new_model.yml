@@ -110,7 +110,7 @@ jobs:
       - uses: actions/checkout@v3
         if: needs.create_new_branch.outputs.BRANCHNAME != ''
         with:
-            ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
+            ref: issue-${{ needs.create_new_branch.outputs.BRANCHNAME }}
 
       # Install svn to clone subdir of github repos 🟢
       - name: Install svn
