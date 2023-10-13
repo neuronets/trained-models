@@ -471,7 +471,7 @@ jobs:
 
           cd ./${{ needs.create_new_branch.outputs.MODELPATH }}/example-data/
 
-          #!/bin/sh \
+          bash << EOF
             for zip in *.zip \
             do \
               dirname='echo $zip | sed 's/\.zip$//'' \
@@ -488,6 +488,7 @@ jobs:
                 echo "Could not unpack $zip - mkdir failed" \
               fi \
             done
+          EOF
 
 
       - name: Collect Workflow Telemetry
