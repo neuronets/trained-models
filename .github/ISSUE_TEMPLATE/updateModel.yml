@@ -96,14 +96,16 @@ body:
       label: Test Command
       description: Please provide read our documentation @root/add_model_instructions.md
       placeholder: Enter your test command.
+    validations:
+      required: true
   - type: textarea
     id: updates
     attributes:
       label: Changelog
       description: Please write a brief description of this update.
       placeholder: Describe the update and its purpose.
+    validations: 
       required: true
-
   - type: checkboxes
     id: terms
     attributes:
@@ -111,4 +113,5 @@ body:
       description: By submitting this issue, you will be sharing your model's data. Therefore, you are ensuring us that you have followed our recommendations.
       options:
         - label: I have read and followed the recommedations in this form and have assigned myself to the issue.
-          required: true
+    validations:
+      required: true

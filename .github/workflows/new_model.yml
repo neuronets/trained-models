@@ -358,7 +358,7 @@ jobs:
         env:
           OSF_TOKEN: ${{ secrets.OSF_TOKEN }}
         run: |
-              datalad siblings
+              # datalad siblings
               datalad download-url --overwrite -m "Added Weights" -O ./${{ needs.create_new_branch.outputs.MODELPATH }}/weights/best_model.${{ steps.get_extensions_weights.outputs.weights_ext }} "${{ needs.create_new_branch.outputs.WEIGHTS }}"
               mkdir ./${{ needs.create_new_branch.outputs.MODELPATH }}/example-data
               cd ./${{ needs.create_new_branch.outputs.MODELPATH }}/example-data
@@ -439,11 +439,6 @@ jobs:
 
       - name: Install singularity
         run: |
-
-          sudo apt-get update && \
-          sudo apt-get install -y build-essential \
-          libseccomp-dev pkg-config squashfs-tools cryptsetup
-
           wget https://github.com/sylabs/singularity/releases/download/v4.0.0/singularity-ce_4.0.0-focal_amd64.deb
 
           sudo apt install ./singularity-ce_4.0.0-focal_amd64.deb -y
