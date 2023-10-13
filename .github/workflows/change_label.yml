@@ -19,3 +19,11 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
           labels: 'Ready-to-test'
+
+      - name: Add assigness
+        uses: actions-cool/issues-helper@v3
+        with:
+            actions: 'add-assignees'
+            token: ${{ secrets.GITHUB_TOKEN }}
+            issue-number: ${{ github.event.issue.number }}
+            assignees: ${{ github.event.issue.user.login }}
