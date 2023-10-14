@@ -169,8 +169,10 @@ jobs:
 
       # Clone config files
       - name: Config file clone
+        # Only run if needs.create_new_branch.outputs.CONFIG is not empty
+        if: ${{ needs.create_new_branch.outputs.CONFIG != '' }}
         run: |
-          mkdir ./${{ needs.create_new_branch.outputs.MODELPATH }}/config
+          mkdir ./${{ needs.create_new_branch.outputs.MODELPATH }}/config/
           url="${{ needs.create_new_branch.outputs.CONFIG }}"
               
           svn_url=$(echo "$url" | sed -E 's|/tree/[^/]+|/trunk|; s|/blob/[^/]+|/trunk|')
@@ -581,7 +583,7 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
           body: |
-              Hello @${{ github.event.issue.user.login }}. The folders/scripts you provided did not pass our tests. Please check out the Action, and modify this issue accordingly with other/same urls. 
+              [This is an automated message] Hello @${{ github.event.issue.user.login }}. The folders/scripts you provided did not pass our tests. Please check out the Action, and modify this issue accordingly with other/same urls. 
 
               When ready, just change the label of this issue to "Ready for testing".
   
@@ -609,7 +611,7 @@ jobs:
                   token: ${{ secrets.GH_TOKEN }}
                   issue-number: ${{ github.event.issue.number }}
                   body: |
-                      Hello @${{ github.event.issue.user.login }}. The workflow linked to adding your model finished successfully! Please double check that this issue's tag is "success."  
+                      [This is an automated message] Hello @${{ github.event.issue.user.login }}. The workflow linked to adding your model finished successfully! Please double check that this issue's tag is "success."  
         
                       A Draft PR should be linked to this issue. Now that your model passed the checks, feel free to change the status of the PR to "ready for review."
 
