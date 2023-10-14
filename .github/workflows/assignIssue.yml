@@ -1,0 +1,17 @@
+name: Assign Issue to User
+
+on: 
+  issues:
+    types: [opened]
+
+jobs:
+  assignUser:
+    if: ${{ startsWith(github.event.issue.title, 'New Model:') || startsWith(github.event.issue.title, 'Update Model:') }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Auto-assign issue'
+        uses: pozil/auto-assign-issue@v1
+        with:
+            assignees: ${{ github.event.issue.user.login }}
