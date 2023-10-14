@@ -4,7 +4,7 @@ name: Add a new model
 # Trigger the workflow on pull request
 on:
   issues:
-    types: [ assigned, labeled ]
+    types: [ labeled ]
 
 jobs:
   
@@ -28,6 +28,11 @@ jobs:
       TESTCOMMAND: ${{ steps.get_test_command.outputs.test_command }}
 
     steps:
+    - name: 'Auto-assign issue'
+      uses: pozil/auto-assign-issue@v1
+      with:
+          assignees: ${{ github.event.issue.user.login }}
+
     # This will automatically create a new branch from this issue, using custom config at /.github/issue-branch.yml 🟢
     - name: Create Issue Branch
       id: branch
