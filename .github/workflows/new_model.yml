@@ -466,7 +466,7 @@ jobs:
           singularity build ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build-docker.outputs.MODELNAME }}.sif docker-archive://./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build-docker.outputs.MODELNAME }}.tar
 
       # Datalad get the sample dataset
-      - name: Get sample dataset & weights
+      - name: Get sample dataset
         run: |
           sudo apt install python3-pip -y
           pip install datalad
@@ -481,8 +481,9 @@ jobs:
           
           find . -name "*.zip" -exec unzip {} \;
 
-          cd /
 
+      - name: Get the weights
+        run: |
           cd ./${{ needs.create_new_branch.outputs.MODELPATH }}/weights/
 
           find . -name "*.zip" -exec unzip {} \;
