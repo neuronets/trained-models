@@ -20,7 +20,7 @@ body:
 
         :warning: Please fill all the details of this form to add your model sucessfully to the zoo. Thank you!
 
-        :red_circle: *If the automatic checks fail, this issue will be tagged as 'failed.' However, fix the issues and comment "Ready-for-testing" to test again.
+        :red_circle: *If the automatic checks fail, this issue will be tagged as 'failed.' However, fix the issues and comment "Ready-to-test" to test again.
         
   - type: input
     id: path
@@ -35,7 +35,7 @@ body:
     attributes:
       label: Best model weights
       description: Please enter the link to the best weights for your model (.pth, .h5, etc). 
-      placeholder: Ensure it is available publicly (Google Drive, Onedrive, etc.)
+      placeholder: Ensure it is available publicly (Google Drive, Onedrive, etc.) and follow the recommendations of the docs.
     validations:
       required: true
   - type: input
@@ -66,8 +66,8 @@ body:
     id: sample-data
     attributes:
       label: Sample data
-      description: Please provide a link to a sample dataset that can be used to test your model. Must be direct download url.
-      placeholder: Enter the sample-dataset here.
+      description: Please provide a link to a sample dataset that can be used to test your model. Must be direct download url. Follow the recommendations of the docs.
+      placeholder: Enter the sample-dataset here. 
     validations:
       required: true
   - type: input
