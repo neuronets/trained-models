@@ -21,8 +21,8 @@ Carefully fill out the issue template with the required information:
 `<org>/<model>/<version>` (e.g., `DeepCSR/deepcsr/1.0`).
 
 ### 2. Best Model Weights
-- Paste a direct download link from Google Drive to the model's weights.
-  Example URL structure: ```"https://drive.google.com/uc?id=<FILEID>&confirm=t"```
+- Paste a direct download link to the model's weights (Google Drive, Github Raw, etc.). If you need to upload multiple weights, zip the weights and paste the download link here.
+  Example URL structure for Google Drive: ```"https://drive.google.com/uc?id=<FILEID>&confirm=t"```
 
 ### 3. Docker Information
 - Input a GitHub URL to a folder containing the Dockerfile and any other necessary files for Docker.
@@ -34,7 +34,7 @@ Carefully fill out the issue template with the required information:
 - Share GitHub URLs for the `model_card.yaml` and `spec.yaml` files. These files must be named as specified. For more information, refer to [this documentation](https://github.com/neuronets/trained-models/blob/master/docs/spec_file.md) and [card documentation](https://github.com/neuronets/trained-models/blob/master/docs/model_card.yaml).
 
 ### 6. Sample Data
-- Upload a Google Drive direct download URL pointing to the sample dataset used to test the model. Follow the URL structure: ```"https://drive.google.com/uc?id=<FILEID>&confirm=t"```
+- Upload a direct download URL pointing to the sample dataset used to test the model (Google Drive, Github Raw, etc.). If you need to upload multiple datasets, zip the files and paste the download link here. Follow the URL structure if using Google Drive: ```"https://drive.google.com/uc?id=<FILEID>&confirm=t"```
 
 ### 7. Model Config (Optional)
 - Provide a GitHub URL to your model's config file if you use one. This is optional but should be from GitHub.
@@ -52,20 +52,19 @@ Carefully fill out the issue template with the required information:
   
     ```python predict.py --model_checkpoint ./<org>/<model>/<version>/weights/<weights_file> --dataset ./<org>/<model>/<version>/example-data/<dataset_file> --conf_path ./<org>/<model>/<version>/config/<config_file> --output_dir .```
 
-
 ### 9. Acknowledge Recommendations
 - Select the checkbox to confirm that you have followed all the recommendations.
 
 ### 10. Final Steps
-- Before submitting the issue, auto-assign it to yourself.
+- Before submitting the issue ensure all your github urls point to files in the main/master branch.
 - Do not add any tags; our automated process will handle them.
 
 ## Step 3: Submit the Issue
 After submitting the issue, our bot will:
-- Automatically create a development branch with the issue number.
+- Automatically create a development branch with your issue number.
 - Generate a draft PR linked to the issue.
 - Test the model; if it fails, the issue will be tagged as "failed."
-- If you need to make changes, fix the issues, update URLs in the issue, and change the tag from "failed" to "Ready-to-test."
+- If you need to make changes, fix the issues, update URLs in the issue, and create a comment saying: "Ready-to-test."
 
 ## Step 4: Approval and Inclusion
 - If testing is successful, the issue will be tagged as "success."
@@ -74,5 +73,3 @@ After submitting the issue, our bot will:
 - Approved models will be added to the "Trained-Models" repository.
 
 Thank you for your contribution!
-
-

@@ -405,33 +405,41 @@ jobs:
           singularity build ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build-docker.outputs.MODELNAME }}.sif docker-archive://./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build-docker.outputs.MODELNAME }}.tar
 
       # Datalad get the sample dataset
-      - name: Get sample dataset & weights
+      - name: Get sample dataset
         run: |
-            sudo apt install python3-pip -y
-            pip install datalad
+          sudo apt install python3-pip -y
+          pip install datalad
 
-            datalad get ./${{ needs.create_new_branch.outputs.MODELPATH }}/weights/
+          git config --global user.name "trained_models"
+          git config --global user.email "trained_models"
 
-            datalad get ./${{ needs.create_new_branch.outputs.MODELPATH }}/example-data/
+          datalad get ./${{ needs.create_new_branch.outputs.MODELPATH }}/weights/
 
-            sudo apt install unzip
+          datalad get ./${{ needs.create_new_branch.outputs.MODELPATH }}/example-data/
 
-            cd ./${{ needs.create_new_branch.outputs.MODELPATH }}/example-data/
-            
-            find . -name "*.zip" -exec unzip {} \;
+          sudo apt install unzip
 
-            cd /
+          cd ./${{ needs.create_new_branch.outputs.MODELPATH }}/example-data/
+          
+          find . -name "*.zip" -exec unzip {} \;
 
-            cd ./${{ needs.create_new_branch.outputs.MODELPATH }}/weights/
+          # Push the dataset to the repo
+          datalad save . -m "Added sample data"
+          datalad push --to osf-annex2-storage
+          datalad push --to origin
+          
 
-            find . -name "*.zip" -exec unzip {} \;
+      # Datalad get the weights
+      - name: Get the weights
+        run: |
+          cd ./${{ needs.create_new_branch.outputs.MODELPATH }}/weights/
 
-      - name: Collect Workflow Telemetry
-        uses: runforesight/workflow-telemetry-action@v1
-        with:
-          job_summary: true
-          proc_trace_sys_enable: true
-          proc_trace_table_show: true
+          find . -name "*.zip" -exec unzip {} \;
+
+          # Push the weights to the repo
+          datalad save . -m "Added model weights"
+          datalad push --to osf-annex2-storage
+          datalad push --to origin
 
       # Run in singularity the test command saved under needs.create_new_branch.outputs.DEEPCSR
       - name: Run test command in Singularity
@@ -522,9 +530,11 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
           body: |
-              Hello @${{ github.event.issue.user.login }}. The folders/scripts you provided did not pass our tests. Please check out the Action, and modify this issue accordingly with other/same urls. 
+            [This is an automated message] Hello @${{ github.event.issue.user.login }},
+                
+            🔴 The folders/scripts you provided did not pass our tests. Please review the Action, and modify this issue's urls accordingly. 
 
-              When ready, just change the label of this issue to "Ready for testing".
+            When ready, just change the label of this issue to "Ready for testing".
   
           emoji: '+1,eyes'
 
@@ -550,11 +560,11 @@ jobs:
                   token: ${{ secrets.GITHUB_TOKEN }}
                   issue-number: ${{ github.event.issue.number }}
                   body: |
-                      Hello @${{ github.event.issue.user.login }}. The workflow linked to adding your model finished successfully! Please double check that this issue's tag is "success."  
+                      [This is an automated message] Hello @${{ github.event.issue.user.login }}. The workflow linked to adding your model finished successfully! Please double check that this issue's tag is "success."  
         
-                      A Draft PR should be linked to this issue. Now that your model passed the checks, feel free to change the status of the PR to "ready for review."
+                      🟢 A Draft PR should be linked to this issue. Now that your model passed the checks, feel free to change the status of the PR to "ready for review."
 
-                      Thank you for adding a model to Nobrainer-Zoo!
+                      ⭐ Thank you for adding a model to Nobrainer-Zoo!
           
                   emoji: '+1,hooray,rocket'
 

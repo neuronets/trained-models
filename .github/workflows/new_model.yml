@@ -359,7 +359,7 @@ jobs:
 
               datalad save . -m "Added model weights"
               
-              # datalad push --to osf-annex2-storage
+              datalad push --to osf-annex2-storage
               datalad push --to origin
 
       - name: Git-annex/Datalad add the sample datasets
@@ -376,7 +376,7 @@ jobs:
 
           datalad save . -m "Added sample data"
 
-          # datalad push --to osf-annex2-storage
+          datalad push --to osf-annex2-storage
           datalad push --to origin
 
 
@@ -471,6 +471,9 @@ jobs:
           sudo apt install python3-pip -y
           pip install datalad
 
+          git config --global user.name "trained_models"
+          git config --global user.email "trained_models"
+
           datalad get ./${{ needs.create_new_branch.outputs.MODELPATH }}/weights/
 
           datalad get ./${{ needs.create_new_branch.outputs.MODELPATH }}/example-data/
@@ -481,12 +484,24 @@ jobs:
           
           find . -name "*.zip" -exec unzip {} \;
 
+          # Push the dataset to the repo
+          datalad save . -m "Added sample data"
+
+          datalad push --to osf-annex2-storage
+          datalad push --to origin
+          
+
 
       - name: Get the weights
         run: |
           cd ./${{ needs.create_new_branch.outputs.MODELPATH }}/weights/
 
           find . -name "*.zip" -exec unzip {} \;
+
+          # Push the weights to the repo
+          datalad save . -m "Added model weights"
+          datalad push --to osf-annex2-storage
+          datalad push --to origin
 
 
       - name: Collect Workflow Telemetry
@@ -531,11 +546,11 @@ jobs:
           echo "model_version=$model_version" >> $GITHUB_OUTPUT
       
       # Push the Docker image to Docker Hub (only if the PR is merged) 🟢
-      # - name: Push Docker image
-        # run: |
-          # docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          # docker tag ${{ needs.build-docker.outputs.MODELNAME }} ${{ needs.build-docker.outputs.IMAGENAME }}:${{ steps.modelVersion.outputs.model_version }}
-          # docker push ${{ needs.build-docker.outputs.IMAGENAME }}
+      - name: Push Docker image
+        run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker tag ${{ needs.build-docker.outputs.MODELNAME }} ${{ needs.build-docker.outputs.IMAGENAME }}:${{ steps.modelVersion.outputs.model_version }}
+          docker push ${{ needs.build-docker.outputs.IMAGENAME }}
     
   stop-runner:
     name: Stop self-hosted EC2 runner
@@ -585,7 +600,9 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
           body: |
-              [This is an automated message] Hello @${{ github.event.issue.user.login }}. The folders/scripts you provided did not pass our tests. Please check out the Action, and modify this issue accordingly with other/same urls. 
+              [This is an automated message] Hello @${{ github.event.issue.user.login }},
+              
+              🔴 The folders/scripts you provided did not pass our tests. Please review the Action, and modify this issue's urls accordingly. 
 
               When ready, just change the label of this issue to "Ready for testing".
   
@@ -615,9 +632,9 @@ jobs:
                   body: |
                       [This is an automated message] Hello @${{ github.event.issue.user.login }}. The workflow linked to adding your model finished successfully! Please double check that this issue's tag is "success."  
         
-                      A Draft PR should be linked to this issue. Now that your model passed the checks, feel free to change the status of the PR to "ready for review."
+                      🟢 A Draft PR should be linked to this issue. Now that your model passed the checks, feel free to change the status of the PR to "ready for review."
 
-                      Thank you for adding a model to Nobrainer-Zoo!
+                      ⭐ Thank you for adding a model to Nobrainer-Zoo!
           
                   emoji: '+1,hooray,rocket'
 
