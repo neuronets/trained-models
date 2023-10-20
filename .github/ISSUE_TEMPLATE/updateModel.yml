@@ -34,7 +34,7 @@ body:
         *Recommended Changes*:
         - Any modifications to the weights folder, including changes to weights, biases, model parameters, or model architecture.
 
-        *Please note that even if you are not updating certain fields, it is still required to fill them. For example, if you are not updating the python scripts, you should paste the current URLs to the scripts, do not leave it in blank 👍
+        :red_circle: *Please note that even if you are not updating certain fields, it is still required to fill them. For example, if you are not updating the python scripts, you should paste the current URLs to the scripts, do not leave it in blank 👍
 
   - type: input
     id: pathNew
@@ -72,7 +72,7 @@ body:
     id: model_info
     attributes:
       label: Update the Model's card and spec
-      description: Please provide a URL for your model_card.yaml and model_spec.yaml files.
+      description: Please provide a URL for your model_card.yaml and spec.yaml files.
       placeholder: One per line please. Even if you are not updating this, input the same url from your old model.
     validations:
       required: true

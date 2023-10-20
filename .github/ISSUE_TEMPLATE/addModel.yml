@@ -8,17 +8,19 @@ body:
       value: |
         ## Recommendations to the user:
 
-        1. Include a docker folder inside your project which includes the dockerfile and everything associated with it (absolutely recommended).
+        :one:. Include a docker folder inside your project which includes the dockerfile and everything associated with it (absolutely recommended).
 
-        2. For your prediction script (if applicable), specify path to the best_model (or weights) and 'sample' dataset at the command line using flags.
+        :two:. For your prediction script (if applicable), specify path to the best_model (or weights) and 'sample' dataset at the command line using flags.
 
-        3. Please avoid absolute paths in any of your scripts. Ideally, relative paths with respect to the root (project) folder is mandatory in the test-command.
+        :three:. Please avoid absolute paths in any of your scripts. Ideally, relative paths with respect to the root (project) folder is mandatory in the test-command.
 
-        4. This issue's title should start with "New Model:" plus our model's org/model/version. You also HAVE to assign yourself to this issue.
+        :four:. This issue's title should start with "New Model:" plus your model's org/model/version.
 
-        Please fill all the details of this form to add your model sucessfully to the zoo. Thank you!
+        :five:. All github urls must point to files/folders in the master/main branch of your repository.
 
-        *If the automatic checks fail, this issue will be tagged as 'failed.' However, fix the issues and change the label to "Ready-for-testing" to test the checks again.
+        :warning: Please fill all the details of this form to add your model sucessfully to the zoo. Thank you!
+
+        :red_circle: *If the automatic checks fail, this issue will be tagged as 'failed.' However, fix the issues and comment "Ready-for-testing" to test again.
         
   - type: input
     id: path
@@ -56,7 +58,7 @@ body:
     id: model_info
     attributes:
       label: Model's card and spec
-      description: Please provide a URL for your model_card.yaml and model_spec.yaml files. For info on creating these files, please see [Docs](https://github.com/neuronets/trained-models/tree/master/docs)
+      description: Please provide a URL for your model_card.yaml and spec.yaml files. For info on creating these files, please see [Docs](https://github.com/neuronets/trained-models/tree/master/docs)
       placeholder: One link per line please.
     validations:
       required: true
