@@ -12,9 +12,10 @@ jobs:
 
     permissions:
       issues: write
-      
+
     steps:
       - name: 'Auto-assign issue'
         uses: pozil/auto-assign-issue@v1
         with:
             assignees: ${{ github.event.issue.user.login }}
+            repo-token: ${{ secrets.GH_TOKEN }}
