@@ -24,6 +24,17 @@ Carefully fill out the issue template with the required information:
 - Paste a direct download link to the model's weights (Google Drive, Github Raw, etc.). If you need to upload multiple weights, zip the weights and paste the download link here.
   Example URL structure for Google Drive: ```"https://drive.google.com/uc?id=<FILEID>&confirm=t"```
 
+  To extract the FILEID from your google drive share url, do the following:
+  1. Right click on the file you want to share.
+  2. Click share
+  3. Click "Get Link"
+  4. Change the general access to "Anyone with the link"
+  5. Copy the link
+  6. Your link should look something like this (i.e) https://drive.google.com/file/d/1KaNTsBrEohhbaUxgI8qrOFpvPbo0FEQb/view?usp=share_link
+  7. The FILEID is the code that goes between ```https://drive.google.com/file/d/``` and ```/view?usp=share_link```
+  8. Copy that FILEID and paste it in this template: ```"https://drive.google.com/uc?id=<FILEID>&confirm=t"```
+  9. In example, the final URL should look like this: ```"https://drive.google.com/uc?id=1KaNTsBrEohhbaUxgI8qrOFpvPbo0FEQb&confirm=t"```
+
 ### 3. Docker Information
 - Input a GitHub URL to a folder containing the Dockerfile and any other necessary files for Docker.
 
