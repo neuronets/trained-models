@@ -1,12 +1,13 @@
 name: Assign Issue to User
 
-on: 
+on:
   issues:
-    types: [opened]
+    types:
+      - labeled
 
 jobs:
   assignUser:
-    if: ${{ startsWith(github.event.issue.title, 'New Model:') || startsWith(github.event.issue.title, 'Update Model:') }}
+    if: ${{ github.event.label.name == 'new-model' && (startsWith(github.event.issue.title, 'New Model:') || startsWith(github.event.issue.title, 'Update Model:')) }}
 
     runs-on: ubuntu-latest
 

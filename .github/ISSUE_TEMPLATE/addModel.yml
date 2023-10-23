@@ -1,6 +1,7 @@
 name: ⬆️ Add a new model
 description: Add a new model to the nobrainer-zoo
 title: "New Model: {org}/{model}/{version}"
+labels: ["new-model"]
 
 body:
   - type: markdown
