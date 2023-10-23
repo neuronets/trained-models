@@ -7,7 +7,7 @@ on:
 
 jobs:
   update_label:
-    if: ${{ (startsWith(github.event.issue.title, 'New Model:') || startsWith(github.event.issue.title, 'Update Model:')) && github.event.label.name == 'failed' && github.event.comment.body == 'Ready-to-test'}}
+    if: ${{ (startsWith(github.event.issue.title, 'New Model:') || startsWith(github.event.issue.title, 'Update Model:')) && github.event.comment.body == 'Ready-to-test'}}
 
     runs-on: ubuntu-latest
 
