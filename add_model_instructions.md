@@ -75,7 +75,7 @@ After submitting the issue, our bot will:
 - Automatically create a development branch with your issue number.
 - Generate a draft PR linked to the issue.
 - Test the model; if it fails, the issue will be tagged as "failed."
-- If you need to make changes, fix the issues, update URLs in the issue, and create a comment saying: "Ready-to-test."
+- If you need to make changes, fix the issues, update URLs in the issue, and when ready, simply append "Ready XX" in the issue title (where XX is a number incrementing with 01 each time a fix has been applied).
 
 ## Step 4: Approval and Inclusion
 - If testing is successful, the issue will be tagged as "success."

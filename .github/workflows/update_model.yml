@@ -534,7 +534,7 @@ jobs:
                 
             🔴 The folders/scripts you provided did not pass our tests. Please review the Action, and modify this issue's urls accordingly. 
 
-            When ready, just change the label of this issue to "Ready for testing".
+            When ready, simply append "Ready XX" in the issue title (where XX is a number incrementing with 01 each time a fix has been applied).
   
           emoji: '+1,eyes'
 
