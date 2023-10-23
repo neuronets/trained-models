@@ -104,7 +104,7 @@ def mesh_extraction(local_args):
     return mesh, local_timer_dict
 
 @click.command()
-@click.option("--conf_path", help="Config file path .yaml")
+@click.option("--conf_path", default="path/to/cloned/weights", help="Config file path .yaml")
 # Replaced Hydra with click argument for nobrainer-zoo: @hydra.main(config_path='configs', config_name='predict')
 def predict_app(conf_path):    
 

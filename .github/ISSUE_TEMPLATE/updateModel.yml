@@ -1,0 +1,117 @@
+name: ♻️ Update an existing model
+description: Update your model
+title: "Update Model: {org}/{model}/{version}"
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Recommendations to the user:
+        ## 1. Major Version Update (X.0.0):
+        - Major updates indicate significant changes that may affect the overall behavior or compatibility of the model. These updates often require thorough testing and validation.
+        *Recommended Changes*:
+        - Major updates should be considered when there are significant changes to the model's architecture, behavior, or compatibility.
+        - Changes to the input/output formats, or core functionality.
+        - Structural changes to the weights folder, such as changing the model architecture or introducing new model components.
+        - Modifications to the Docker configuration that significantly alter the deployment environment.
+        - Changes to the sample data that affect the overall behavior of the model.
+        ## 2. Minor Version Update (X.Y.0):
+        - Minor updates introduce new features, enhancements, or optimizations to the model without drastically affecting existing functionality.
+        *Recommended Changes*:
+        - New features or improvements added to the model.
+        - Changes to the Python scripts that enhance performance, add new functionality, or optimize existing code.
+        - Addition of new sample data for testing or demonstration purposes.
+        - Adjustments to the Docker configuration to support new features.
+        ## 3. Patch Version Update (X.Y.Z):
+        - Patch updates include bug fixes, small improvements, and updates that do not introduce new features or major changes.
+        *Recommended Changes*:
+        - Bug fixes to address issues reported by users.
+        - Updates to the model's documentation, such as clarifications or corrections.
+        - Minor adjustments to the Docker configuration or deployment process.
+        - Updates to metadata files like **`spec.yaml`** or **`model_card.yaml`** to provide more accurate or updated information.
+        ## 4. Special Case: Weight Update (Major Change):
+        - Whenever there is an update to the weights folder, it should be considered a major change due to its potential impact on model behavior and compatibility.
+        *Recommended Changes*:
+        - Any modifications to the weights folder, including changes to weights, biases, model parameters, or model architecture.
+
+        :red_circle: *Please note that even if you are not updating certain fields, it is still required to fill them. For example, if you are not updating the python scripts, you should paste the current URLs to the scripts, do not leave it in blank 👍
+
+  - type: input
+    id: pathNew
+    attributes:
+      label: Updated Model's repository path
+      description: Please enter the folder structure for your model {org}/{model}/{version} with the updated version (read recommendations). 
+      placeholder: ex. DeepCSR/deepcsr/1.0.1 for patch, or DeepCSR/deepcsr/1.1.0 for minor change, or DeepCSR/deepcsr/2.0.0 for major change.
+    validations:
+      required: true
+  - type: input
+    id: weights
+    attributes:
+      label: Update the model's weights
+      description: Please enter the link to the best weights for your model (.pth, .h5, etc). 
+      placeholder: Ensure it is available publicly (Google Drive, Onedrive, etc.). Even if you are not updating this, input the same url from your old model.
+    validations:
+      required: true
+  - type: input
+    id: docker
+    attributes:
+      label: Update Docker information
+      description: Please enter the link to the docker folder. Following recommendation 1. 
+      placeholder: Enter the github link to the docker folder here. Even if you are not updating this, input the same url from your old model.
+    validations:
+      required: true
+  - type: textarea
+    id: python-scripts
+    attributes:
+      label: Update the Model's python scripts
+      description: Please provide URL's to all your python scripts. It can be a standalone script but could also be a mix of folders and single scripts. 
+      placeholder: If multiple URLs please enter one per line. Even if you are not updating this, input the same url from your old model.
+    validations:
+      required: true
+  - type: textarea
+    id: model_info
+    attributes:
+      label: Update the Model's card and spec
+      description: Please provide a URL for your model_card.yaml and spec.yaml files.
+      placeholder: One per line please. Even if you are not updating this, input the same url from your old model.
+    validations:
+      required: true
+  - type: input
+    id: sample-data
+    attributes:
+      label: Update the Sample dataset
+      description: Please provide a link to a sample dataset that can be used to test your model.
+      placeholder: Enter the sample-dataset here. Even if you are not updating this, input the same url from your old model.
+    validations:
+      required: true
+  - type: input
+    id: modelConfig
+    attributes:
+      label: Model config
+      description: Please provide a link in github to your model's config file (if applicable).
+      placeholder: Enter the config file here.
+  - type: textarea
+    id: testCommand
+    attributes:
+      label: Test Command
+      description: Please provide read our documentation @root/add_model_instructions.md
+      placeholder: Enter your test command.
+    validations:
+      required: true
+  - type: textarea
+    id: updates
+    attributes:
+      label: Changelog
+      description: Please write a brief description of this update.
+      placeholder: Describe the update and its purpose.
+    validations: 
+      required: true
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Read & Followed recommendations
+      description: By submitting this issue, you will be sharing your model's data. Therefore, you are ensuring us that you have followed our recommendations.
+      options:
+        - label: I have read and followed the recommedations in this form and have assigned myself to the issue.
+    validations:
+      required: true

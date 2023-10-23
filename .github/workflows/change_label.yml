@@ -1,0 +1,21 @@
+name: Update label for issues
+
+on: 
+  issue_comment:
+    types:
+      - created
+
+jobs:
+  update_label:
+    if: ${{ (startsWith(github.event.issue.title, 'New Model:') || startsWith(github.event.issue.title, 'Update Model:')) && github.event.label.name != 'failed' && github.event.comment.body == 'Ready-to-test'}}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set labels
+        uses: actions-cool/issues-helper@v3
+        with:
+          actions: 'set-labels'
+          token: ${{ secrets.GH_TOKEN }}
+          issue-number: ${{ github.event.issue.number }}
+          labels: 'Ready-to-test'
