@@ -9,7 +9,7 @@ on:
 jobs:
   
   create_new_branch:
-    if: ${{ startsWith(github.event.issue.title, 'New Model:') && github.event.label.name != 'failed' && github.event.label.name != 'new-model' && github.event.label.name != 'update-model' }}
+    if: ${{ startsWith(github.event.issue.title, 'New Model:') && github.event.label.name == 'Ready-to-test' }}
 
     runs-on: ubuntu-latest
 

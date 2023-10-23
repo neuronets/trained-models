@@ -7,7 +7,7 @@ on:
 
 jobs:
   assignUser:
-    if: ${{ (github.event.label.name == 'new-model' || github.event.label.name == 'update-model')  && (startsWith(github.event.issue.title, 'New Model:') || startsWith(github.event.issue.title, 'Update Model:')) }}
+    if: ${{ startsWith(github.event.issue.title, 'New Model:') || startsWith(github.event.issue.title, 'Update Model:') }}
 
     runs-on: ubuntu-latest
 
