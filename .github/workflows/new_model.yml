@@ -250,30 +250,6 @@ jobs:
       MODELNAME: ${{ steps.set_image_name.outputs.model_name }}
 
     steps:
-      # Cleanup steps to free up disk space
-      - name: Cleanup disk space for large docker images
-        run: |
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /opt/ghc
-          sudo rm -rf "/usr/local/share/boost"
-          sudo rm -rf /opt/hostedtoolcache
-          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
-      
-      - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space@main
-        with:
-            # this might remove tools that are actually needed,
-            # if set to "true" but frees about 6 GB
-            tool-cache: false
-            
-            # all of these default to true, but feel free to set to
-            # "false" if necessary for your workflow
-            android: true
-            dotnet: true
-            haskell: true
-            large-packages: true
-            docker-images: false
-
       # Checkout the repository to the GitHub Actions runner 🟢
       - uses: actions/checkout@v4
         if: needs.create_new_branch.outputs.BRANCHNAME == ''
@@ -526,13 +502,6 @@ jobs:
       - name: Load Docker image
         run: |
           docker load --input "./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build-docker.outputs.MODELNAME }}.tar"
-
-      - name: Collect Workflow Telemetry
-        uses: runforesight/workflow-telemetry-action@v1
-        with:
-          job_summary: true
-          proc_trace_sys_enable: true
-          proc_trace_table_show: true
 
       # Test model with docker image as well
       - name: Run test command in Docker
