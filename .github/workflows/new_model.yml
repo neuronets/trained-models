@@ -189,13 +189,13 @@ jobs:
 
     steps:
     # Checkout the repository to the GitHub Actions runner 🟢
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       if: needs.create_new_branch.outputs.BRANCHNAME == ''
       with:
         ref: issue-${{ github.event.issue.number }}
 
     # If branchName is empty use issue number, else, use the branchName 🟢
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       if: needs.create_new_branch.outputs.BRANCHNAME != ''
       with:
           ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
@@ -250,38 +250,14 @@ jobs:
       MODELNAME: ${{ steps.set_image_name.outputs.model_name }}
 
     steps:
-      # Cleanup steps to free up disk space
-      - name: Cleanup disk space for large docker images
-        run: |
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /opt/ghc
-          sudo rm -rf "/usr/local/share/boost"
-          sudo rm -rf /opt/hostedtoolcache
-          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
-      
-      - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space@main
-        with:
-            # this might remove tools that are actually needed,
-            # if set to "true" but frees about 6 GB
-            tool-cache: false
-            
-            # all of these default to true, but feel free to set to
-            # "false" if necessary for your workflow
-            android: true
-            dotnet: true
-            haskell: true
-            large-packages: true
-            docker-images: false
-
       # Checkout the repository to the GitHub Actions runner 🟢
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         if: needs.create_new_branch.outputs.BRANCHNAME == ''
         with:
           ref: issue-${{ github.event.issue.number }}
 
       # If branchName is empty use issue number, else, use the branchName 🟢
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         if: needs.create_new_branch.outputs.BRANCHNAME != ''
         with:
             ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
@@ -301,13 +277,13 @@ jobs:
 
     steps:
       # Checkout the repository to the GitHub Actions runner to the new branch created for the issue 🟢
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         if: needs.create_new_branch.outputs.BRANCHNAME == ''
         with:
           ref: issue-${{ github.event.issue.number }}
 
       # If branchName is empty use issue number, else, use the branchName 🟢
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         if: needs.create_new_branch.outputs.BRANCHNAME != ''
         with:
             ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
@@ -436,13 +412,13 @@ jobs:
           large-packages: true
           docker-images: false
         
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         if: needs.create_new_branch.outputs.BRANCHNAME == ''
         with:
           ref: issue-${{ github.event.issue.number }}
 
       # If branchName is empty use issue number, else, use the branchName 🟢
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         if: needs.create_new_branch.outputs.BRANCHNAME != ''
         with:
             ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
@@ -469,10 +445,14 @@ jobs:
       - name: Get sample dataset
         run: |
           sudo apt install python3-pip -y
-          pip install datalad
+          sudo apt-get install datalad -y
+          python3 -m pip install datalad-osf
+          sudo python3 -m pip install datalad-installer
+          datalad-installer --sudo ok git-annex -m datalad/git-annex:release
+          sudo git config --global filter.annex.process "git-annex filter-process"
 
-          git config --global user.name "trained_models"
-          git config --global user.email "trained_models"
+          git config --system user.name "trained_models"
+          git config --system user.email "trained_models"
 
           datalad get ./${{ needs.create_new_branch.outputs.MODELPATH }}/weights/
 
@@ -516,19 +496,12 @@ jobs:
         run: |
           # Parent directory as a bind path in a env variable
 
-          singularity exec --nv --bind /actions-runner,/actions-runner/_work/,/actions-runner/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/${{ needs.create_new_branch.outputs.MODELPATH }}/,/actions-runner/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/${{ needs.create_new_branch.outputs.MODELPATH }}/docker,/actions-runner/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/${{ needs.create_new_branch.outputs.MODELPATH }}/weights,/actions-runner/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/${{ needs.create_new_branch.outputs.MODELPATH }}/example-data:/output ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build-docker.outputs.MODELNAME }}.sif ${{ needs.create_new_branch.outputs.TESTCOMMAND }}
+          singularity exec --nv ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build-docker.outputs.MODELNAME }}.sif ${{ needs.create_new_branch.outputs.TESTCOMMAND }}
 
       # Load the Docker image 🟢
       - name: Load Docker image
         run: |
           docker load --input "./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build-docker.outputs.MODELNAME }}.tar"
-
-      - name: Collect Workflow Telemetry
-        uses: runforesight/workflow-telemetry-action@v1
-        with:
-          job_summary: true
-          proc_trace_sys_enable: true
-          proc_trace_table_show: true
 
       # Test model with docker image as well
       - name: Run test command in Docker
@@ -550,7 +523,7 @@ jobs:
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker tag ${{ needs.build-docker.outputs.MODELNAME }} ${{ needs.build-docker.outputs.IMAGENAME }}:${{ steps.modelVersion.outputs.model_version }}
-          docker push ${{ needs.build-docker.outputs.IMAGENAME }}
+          docker push ${{ needs.build-docker.outputs.IMAGENAME }}:${{ steps.modelVersion.outputs.model_version }}
     
   stop-runner:
     name: Stop self-hosted EC2 runner
