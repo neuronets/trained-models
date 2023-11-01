@@ -189,13 +189,13 @@ jobs:
 
     steps:
     # Checkout the repository to the GitHub Actions runner 🟢
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       if: needs.create_new_branch.outputs.BRANCHNAME == ''
       with:
         ref: issue-${{ github.event.issue.number }}
 
     # If branchName is empty use issue number, else, use the branchName 🟢
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       if: needs.create_new_branch.outputs.BRANCHNAME != ''
       with:
           ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
@@ -275,13 +275,13 @@ jobs:
             docker-images: false
 
       # Checkout the repository to the GitHub Actions runner 🟢
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         if: needs.create_new_branch.outputs.BRANCHNAME == ''
         with:
           ref: issue-${{ github.event.issue.number }}
 
       # If branchName is empty use issue number, else, use the branchName 🟢
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         if: needs.create_new_branch.outputs.BRANCHNAME != ''
         with:
             ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
@@ -301,13 +301,13 @@ jobs:
 
     steps:
       # Checkout the repository to the GitHub Actions runner to the new branch created for the issue 🟢
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         if: needs.create_new_branch.outputs.BRANCHNAME == ''
         with:
           ref: issue-${{ github.event.issue.number }}
 
       # If branchName is empty use issue number, else, use the branchName 🟢
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         if: needs.create_new_branch.outputs.BRANCHNAME != ''
         with:
             ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
@@ -436,13 +436,13 @@ jobs:
           large-packages: true
           docker-images: false
         
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         if: needs.create_new_branch.outputs.BRANCHNAME == ''
         with:
           ref: issue-${{ github.event.issue.number }}
 
       # If branchName is empty use issue number, else, use the branchName 🟢
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         if: needs.create_new_branch.outputs.BRANCHNAME != ''
         with:
             ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
@@ -469,10 +469,14 @@ jobs:
       - name: Get sample dataset
         run: |
           sudo apt install python3-pip -y
-          pip install datalad
+          sudo apt-get install datalad -y
+          python3 -m pip install datalad-osf
+          sudo python3 -m pip install datalad-installer
+          datalad-installer --sudo ok git-annex -m datalad/git-annex:release
+          sudo git config --global filter.annex.process "git-annex filter-process"
 
-          git config --global user.name "trained_models"
-          git config --global user.email "trained_models"
+          git config --system user.name "trained_models"
+          git config --system user.email "trained_models"
 
           datalad get ./${{ needs.create_new_branch.outputs.MODELPATH }}/weights/
 
@@ -516,7 +520,7 @@ jobs:
         run: |
           # Parent directory as a bind path in a env variable
 
-          singularity exec --nv --bind /actions-runner,/actions-runner/_work/,/actions-runner/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/${{ needs.create_new_branch.outputs.MODELPATH }}/,/actions-runner/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/${{ needs.create_new_branch.outputs.MODELPATH }}/docker,/actions-runner/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/${{ needs.create_new_branch.outputs.MODELPATH }}/weights,/actions-runner/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/${{ needs.create_new_branch.outputs.MODELPATH }}/example-data:/output ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build-docker.outputs.MODELNAME }}.sif ${{ needs.create_new_branch.outputs.TESTCOMMAND }}
+          singularity exec --nv ./${{ needs.create_new_branch.outputs.MODELPATH }}/docker/${{ needs.build-docker.outputs.MODELNAME }}.sif ${{ needs.create_new_branch.outputs.TESTCOMMAND }}
 
       # Load the Docker image 🟢
       - name: Load Docker image
@@ -550,7 +554,7 @@ jobs:
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker tag ${{ needs.build-docker.outputs.MODELNAME }} ${{ needs.build-docker.outputs.IMAGENAME }}:${{ steps.modelVersion.outputs.model_version }}
-          docker push ${{ needs.build-docker.outputs.IMAGENAME }}
+          docker push ${{ needs.build-docker.outputs.IMAGENAME }}:${{ steps.modelVersion.outputs.model_version }}
     
   stop-runner:
     name: Stop self-hosted EC2 runner
