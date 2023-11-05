@@ -295,7 +295,7 @@ jobs:
 
             datalad save . -m "Added model weights and sample data"
             
-            datalad push --to osf-annex2-storage
+            datalad push --to osf-storage
             datalad push --to origin
 
   start-runner:
@@ -415,7 +415,7 @@ jobs:
 
           # Push the dataset to the repo
           datalad save . -m "Added sample data"
-          datalad push --to osf-annex2-storage
+          datalad push --to osf-storage
           datalad push --to origin
           
 
@@ -428,7 +428,7 @@ jobs:
 
           # Push the weights to the repo
           datalad save . -m "Added model weights"
-          datalad push --to osf-annex2-storage
+          datalad push --to osf-storage
           datalad push --to origin
 
       # Run in singularity the test command saved under needs.create_new_branch.outputs.DEEPCSR
