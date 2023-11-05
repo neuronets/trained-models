@@ -48,12 +48,14 @@ jobs:
         if: needs.create_new_branch.outputs.BRANCHNAME == ''
         with:
           ref: issue-${{ github.event.issue.number }}
+          fetch-depth: 0
 
       # If branchName is empty use issue number, else, use the branchName 🟢
       - uses: actions/checkout@v4
         if: needs.create_new_branch.outputs.BRANCHNAME != ''
         with:
             ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
+            fetch-depth: 0
 
       # Install svn to clone subdir of github repos 🟢
       - name: Install svn
@@ -153,12 +155,14 @@ jobs:
       if: needs.create_new_branch.outputs.BRANCHNAME == ''
       with:
         ref: issue-${{ github.event.issue.number }}
+        fetch-depth: 0
 
     # If branchName is empty use issue number, else, use the branchName 🟢
     - uses: actions/checkout@v4
       if: needs.create_new_branch.outputs.BRANCHNAME != ''
       with:
           ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
+          fetch-depth: 0
 
     # Set up Python
     - name: Set up Python
@@ -215,12 +219,14 @@ jobs:
         if: needs.create_new_branch.outputs.BRANCHNAME == ''
         with:
           ref: issue-${{ github.event.issue.number }}
+          fetch-depth: 0
 
       # If branchName is empty use issue number, else, use the branchName 🟢
       - uses: actions/checkout@v4
         if: needs.create_new_branch.outputs.BRANCHNAME != ''
         with:
             ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
+            fetch-depth: 0
 
       # Get image name 🟢
       - name: Set docker image name
@@ -241,12 +247,14 @@ jobs:
         if: needs.create_new_branch.outputs.BRANCHNAME == ''
         with:
           ref: issue-${{ github.event.issue.number }}
+          fetch-depth: 0
 
       # If branchName is empty use issue number, else, use the branchName 🟢
       - uses: actions/checkout@v4
         if: needs.create_new_branch.outputs.BRANCHNAME != ''
         with:
             ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
+            fetch-depth: 0
 
       # Set up Python
       - name: Set up Python
@@ -350,12 +358,14 @@ jobs:
         if: needs.create_new_branch.outputs.BRANCHNAME == ''
         with:
           ref: issue-${{ github.event.issue.number }}
+          fetch-depth: 0
 
       # If branchName is empty use issue number, else, use the branchName 🟢
       - uses: actions/checkout@v4
         if: needs.create_new_branch.outputs.BRANCHNAME != ''
         with:
             ref: ${{ needs.create_new_branch.outputs.BRANCHNAME }}
+            fetch-depth: 0
 
       - name: Install singularity
         run: |
