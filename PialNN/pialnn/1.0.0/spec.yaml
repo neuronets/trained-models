@@ -8,8 +8,7 @@ repository:
   repo_download_location: None
 inference:
   prediction_script: trained-models/DeepCSR/deepcsr/1.0/predict.py
-  command: f"python {MODELS_PATH}/{model}/predict.py --conf_path {conf} --model_checkpoint
-    {infile[0]} --dataset {infile[1]}"
+  command: f"python {MODELS_PATH}/{model}/predict.py --conf_path {conf} --model_checkpoint {infile[0]} --dataset {infile[1]}"
   data_spec:
     infile:
       n_files: 1
@@ -22,8 +21,8 @@ training_data_info:
     evaluate: 1
     test: 1
   biological_sex:
-    male: null
-    female: null
+    male:
+    female:
   age_histogram: '1'
   race: '1'
   imaging_contrast_info: '1'
