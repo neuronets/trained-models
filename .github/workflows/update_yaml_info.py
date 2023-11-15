@@ -31,8 +31,8 @@ def edit_spec_yaml(path, model_name):
     return True
 
 if __name__ == "__main__":
-    model_folder = sys.argv[1]
-    dockerfile_path = sys.argv[2]
+    model_folder = sys.argv[2]
+    dockerfile_path = sys.argv[1]
 
     success = edit_spec_yaml(dockerfile_path, model_folder)
     
