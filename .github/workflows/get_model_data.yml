@@ -37,8 +37,8 @@ jobs:
 
       - name: Extract files from clone and remove clone
         run: |
-          mv ./trained-models-template/docs .
-          rm -r ./trained-models-template
+          mv ./trained-models-template/docs/* ./docs
+          rm -r ./trained-models-template/
       
       - name: Use GitHub Actions' cache to shorten build times and decrease load on servers
         uses: actions/cache@v2
