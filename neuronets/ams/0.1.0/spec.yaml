@@ -114,24 +114,3 @@ training_data_info:
         metrics: None
         data_preprocessing: None
         data_augmentation: None
-
-#### model information and help
-model:
-    model_name: "ams"
-    description: "Meningioma Segmentation Model"
-    structure: "U-Net"
-    training_mode: "supervised"
-    model_url: "https://github.com/neuronets/ams"
-    Zoo_function: "predict"
-    example: "nobrainer-zoo predict -m neuronets/ams/0.1.0 <path_to_input> <path_to_output>/out.nii.gz"
-    note: "Please provide an output file name with an extension."
-    input_file_type: "nii.gz"
-    model_details: ""
-    intended_use: ""
-    factors: ""
-    metrics: ""
-    eval_data: ""
-    training_data: ""
-    quant_analyses: ""
-    ethical_considerations: ""
-    caveats_recs: ""

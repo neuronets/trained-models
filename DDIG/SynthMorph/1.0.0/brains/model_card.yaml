@@ -1,0 +1,43 @@
+Model_details:
+  Organization: DDIG
+  Model_date: (Date when the model was last updated or released)
+  Model_version: 1.0.0
+  Model_type: 3D Brain Registration
+  More_information: SynthMorph is a 3D brain registration model based on U-Net architecture, functioning in an unsupervised training mode.
+  Citation_details: "Hoffmann, M., Billot, B., Greve, D. N., Iglesias, J. E., Fischl, B., & Dalca, A. V. (2020). SynthMorph: Learning contrast-invariant registration without acquired images. ArXiv. https://doi.org/10.1109/TMI.2021.3116879"
+  Contact_info: https://github.com/voxelmorph/voxelmorph/issues/new?labels=voxelmorph
+
+Intended_use:
+  Primary_intended_uses: 3D brain image registration for medical imaging analysis.
+  Primary_intended_users: Researchers and practitioners in medical imaging, especially in neuroscience and radiology.
+  Out_of_scope_use_cases: Non-medical image processing, general object detection or classification tasks.
+
+Factors:
+  Relevant_factors: Image quality, resolution, and contrast; anatomical variations in brain structures.
+  Evaluation_factors: Accuracy of alignment, robustness to variations in imaging conditions.
+  Model_performance_measures: Dice similarity coefficient, registration accuracy, computational efficiency.
+
+Metrics:
+  Model Performance Measures: Dice similarity coefficient, mean squared error between registered images.
+  Decision Thresholds: (Any specific thresholds used for decision-making in the model)
+  Variation Approaches: (Approaches used to handle variations in data or imaging conditions)
+
+Evaluation Data:
+  Datasets: (Details of datasets used for evaluation, if available)
+  Motivation: To assess the model's performance in accurately registering 3D brain images.
+  Preprocessing: (Details of any preprocessing steps applied to the evaluation data)
+
+Training Data:
+  Datasets: (Details of datasets used for training, if available)
+  Motivation: To train the model for robust and accurate 3D brain image registration.
+  Preprocessing: (Details of any preprocessing steps applied to the training data)
+
+Quantitative Analyses:
+  Unitary Results: (Results of the model performance on individual datasets or images)
+  Intersectional Results: (Results showcasing the performance across different datasets or conditions)
+
+Ethical Considerations:
+  (Any ethical considerations specific to the use or implementation of this model, e.g., patient privacy in medical imaging)
+
+Caveats and Recommendations:
+  (Any limitations or recommendations for using the model effectively)

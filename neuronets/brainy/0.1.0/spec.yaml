@@ -115,23 +115,3 @@ training_data_info:
         data_preprocessing: "standard score"
         data_augmentation: "random rigid transformations applied to 50% of data"
         
-#### model information and help
-model:
-    model_name: "brainy"
-    description: "3D brain extraction model"
-    structure: "U-Net"
-    training_mode: "supervised"
-    model_url: "https://github.com/neuronets/brainy"
-    Zoo_function: "predict"
-    example: "nobrainer-zoo predict -m neuronets/brainy/0.1.0 <path_to_input> <path_to_output>/out.nii.gz"
-    note: "Please provide an output file name with an extension."
-    input_file_type: "nii.gz"
-    model_details: ""
-    intended_use: ""
-    factors: ""
-    metrics: ""
-    eval_data: ""
-    training_data: ""
-    quant_analyses: ""
-    ethical_considerations: ""
-    caveats_recs: ""
