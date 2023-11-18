@@ -32,6 +32,8 @@ jobs:
   create_new_branch:
     needs: [start-runner]
     runs-on: ${{ needs.start-runner.outputs.label }} # run the job on the newly created runner
+    outputs:
+      BRANCHNAME: ${{ steps.branch.outputs.branchName }}
     steps:
       - name: Cleanup disk space for large docker images
         run: |
@@ -327,6 +329,14 @@ jobs:
               🔴 The folders/scripts you provided did not pass our tests. Please review the Action, and modify this issue's urls accordingly. 
               When ready, simply append "Ready XX" in the issue title (where XX is a number incrementing with 01 each time a fix has been applied).
           emoji: '+1,eyes'
+
+      # Remove created branch if failed
+      - name: Delete branch
+        uses: dawidd6/action-delete-branch@v3
+        with:
+          github_token: ${{secrets.GH_TOKEN}}
+          branches: issue
+          suffix: -${{ github.event.issue.number }}
         
   success:
     needs: [start-runner, create_new_branch, stop-runner]
