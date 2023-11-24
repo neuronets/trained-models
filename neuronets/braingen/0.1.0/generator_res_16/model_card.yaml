@@ -1,11 +1,11 @@
 Model_details:
-  Organization: neuronets
-  Model_date: 2020
+  Organization: "neuronets"
+  Model_date: "2020"
   Model_version: 0.1.0
-  Model_type: GAN 3D Brain Generator
-  More_information: braingen_res_16
-  Citation_details: https://github.com/neuronets/progressivegan3d
-  Contact_info: https://github.com/neuronets/progressivegan3d/issues/new
+  Model_type: "GAN"
+  More_information: "braingen_res_16"
+  Citation_details: "https://github.com/neuronets/progressivegan3d"
+  Contact_info: "https://github.com/neuronets/progressivegan3d/issues/new"
 
 Intended_use:
   Primary_intended_uses:
