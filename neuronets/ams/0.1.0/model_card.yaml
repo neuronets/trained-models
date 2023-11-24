@@ -1,11 +1,11 @@
 Model_details:
-  Organization: neuronets
-  Model_date: 2020
+  Organization: "neuronets"
+  Model_date: "2020"
   Model_version: 0.1.0
-  Model_type: Automated meningioma segmentation
-  More_information: ams
-  Citation_details: https://github.com/neuronets/ams
-  Contact_info: https://github.com/neuronets/ams/issues/new
+  Model_type: ""
+  More_information: "ams"
+  Citation_details: "https://github.com/neuronets/ams"
+  Contact_info: "https://github.com/neuronets/ams/issues/new"
 
 Intended_use:
   Primary_intended_uses:

@@ -59,24 +59,3 @@ training_data_info:
         metrics: None
         data_preprocessing: None
         data_augmentation: "domain randomization using a generator"
-
-#### model information and help
-model:
-    model_name: "SynthStrip"
-    description: "3D brain extraction model"
-    structure: "U-Net"
-    training_mode: "supervised"
-    model_url: "https://surfer.nmr.mgh.harvard.edu/docs/synthstrip/"
-    Zoo_function: "predict"
-    example: "nobrainer-zoo predict -m DDIG/SynthStrip/1.0.0 <path_to_input> <path_to_output>/out.nii.gz"
-    note: "Please provide an output file name with an extension."
-    input_file_type: "nii.gz"
-    model_details: ""
-    intended_use: ""
-    factors: ""
-    metrics: ""
-    eval_data: ""
-    training_data: ""
-    quant_analyses: ""
-    ethical_considerations: ""
-    caveats_recs: ""
