@@ -1,33 +1,43 @@
 Model_details:
-  Organization: DeepCSR
-  Model_date: t
-  Model_version: 1.0
-  Model_type: t
-  More_information: t
-  Citation_details: t
-  Contact_info: t
+  Organization: "DeepCSR"
+  Model_date: "2020"
+  Model_version: 1.0.0
+  Model_type: "Convolutional Neural Network"
+  More_information: "DeepCSR"
+  Citation_details: "Cruz, R. S., Lebrat, L., Bourgeat, P., Fookes, C., Fripp, J., & Salvado, O. (2020). DeepCSR: A 3D Deep Learning Approach for Cortical Surface Reconstruction. ArXiv. /abs/2010.11423"
+  Contact_info: "https://github.com/neuroneural/DeepCSR-fork/issues/new"
+
 Intended_use:
-  Primary_intended_uses: t
-  Primary_intended_users: t
-  Out_of_scope_use_cases: t
+  Primary_intended_uses: "Cortical surface reconstruction from magnetic resonance imaging (MRI)."
+  Primary_intended_users: "Researchers and practitioners in neuroimaging and neurodegenerative disease studies."
+  Out_of_scope_use_cases: "Applications outside of MRI-based brain imaging."
+
 Factors:
-  Relevant_factors: t
-  Evaluation_factors: t
-  Model_performance_measures: t
+  Relevant_factors: "Variability in MRI scans, subject demographics, and cortical surface complexity."
+  Evaluation_factors: "Precision in cortical surface reconstruction, adaptability to different MRI datasets."
+  Model_performance_measures: "Accuracy in cortical surface reconstruction, speed of processing."
+
 Metrics:
-  Model Performance Measures: t
-  Decision Thresholds: t
-  Variation Approaches: t
+  Model Performance Measures: "Reconstruction accuracy, runtime efficiency."
+  Decision Thresholds: "Thresholds in hypercolumn feature extraction and surface representation."
+  Variation Approaches: "Adapting to different MRI resolutions and cortical surface complexities."
+
 Evaluation Data:
-  Datasets: t
-  Motivation: t
-  Preprocessing: t
+  Datasets: "Alzheimer’s Disease Neuroimaging Initiative (ADNI) study dataset."
+  Motivation: "To assess performance in a clinically relevant context with a variety of brain images."
+  Preprocessing: "Affine registration to a brain template, implicit surface representation computation."
+
 Training Data:
-  Datasets: t
-  Motivation: t
-  Preprocessing: t
+  Datasets: "MRI data and corresponding pseudo-ground truth surfaces generated with FreeSurfer V6.0."
+  Motivation: "To develop a model capable of accurate and efficient cortical surface reconstruction."
+  Preprocessing: "Co-registering MR images to a brain template, point sampling near the target surface."
+
 Quantitative Analyses:
-  Unitary Results: t
-  Intersectional Results: t
-Ethical Considerations: t
-Caveats and Recommendations: t
+  Unitary Results: "Comparison with traditional cortical reconstruction methods like FreeSurfer."
+  Intersectional Results: "Performance analysis across different MRI scans and cortical surface types."
+
+Ethical Considerations:
+  "Data privacy and ethical use of MRI scans, especially in the context of neurodegenerative diseases."
+
+Caveats and Recommendations:
+  "Users should be aware of the model's limitations in extremely complex cortical surfaces. Continuous updates and validation with diverse datasets are recommended."
