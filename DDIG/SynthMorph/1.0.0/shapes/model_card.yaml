@@ -8,7 +8,7 @@ Model_details:
   Contact_info: "https://github.com/voxelmorph/voxelmorph/issues/new?labels=voxelmorph"
 
 Intended_use:
-  Primary_intended_uses: "Learning registration without acquired imaging data. Train using images synthesized from brain label maps."
+  Primary_intended_uses: "Learning registration without acquired imaging data. Train using images synthesized from random shapes only."
   Primary_intended_users: "Researchers and practitioners in medical imaging, especially in neuroscience and radiology."
   Out_of_scope_use_cases: "Non-medical image processing, general object detection or classification tasks."
 

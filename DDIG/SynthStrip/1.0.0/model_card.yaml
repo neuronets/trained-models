@@ -1,0 +1,43 @@
+Model_details:
+  Organization: "DDIG"
+  Model_date: "2022"
+  Model_version: 1.0.0
+  Model_type: "U-Net"
+  More_information: "SynthStrip"
+  Citation_details: "Andrew Hoopes, Jocelyn S. Mora, Adrian V. Dalca, Bruce Fischl, Malte Hoffmann, SynthStrip: skull-stripping for any brain image, NeuroImage, Volume 260, 2022, 119474, ISSN 1053-8119, https://doi.org/10.1016/j.neuroimage.2022.119474."
+  Contact_info: "https://github.com/freesurfer/freesurfer/issues/new"
+
+Intended_use:
+  Primary_intended_uses: "Skull-stripping in various imaging modalities, resolutions, and subject populations."
+  Primary_intended_users: "Researchers and practitioners in medical imaging."
+  Out_of_scope_use_cases: "Non-medical image processing, applications outside brain imaging."
+
+Factors:
+  Relevant_factors: "Image quality, resolution, imaging modalities (MRI, CT, PET), subject age and health condition (infants to adults, including glioblastoma patients)"
+  Evaluation_factors: "Robustness to variations in imaging conditions, accuracy of brain voxel extraction."
+  Model_performance_measures: "Accuracy in brain voxel extraction, compatibility with different imaging modalities."
+
+Metrics:
+  Model Performance Measures: "Accuracy in skull-stripping across different imaging modalities and subject conditions."
+  Decision Thresholds: "Thresholds for voxel classification as brain or non-brain tissue."
+  Variation Approaches: "Adaptation to different imaging conditions and subject demographics."
+
+Evaluation Data:
+  Datasets: "622 MRI, CT, and PET scans with corresponding ground-truth brain masks."
+  Motivation: "To evaluate performance across diverse imaging types and subject populations."
+  Preprocessing: "Standardization of image formats and resolution normalization."
+
+Training Data:
+  Datasets: "131 adult MPRAGE scans with FreeSurfer brain labels and additional non-brain labels."
+  Motivation: "To create a robust model capable of accurately segmenting brain tissue in diverse imaging contexts."
+  Preprocessing: "Segmentation map synthesis, resolution normalization, data augmentation for robustness."
+
+Quantitative Analyses:
+  Unitary Results: "Performance metrics for individual modalities and subject conditions."
+  Intersectional Results: "Analysis across combinations of imaging modalities and subject demographics."
+
+Ethical Considerations:
+  "Consideration of patient privacy and data security, especially given the sensitive nature of medical imaging data."
+
+Caveats and Recommendations:
+  "Users should be aware of the model's limitations in extreme imaging conditions. Continuous validation with new data is recommended to maintain performance accuracy."

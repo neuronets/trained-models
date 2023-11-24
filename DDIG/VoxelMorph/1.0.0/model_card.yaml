@@ -1,0 +1,43 @@
+Model_details:
+  Organization: "DDIG"
+  Model_date: "2018"
+  Model_version: 1.0.0
+  Model_type: "U-Net"
+  More_information: "VoxelMorph"
+  Citation_details: "Balakrishnan, G., Zhao, A., Sabuncu, M. R., Guttag, J., & Dalca, A. V. (2018). VoxelMorph: A Learning Framework for Deformable Medical Image Registration. ArXiv. https://doi.org/10.1109/TMI.2019.2897538"
+  Contact_info: "https://github.com/voxelmorph/voxelmorph/issues/new?labels=voxelmorph"
+
+Intended_use:
+  Primary_intended_uses: "Deformable medical image registration for various imaging studies."
+  Primary_intended_users: "Researchers and professionals in medical imaging and computational anatomy."
+  Out_of_scope_use_cases: "Non-medical image processing, applications outside deformable registration."
+
+Factors:
+  Relevant_factors: "Image type variability, subject diversity, anatomical variations."
+  Evaluation_factors: "Accuracy of registration, adaptability to different imaging conditions."
+  Model_performance_measures: "Image matching objective functions, overlap of anatomical segmentations."
+
+Metrics:
+  Model Performance Measures: "Dice coefficient for registration accuracy, runtime efficiency."
+  Decision Thresholds: "Thresholds in loss functions for image similarity and deformation smoothness."
+  Variation Approaches: "Adaptation to different datasets, integration of auxiliary data for improved registration."
+
+Evaluation Data:
+  Datasets: "Used for atlas-based and subject-to-subject registration; includes 3731 T1-weighted MRI scans from various datasets."
+  Motivation: "To validate the model's effectiveness across diverse imaging types and subject populations."
+  Preprocessing: "Affine spatial normalization, brain extraction, and anatomical segmentation using FreeSurfer."
+
+Training Data:
+  Datasets: "Training on a large-scale multi-site dataset including T1-weighted MRI scans."
+  Motivation: "To develop a robust and efficient model for deformable image registration."
+  Preprocessing: "Standard preprocessing steps including affine normalization and brain extraction."
+
+Quantitative Analyses:
+  Unitary Results: "Registration accuracy and runtime comparisons with state-of-the-art methods."
+  Intersectional Results: "Performance analysis across different datasets, subject groups, and imaging conditions."
+
+Ethical Considerations:
+  "Ensuring the privacy and security of sensitive medical imaging data."
+
+Caveats and Recommendations:
+  "Users should be aware of the model's limitations in challenging registration scenarios. Regular updates and validations are recommended for maintaining accuracy and efficiency."
