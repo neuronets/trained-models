@@ -3,39 +3,41 @@ Model_details:
   Model_date: "2020"
   Model_version: 1.0.0
   Model_type: "U-Net"
-  More_information: "SynthMorph"
+  More_information: "shapes"
   Citation_details: "Hoffmann, M., Billot, B., Greve, D. N., Iglesias, J. E., Fischl, B., & Dalca, A. V. (2020). SynthMorph: Learning contrast-invariant registration without acquired images. ArXiv. https://doi.org/10.1109/TMI.2021.3116879"
-  Contact_info: "https://github.com/voxelmorph/voxelmorph/issues/new?labels=voxelmorph"
+  Contact_info: "https://github.com/voxelmorph/voxelmorph/issues/new"
 
 Intended_use:
-  Primary_intended_uses: "Learning registration without acquired imaging data. Train using images synthesized from random shapes only."
-  Primary_intended_users: "Researchers and practitioners in medical imaging, especially in neuroscience and radiology."
-  Out_of_scope_use_cases: "Non-medical image processing, general object detection or classification tasks."
+  Primary_intended_uses: "Learning contrast-invariant registration without relying on acquired imaging data."
+  Primary_intended_users: "Researchers and clinicians in neuroimaging and medical image analysis."
+  Out_of_scope_use_cases: "Not intended for direct clinical diagnosis or treatment planning."
 
 Factors:
-  Relevant_factors: "Image quality, resolution, and contrast; anatomical variations in brain structures."
-  Evaluation_factors: "Accuracy of alignment, robustness to variations in imaging conditions."
-  Model_performance_measures: "Dice similarity coefficient, registration accuracy, computational efficiency."
+  Relevant_factors: "MRI contrasts, neural network training strategies."
+  Evaluation_factors: "Generalization to a broad array of MRI contrasts, robustness, accuracy."
+  Model_performance_measures: "Registration accuracy, contrast invariance, computational efficiency."
 
 Metrics:
-  Model Performance Measures: "Dice similarity coefficient, mean squared error between registered images."
+  Model Performance Measures: "Dice scores, symmetric surface distances, warp folding proportion."
   Decision Thresholds:
-  Variation Approaches:
+  Variation Approaches: "Assessment across various MRI contrasts and processing levels."
 
 Evaluation Data:
-  Datasets:
-  Motivation: "To assess the model's performance in accurately registering 3D brain images."
-  Preprocessing:
+  Datasets: "Includes brain MRI datasets from OASIS, HCP-A, BIRN, UK Biobank, and more."
+  Motivation: "To evaluate robustness to contrast variations and generalizability."
+  Preprocessing: "Standard neuroimaging preprocessing steps, including skull-stripping and normalization."
 
 Training Data:
-  Datasets:
-  Motivation: "To train the model for robust and accurate 3D brain image registration."
-  Preprocessing:
+  Datasets: "Synthetic data generated from label maps using a generative model."
+  Motivation: "To achieve contrast-invariant registration capabilities."
+  Preprocessing: "Synthesis of images from label maps to create training data with wide-ranging variability."
 
 Quantitative Analyses:
-  Unitary Results:
-  Intersectional Results:
+  Unitary Results: "Performance metrics like Dice scores and surface distances."
+  Intersectional Results: "Analysis across different MRI contrasts and datasets."
 
 Ethical Considerations:
+  "Adherence to ethical standards in AI and medical imaging research, particularly regarding data privacy and responsible use."
 
 Caveats and Recommendations:
+  "Recognition of the model's limitations in clinical settings and the importance of validation with real-world data."
