@@ -54,24 +54,3 @@ training_data_info:
         metrics: None
         data_preprocessing: None
         data_augmentation: "spatial transform"
-
-#### model information and help
-model:
-    model_name: "SynthSR"
-    description: "3D brain hyper resolution model"
-    structure: "U-Net"
-    training_mode: None
-    model_url: "https://github.com/BBillot/SynthSR"
-    Zoo_function: "predict"
-    example: "nobrainer-zoo predict -m UCL/SynthSR/1.0.0 --model_type hyperfine <path_to_input_T1> <path_to_input_T2> <path_to_output>/out.nii.gz"
-    note: "Please provide an output file name with an extension."
-    input_file_type: "nii.gz"
-    model_details: ""
-    intended_use: ""
-    factors: ""
-    metrics: ""
-    eval_data: ""
-    training_data: ""
-    quant_analyses: ""
-    ethical_considerations: ""
-    caveats_recs: ""

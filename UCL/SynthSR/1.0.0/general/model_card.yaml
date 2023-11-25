@@ -1,0 +1,43 @@
+Model_details:
+  Organization: "UCL"
+  Model_date: "2021"
+  Model_version: 1.0.0
+  Model_type: "U-Net"
+  More_information: "general"
+  Citation_details: "Billot, B., Greve, D. N., Puonti, O., Thielscher, A., Van Leemput, K., Fischl, B., Dalca, A. V., & Iglesias, J. E. (2021). SynthSeg: Segmentation of brain MRI scans of any contrast and resolution without retraining. ArXiv. https://doi.org/10.1016/j.media.2023.102789"
+  Contact_info: "https://github.com/BBillot/SynthSR/issues/new"
+
+Intended_use:
+  Primary_intended_uses: "Super-resolution and synthesis of MRI scans to 1 mm isotropic MP-RAGE volumes, lesion inpainting."
+  Primary_intended_users: "Researchers and clinicians in neuroimaging."
+  Out_of_scope_use_cases: "Non-MRI based imaging applications and non-clinical uses."
+
+Factors:
+  Relevant_factors: "MRI scan orientation, resolution, and contrast; lesion presence."
+  Evaluation_factors: "Accuracy in super-resolution and synthesis, lesion inpainting effectiveness."
+  Model_performance_measures: "Quality of generated 1 mm isotropic MP-RAGE volumes, lesion inpainting accuracy."
+
+Metrics:
+  Model Performance Measures: "Quality assessment of synthesized MP-RAGE volumes, lesion inpainting effectiveness."
+  Decision Thresholds:
+  Variation Approaches: "Assessment across different MRI modalities and resolutions."
+
+Evaluation Data:
+  Datasets: "Clinical MRI and CT scans with different orientations, resolutions, and contrasts."
+  Motivation: "To evaluate the model's ability to generate high-quality MP-RAGE volumes from diverse clinical scans."
+  Preprocessing: "Handling various MRI and CT scan formats and conditions."
+
+Training Data:
+  Datasets: "Synthetic data generated using a generative model based on SynthSeg."
+  Motivation: "To train a network for effective super-resolution and synthesis of MRI scans."
+  Preprocessing: "Synthetic data generation with randomized imaging parameters."
+
+Quantitative Analyses:
+  Unitary Results: "Performance analysis on individual datasets."
+  Intersectional Results: "Analysis across different scan types and conditions."
+
+Ethical Considerations:
+  "General ethical considerations in AI and medical imaging, such as data privacy and responsible use."
+
+Caveats and Recommendations:
+  "Awareness of model's limitations and importance of supplementary clinical evaluation."
