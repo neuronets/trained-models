@@ -1,0 +1,43 @@
+Model_details:
+  Organization: "UCL"
+  Model_date: "2021"
+  Model_version: 1.0.0
+  Model_type: "U-Net"
+  More_information: "SynthSeg"
+  Citation_details: "Billot, B., Greve, D. N., Puonti, O., Thielscher, A., Van Leemput, K., Fischl, B., Dalca, A. V., & Iglesias, J. E. (2021). SynthSeg: Segmentation of brain MRI scans of any contrast and resolution without retraining. ArXiv. https://doi.org/10.1016/j.media.2023.102789"
+  Contact_info: "https://github.com/BBillot/SynthSeg/issues/new"
+
+Intended_use:
+  Primary_intended_uses: "Segmentation of brain MRI scans of any contrast and resolution without retraining."
+  Primary_intended_users: "Researchers and clinicians in neuroimaging."
+  Out_of_scope_use_cases: "Use cases outside of brain MRI segmentation, especially for non-clinical or diagnostic purposes."
+
+Factors:
+  Relevant_factors: "Scan contrast and resolution, patient population variability."
+  Evaluation_factors: "Robustness to contrast and resolution changes, accuracy across diverse patient populations."
+  Model_performance_measures: "Generalization ability, segmentation accuracy."
+
+Metrics:
+  Model Performance Measures: "Dice scores, surface distances."
+  Decision Thresholds:
+  Variation Approaches: "Assessment across different MRI modalities and resolutions."
+
+Evaluation Data:
+  Datasets: "A range of MRI datasets including T1-weighted images and CT scans."
+  Motivation: "To assess robustness and generalization capabilities."
+  Preprocessing: "Standard neuroimaging preprocessing steps."
+
+Training Data:
+  Datasets: "Synthetic data generated from anatomical segmentations."
+  Motivation: "To create a robust model for clinical MRI datasets."
+  Preprocessing: "Synthetic data generation with randomized imaging parameters."
+
+Quantitative Analyses:
+  Unitary Results: "Performance metrics such as Dice scores."
+  Intersectional Results: "Performance analysis across modalities and resolutions."
+
+Ethical Considerations:
+  "General ethical considerations in AI and medical imaging, such as data privacy and responsible use."
+
+Caveats and Recommendations:
+  "Awareness of model's limitations and importance of supplementary clinical evaluation."
