@@ -1,0 +1,43 @@
+Model_details:
+  Organization: "neuronets"
+  Model_date: "2019"
+  Model_version: 0.4.0
+  Model_type: "Meshnet"
+  More_information: "bwn"
+  Citation_details: "McClure, P., Rho, N., Lee, J. A., Kaczmarzyk, J. R., Zheng, C. Y., Ghosh, S. S., Nielson, D. M., Thomas, A. G., Bandettini, P., & Pereira, F. (2019). Knowing What You Know in Brain Segmentation Using Bayesian Deep Neural Networks. Frontiers in Neuroinformatics, 13, 479876. https://doi.org/10.3389/fninf.2019.00067"
+  Contact_info: "https://github.com/neuronets/kwyk/issues/new"
+
+Intended_use:
+  Primary_intended_uses: "Brain segmentation from structural MRI volumes."
+  Primary_intended_users: "Researchers in neuroimaging, clinicians, and those involved in brain structure studies."
+  Out_of_scope_use_cases: "Non-MRI based brain imaging applications."
+
+Factors:
+  Relevant_factors: "Variability in MRI scans, differences in brain structures, and noise in images."
+  Evaluation_factors: "Segmentation accuracy, uncertainty estimation, and generalization across different datasets."
+  Model_performance_measures: "Dice coefficient, true positive rate, false negative rate."
+
+Metrics:
+  Model Performance Measures: "Average Dice scores of 0.8373 (in-site) and 0.7921 (out-of-site)."
+  Decision Thresholds: "Thresholds in uncertainty estimation for predicting segmentation errors and scan quality."
+  Variation Approaches: "Adaptation to diverse MRI datasets and scan qualities."
+
+Evaluation Data:
+  Datasets: "Combination of several datasets including CoRR, OpenfMRI, NKI, and others totaling 11,480 T1 sMRI volumes."
+  Motivation: "To ensure robust performance across varied datasets and enhance generalizability."
+  Preprocessing: "Resampling to 1mm isotropic cubic volumes, normalization, and z-scoring."
+
+Training Data:
+  Datasets: "Large dataset of 9,184 sMRI volumes, with 50-class FreeSurfer segmentations as labels."
+  Motivation: "To train a network that can rapidly and accurately predict FreeSurfer segmentations."
+  Preprocessing: "Data was split into 32x32x32 sub-volumes, used as inputs for the neural network."
+
+Quantitative Analyses:
+  Unitary Results: "Performance evaluation based on Dice scores for individual classes across test volumes."
+  Intersectional Results: "Analysis of performance generalization on in-site and out-of-site test sets."
+
+Ethical Considerations:
+  "The tool is designed for research purposes and not intended as a standalone diagnostic tool. Users should be cautious about its application in clinical settings."
+
+Caveats and Recommendations:
+  "The model shows high accuracy in brain segmentation tasks, but users should be aware of potential variability in performance across different MRI datasets. It is recommended to evaluate the model's performance in the specific context of use."

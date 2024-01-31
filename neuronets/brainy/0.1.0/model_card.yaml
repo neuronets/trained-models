@@ -1,0 +1,43 @@
+Model_details:
+  Organization: "neuronets"
+  Model_date: "2021"
+  Model_version: 0.1.0
+  Model_type: "U-Net"
+  More_information: "brainy"
+  Citation_details: "https://github.com/neuronets/brainy"
+  Contact_info: "https://github.com/neuronets/brainy/issues/new"
+
+Intended_use:
+  Primary_intended_uses: "Automated brain extraction from T1-weighted brain scans."
+  Primary_intended_users: "Researchers and practitioners in neuroimaging and neuroscience."
+  Out_of_scope_use_cases: "Use cases outside of T1-weighted brain MRI analysis."
+
+Factors:
+  Relevant_factors: "Scan quality, subject demographics, and variation in brain anatomy."
+  Evaluation_factors: "Accuracy and speed of brain extraction, robustness to image variability."
+  Model_performance_measures: "Dice score, Jaccard index, efficiency of processing."
+
+Metrics:
+  Model Performance Measures: "Median Dice score of 0.97, mean of 0.96, and range of 0.91 to 0.98."
+  Decision Thresholds: "Thresholds applied in image segmentation and classification."
+  Variation Approaches: "Data augmentation with random rigid transformations for robustness."
+
+Evaluation Data:
+  Datasets: "99 T1-weighted brain scans with binarized FreeSurfer segmentations."
+  Motivation: "To validate the model's brain extraction performance in realistic scenarios."
+  Preprocessing: "Standard scoring (Z-scoring) of T1-weighted volumes."
+
+Training Data:
+  Datasets: "10,000 T1-weighted brain scans with binarized FreeSurfer segmentations."
+  Motivation: "To train the model for accurate and efficient brain extraction."
+  Preprocessing: "Segmentation into blocks of 128x128x128, data augmentation with random transformations."
+
+Quantitative Analyses:
+  Unitary Results: "Detailed performance metrics for individual datasets."
+  Intersectional Results: "Analysis of performance across different conditions and augmentation types."
+
+Ethical Considerations:
+  "This tool is intended for research purposes and not as a medical product."
+
+Caveats and Recommendations:
+  "Best used on T1-weighted MRI data. Effectiveness may vary with scan quality and anatomical differences. Regular updates and performance checks recommended."

@@ -1,0 +1,43 @@
+Model_details:
+  Organization: "neuronets"
+  Model_date: "2020"
+  Model_version: 0.1.0
+  Model_type: "U-Net"
+  More_information: "ams"
+  Citation_details: "Boaro, A., Kaczmarzyk, J. R., Kavouridis, V. K., Harary, M., Mammi, M., Dawood, H., Shea, A., Cho, E. Y., Juvekar, P., Noh, T., Rana, A., Ghosh, S., & Arnaout, O. (2022). Deep neural networks allow expert-level brain meningioma segmentation and present potential for improvement of clinical practice. Scientific Reports, 12(1), 1-9. https://doi.org/10.1038/s41598-022-19356-5"
+  Contact_info: "https://github.com/neuronets/ams/issues/new"
+
+Intended_use:
+  Primary_intended_uses: "Expert-level automated segmentation and volume estimation of brain meningiomas on MRI scans."
+  Primary_intended_users: "Neurologists, radiologists, and researchers in neuroimaging."
+  Out_of_scope_use_cases: "Not intended for non-meningioma brain pathology segmentation or use outside clinical research settings."
+
+Factors:
+  Relevant_factors: "Tumor size, location, and MRI characteristics."
+  Evaluation_factors: "Segmentation accuracy, robustness to tumor variations, generalization to diverse MRI datasets."
+  Model_performance_measures: "Dice score, Hausdorff distance, average Hausdorff distance."
+
+Metrics:
+  Model Performance Measures: "Accuracy of tumor segmentation, volume estimation accuracy."
+  Decision Thresholds: "Segmentation threshold optimized for meningiomas."
+  Variation Approaches: "Performance evaluation across different sizes and locations of meningiomas."
+
+Evaluation Data:
+  Datasets: "806 pre-surgery exams containing 936 tumors from radiological repositories of two major academic hospitals."
+  Motivation: "To develop a robust model for meningioma segmentation in diverse clinical scenarios."
+  Preprocessing: "Standardized image processing, conforming to 256 slices with 1mm3 isotropic voxels."
+
+Training Data:
+  Datasets: "Dataset of 10099 high-resolution T1-weighted MRI scans of healthy brains and 806 contrast-enhanced T1-weighted meningioma MRIs."
+  Motivation: "To create a reliable model for meningioma segmentation, capable of generalizing across various MRI types and tumor characteristics."
+  Preprocessing: "MRI scans conformed to standard dimensions, tumors segmented by experts for training."
+
+Quantitative Analyses:
+  Unitary Results: "Model achieved high segmentation accuracy, comparable to human experts."
+  Intersectional Results: "Performance analysis showed consistency across different tumor sizes and MRI characteristics."
+
+Ethical Considerations:
+  "Ethical considerations include ensuring patient privacy and responsible use of AI in clinical settings."
+
+Caveats and Recommendations:
+  "While the model shows high accuracy, its predictions should be used in conjunction with expert clinical judgment. Further validation in diverse clinical settings is recommended."

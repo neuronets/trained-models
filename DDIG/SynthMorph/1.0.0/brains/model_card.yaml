@@ -1,0 +1,43 @@
+Model_details:
+  Organization: "DDIG"
+  Model_date: "2020"
+  Model_version: 1.0.0
+  Model_type: "U-Net"
+  More_information: "brains"
+  Citation_details: "Hoffmann, M., Billot, B., Greve, D. N., Iglesias, J. E., Fischl, B., & Dalca, A. V. (2020). SynthMorph: Learning contrast-invariant registration without acquired images. ArXiv. https://doi.org/10.1109/TMI.2021.3116879"
+  Contact_info: "https://github.com/voxelmorph/voxelmorph/issues/new"
+
+Intended_use:
+  Primary_intended_uses: "Learning contrast-invariant registration without relying on acquired imaging data."
+  Primary_intended_users: "Researchers and clinicians in neuroimaging and medical image analysis."
+  Out_of_scope_use_cases: "Not intended for direct clinical diagnosis or treatment planning."
+
+Factors:
+  Relevant_factors: "MRI contrasts, neural network training strategies."
+  Evaluation_factors: "Generalization to a broad array of MRI contrasts, robustness, accuracy."
+  Model_performance_measures: "Registration accuracy, contrast invariance, computational efficiency."
+
+Metrics:
+  Model Performance Measures: "Dice scores, symmetric surface distances, warp folding proportion."
+  Decision Thresholds:
+  Variation Approaches: "Assessment across various MRI contrasts and processing levels."
+
+Evaluation Data:
+  Datasets: "Includes brain MRI datasets from OASIS, HCP-A, BIRN, UK Biobank, and more."
+  Motivation: "To evaluate robustness to contrast variations and generalizability."
+  Preprocessing: "Standard neuroimaging preprocessing steps, including skull-stripping and normalization."
+
+Training Data:
+  Datasets: "Synthetic data generated from label maps using a generative model."
+  Motivation: "To achieve contrast-invariant registration capabilities."
+  Preprocessing: "Synthesis of images from label maps to create training data with wide-ranging variability."
+
+Quantitative Analyses:
+  Unitary Results: "Performance metrics like Dice scores and surface distances."
+  Intersectional Results: "Analysis across different MRI contrasts and datasets."
+
+Ethical Considerations:
+  "Adherence to ethical standards in AI and medical imaging research, particularly regarding data privacy and responsible use."
+
+Caveats and Recommendations:
+  "Recognition of the model's limitations in clinical settings and the importance of validation with real-world data."
