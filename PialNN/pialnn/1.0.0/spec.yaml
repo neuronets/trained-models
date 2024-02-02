@@ -1,0 +1,47 @@
+image:
+  docker: neuronets/deepcsr
+  singularity: nobrainer-zoo_deepcsr.sif
+repository:
+  repo_url: None
+  committish: None
+  repo_download: 'False'
+  repo_download_location: None
+inference:
+  prediction_script: trained-models/DeepCSR/deepcsr/1.0/predict.py
+  command: f"python {MODELS_PATH}/{model}/predict.py --conf_path {conf} --model_checkpoint
+    {infile[0]} --dataset {infile[1]}"
+  data_spec:
+    infile:
+      n_files: 1
+    outfile:
+      n_files: 1
+training_data_info:
+  data_number:
+    total: 1
+    train: 1
+    evaluate: 1
+    test: 1
+  biological_sex:
+    male: null
+    female: null
+  age_histogram: '1'
+  race: '1'
+  imaging_contrast_info: '1'
+  dataset_sources: '1'
+  data_sites:
+    number_of_sites: 1
+    sites: '1'
+  scanner_models: '1'
+  hardware: '1'
+  training_parameters:
+    input_shape: '1'
+    block_shape: '1'
+    n_classes: 1
+    lr: '1'
+    n_epochs: 1
+    total_batch_size: 1
+    number_of_gpus: 1
+    loss_function: '1'
+    metrics: '1'
+    data_preprocessing: '1'
+    data_augmentation: '1'
